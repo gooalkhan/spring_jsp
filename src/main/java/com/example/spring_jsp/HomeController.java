@@ -14,13 +14,13 @@ public class HomeController {
     private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     private final MemberService memberService;
-    private final PythonScriptExecutor pythonScriptExecutor;
 
     @GetMapping("/")
     public String index() {
         logger.info("welcome home");
+        logger.info("os: " + System.getProperty("os.name"));
+        logger.info("user: " + System.getProperty("user.name"));
         memberService.printAll();
-        pythonScriptExecutor.run();
         return "index";
     }
 }
