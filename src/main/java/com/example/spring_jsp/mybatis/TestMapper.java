@@ -14,4 +14,6 @@ public interface TestMapper {
     void createTable();
 
     void save(MemberVO memberVO);
+
+    void dropTable();
 }

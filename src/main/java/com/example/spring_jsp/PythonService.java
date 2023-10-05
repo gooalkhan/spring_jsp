@@ -18,7 +18,7 @@ public class PythonService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
-    public String start_process() {
+    public void start_process() {
 
         PythonApacheExecutor pythonApacheExecutor;
 
@@ -27,8 +27,8 @@ public class PythonService {
         } else {
             pythonApacheExecutor = new PythonApacheExecutor(pythonExecutablePathLinux);
         }
-
-        pythonApacheExecutor.run();
-        return "";
+        logger.info("python executor thread start");
+        Thread thread = new Thread(pythonApacheExecutor);
+        thread.start();
     }
 }
