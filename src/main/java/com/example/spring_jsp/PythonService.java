@@ -13,7 +13,7 @@ public class PythonService {
     @Value("${python.executable.path.windows}")
     private String pythonExecutablePathWindows;
 
-    @Value("${python.executable.path.windows}")
+    @Value("${python.executable.path.linux}")
     private String pythonExecutablePathLinux;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
