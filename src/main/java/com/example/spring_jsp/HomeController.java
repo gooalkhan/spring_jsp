@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
 
     private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private final PythonService pythonService;
 
     private final MemberService memberService;
 
@@ -21,6 +22,8 @@ public class HomeController {
         logger.info("os: " + System.getProperty("os.name"));
         logger.info("user: " + System.getProperty("user.name"));
         memberService.printAll();
+        pythonService.start_process();
+
         return "index";
     }
 }

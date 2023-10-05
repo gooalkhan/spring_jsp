@@ -1,14 +1,18 @@
 import requests
 import threading
 import time
+import sys
 
-try:
-    print("from python - python process starts")
-    for i in range(100):
-        print(i)
+if __name__ == '__main__':
 
-    print("from python - python process ends successfully")
+    try:
+        print("from python - %s python process starts" % sys.argv[0])
+        for i in range(10):
+            print(i)
+            time.sleep(0.5)
 
-except Exception as e:
-    print(e)
-    print("from python - python process ends with error")
+        print("from python - python process ends successfully")
+
+    except Exception as e:
+        print(e)
+        print("from python - python process ends with error")
