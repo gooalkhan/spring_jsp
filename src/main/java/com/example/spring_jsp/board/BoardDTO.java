@@ -6,5 +6,5 @@ import lombok.Data;
 
 @Data
 public class BoardDTO {
-
+//테스트
 }
