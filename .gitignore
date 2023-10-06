@@ -41,3 +41,5 @@ out/
 /gradle/wrapper/gradle-wrapper.properties
 /gradlew
 /gradlew.bat
+
+#풀 리퀘스트 테스트
