@@ -2,23 +2,35 @@ package com.example.spring_jsp;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.exec.*;
+import org.apache.commons.exec.environment.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 public class PythonApacheExecutor implements Runnable {
 
     private final String pythonExecutablePath;
+
+    private final String profile;
+
     final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     public void run() {
         try {
             CommandLine cmdLine = new CommandLine(pythonExecutablePath);
 
-            // 파이썬 실행환경을 resources 폴더에 추가한 경우
+            // 환경 변수 설정
+            Map<String, String> environmentVariables = new HashMap<>();
+            environmentVariables.put("spring_profiles_active", profile);
+
+            // 환경 변수를 커맨드에 적용
+            EnvironmentUtils.addVariableToEnvironment(environmentVariables, "spring_profiles_active="+profile);
+
             URL url = this.getClass().getResource("/python/main.py");
             File file = new File(url.toURI());
 

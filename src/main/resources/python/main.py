@@ -1,15 +1,30 @@
-import requests
-import threading
-import time
+import subprocess
 import sys
+import os
 
-if __name__ == '__main__':
+URI = "jdbc:h2:tcp://localhost:9092/mem:testdb"
+ID = "sa"
+PW = ""
+LIB_PATH = os.getcwd() + "/build/resources/main/python/lib/h2-2.1.214.jar"
 
+try:
+    import jaydebeapi
+except ImportError:
+    print("Error importing jaydebeapi")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", 'jaydebeapi'])
+    import jaydebeapi
+finally:
     try:
         print("%s process starts" % sys.argv[0])
-        for i in range(10):
-            print(i)
-            time.sleep(0.5)
+
+        print("file exists %s" % os.path.exists(LIB_PATH))
+
+        with jaydebeapi.connect('org.h2.Driver', [URI, ID, PW], LIB_PATH) as conn:
+            with conn.cursor() as curs:
+                curs.execute("select * from MEMBERTBL")
+                data = curs.fetchall()
+                for row in data:
+                    print(row)
 
         print("process ends successfully")
 
