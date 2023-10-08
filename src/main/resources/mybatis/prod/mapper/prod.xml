@@ -3,8 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.spring_jsp.mybatis.TestMapper">
     <select id="getAll" resultType="com.example.spring_jsp.member.MemberVO">
-        select *
-        from membertbl;
+        select * from membertbl;
     </select>
 
     <update id="save">
@@ -13,7 +12,7 @@
     </update>
 
     <update id="createTable">
-        create table MEMBERTBL
+        create table membertbl
         (
             IDX            INTEGER      not null auto_increment,
             ID             VARCHAR(20)  not null,
@@ -29,6 +28,6 @@
     </update>
 
     <update id="dropTable">
-        drop table if exists MEMBERTBL;
+        drop table if exists membertbl;
     </update>
 </mapper>

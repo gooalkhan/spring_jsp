@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring_jsp.board.BoardMapperr">
+<!--    <update id="createTable">-->
+<!--        create table BOARDTBL-->
+<!--        (-->
+<!--            IDX           int          NOT NULL AUTO_INCREMENT,-->
+<!--            SUBJECT       varchar(100) NOT NULL,-->
+<!--            CONTENT       text         NOT NULL,-->
+<!--            POSTDATE      timestamp    NOT NULL,-->
+<!--            LIKES         int          NOT NULL,-->
+<!--            VIEWS         int          NOT NULL,-->
+<!--            membertbl_IDX varchar(20)  NOT NULL,-->
+<!--            PRIMARY KEY (IDX),-->
+<!--            KEY           fk_boardtbl_membertbl1_IDX (membertbl_IDX),-->
+<!--            CONSTRAINT fk_boardtbl_membertbl1 FOREIGN KEY (membertbl_IDX) REFERENCES membertbl (ID)-->
+<!--        );-->
+<!--    </update>-->
+</mapper>
