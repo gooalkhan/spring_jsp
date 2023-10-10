@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.member.MemberMapper">
+
+	<!-- 기본 membertbl select 구문 -->
+	<select id="memberSelect" resultType="com.example.demo.member.MemberDTO">
+		select
+		*
+		from
+		membertbl
+	</select>
+	
+	<!-- 기본 membertbl insert 구문(게시글 등록) -->
+	<insert id="memberJoin" parameterType="hashMap" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into
+		membertbl
+		(ID, PW, EMAIL, NAME, JOINDATE, MODIFYDATE)
+		values
+		(#{id}, #{pw}, #{email}, #{name}, now(), now())
+	</insert>
+	
+	<!-- 기본 membertbl update 구문(게시글 수정) -->
+	<update id="memberUpdate">
+		
+	</update>
+	
+	<!-- 기본 membertbl delete 구문(게시글 삭제) -->
+	<delete id="memberDelete">
+		delete
+		from
+		membertbl
+		where
+		IDX = #{idx}
+	</delete>
+	
+	<!-- 회원 상세 정보 -->
+	<select id="memberDetail" resultType="com.example.demo.member.MemberDTO">
+		<![CDATA[
+	    select
+	    *
+	    from
+	    membertbl
+	    where
+	    ID = #{id}
+	    ]]>
+	</select>
+	
+	<!-- 	    and
+	    PW = #{pw}
+	    아직 미완성 나중에 수정 -->
+	<!-- 로그인 -->
+	<select id="memberLogin" resultType="com.example.demo.member.MemberDTO">
+		<![CDATA[
+	    select
+	    *
+	    from
+	    membertbl
+	    where
+	    ID = #{id}
+	    ]]>
+	</select>
+	
+</mapper>

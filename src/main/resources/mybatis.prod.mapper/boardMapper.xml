@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.board.BoardMapper">
+
+	<!-- 기본 boardtbl select 구문 -->
+	<select id="boardSelect" resultType="com.example.demo.board.BoardDTO">
+		select
+		*
+		from
+		boardtbl
+	</select>
+	
+	<!-- 기본 boardtbl insert 구문(게시글 등록) -->
+	<!-- 
+	<insert id="boardInsert" parameterType="hashMap" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into
+		boardtbl
+		(SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_IDX)
+		values
+		(#{subject}, #{content}, now(), 0, 0, #{sid})
+	</insert>
+	-->
+	
+	<!--  기본 boardtbl dto 구문(게시글 등록) -->
+	<insert id="boardInsert">
+		insert
+		into
+		boardtbl
+		(SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_IDX)
+		values
+		(#{subject}, #{content}, now(), 0, 0, #{membertbl_idx})
+	</insert>
+	
+	<!-- 기본 boardtbl update 구문(게시글 수정) -->
+	<update id="boardUpdate">
+		
+	</update>
+	
+	<!-- 기본 boardtbl delete 구문(게시글 삭제) -->
+	<delete id="boardDelete">
+		delete
+		from
+		boardtbl
+		where
+		IDX = #{idx}
+	</delete>
+	
+	<!-- 글 상세 정보 -->
+	<select id="boardDetail" resultType="com.example.demo.board.BoardDTO">
+		<![CDATA[
+	    select
+	    *
+	    from
+	    boardtbl
+	    where
+	    IDX = #{idx}
+	    ]]>
+	</select>
+</mapper>

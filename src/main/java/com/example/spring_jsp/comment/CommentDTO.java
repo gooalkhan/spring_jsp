@@ -1,9 +1,9 @@
-package com.example.spring_jsp.board;
+package com.example.spring_jsp.comment;
 
 import lombok.Data;
 
 @Data
-public class BoardDTO {
+public class CommentDTO {
     private int idx;
     private String subject;
     private String content;
