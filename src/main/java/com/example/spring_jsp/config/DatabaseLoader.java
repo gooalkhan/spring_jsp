@@ -1,5 +1,7 @@
 package com.example.spring_jsp.config;
 
+import com.example.spring_jsp.board.BoardDTO;
+import com.example.spring_jsp.board.BoardMapper;
 import com.example.spring_jsp.member.MemberDTO;
 import com.example.spring_jsp.member.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class DatabaseLoader implements CommandLineRunner {
     private String activeProfile;
 
     private final MemberMapper memberMapper;
+    private final BoardMapper boardMapper;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -30,10 +33,12 @@ public class DatabaseLoader implements CommandLineRunner {
 
         // 초기 테이블 생성
         if (activeProfile.equals("prod")) {
+            boardMapper.dropTable();
             memberMapper.dropTable();
         }
 
         memberMapper.createTable();
+        boardMapper.createTable();
 
         // 초기 데이터 추가
         MemberDTO entity = new MemberDTO();
@@ -43,6 +48,12 @@ public class DatabaseLoader implements CommandLineRunner {
         entity.setName("홍길동");
         entity.setJoindate(new Timestamp(System.currentTimeMillis()));
         memberMapper.save(entity);
+
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setSubject("제목은");
+        boardDTO.setContent("내용이다");
+        boardDTO.setMembertbl_IDX("hong");
+        boardMapper.boardInsert(boardDTO);
     }
 
     @Bean(initMethod = "start", destroyMethod = "stop")

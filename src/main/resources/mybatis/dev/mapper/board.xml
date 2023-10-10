@@ -3,18 +3,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.spring_jsp.board.BoardMapper">
     <update id="createTable">
-        create table BOARDTBL
-        (
-            IDX           int          NOT NULL AUTO_INCREMENT,
-            SUBJECT       varchar(100) NOT NULL,
-            CONTENT       text         NOT NULL,
-            POSTDATE      timestamp    NOT NULL,
-            LIKES         int          NOT NULL,
-            VIEWS         int          NOT NULL,
-            membertbl_IDX varchar(20)  NOT NULL,
-            PRIMARY KEY (IDX),
-            KEY           fk_boardtbl_membertbl1_IDX (membertbl_IDX),
-            CONSTRAINT fk_boardtbl_membertbl1 FOREIGN KEY (membertbl_IDX) REFERENCES membertbl (ID)
+        CREATE TABLE boardtbl (
+                                  IDX INT AUTO_INCREMENT PRIMARY KEY,
+                                  SUBJECT VARCHAR(100) NOT NULL,
+                                  CONTENT TEXT NOT NULL,
+                                  POSTDATE TIMESTAMP NOT NULL,
+                                  LIKES INT NOT NULL,
+                                  VIEWS INT NOT NULL,
+                                  membertbl_IDX varchar(20) NOT NULL,
+                                  FOREIGN KEY (membertbl_IDX) REFERENCES membertbl (ID)
         );
     </update>
 
@@ -34,7 +31,7 @@
 
         insert into boardtbl (SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_IDX)
 
-        values (#{subject}, #{content}, now(), 0, 0, #{membertbl_IDX})
+        values (#{subject}, #{content}, now(), 0, 0, #{membertbl_IDX});
 
     </update>
 
@@ -55,4 +52,6 @@
         select * from boardtbl where IDX = #{idx}
 
     </select>
+
+
 </mapper>
