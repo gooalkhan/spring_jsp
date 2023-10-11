@@ -1,6 +1,5 @@
-package com.example.spring_jsp.mybatis;
+package com.example.spring_jsp.comment;
 
-import com.example.spring_jsp.member.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -8,12 +7,12 @@ import java.util.List;
 
 @Repository
 @Mapper
-public interface TestMapper {
-    List<MemberVO> getAll();
+public interface CommentMapper {
+    List<CommentDTO> getAll();
 
     void createTable();
 
-    void save(MemberVO memberVO);
+    void save(CommentDTO commentDTO);
 
     void dropTable();
 }

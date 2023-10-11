@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.exec.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.net.URL;
 
@@ -12,18 +11,21 @@ import java.net.URL;
 public class PythonApacheExecutor implements Runnable {
 
     private final String pythonExecutablePath;
+
+    private final String profile;
+
     final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     public void run() {
         try {
             CommandLine cmdLine = new CommandLine(pythonExecutablePath);
 
-            // 파이썬 실행환경을 resources 폴더에 추가한 경우
             URL url = this.getClass().getResource("/python/main.py");
             File file = new File(url.toURI());
 
             cmdLine.addArgument("-u");
             cmdLine.addArgument(file.getAbsolutePath());
+            cmdLine.addArgument(profile);
 
             Executor executor = getExecutor();
             logger.info("java - python process spawned");

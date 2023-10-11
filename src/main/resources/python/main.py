@@ -1,18 +1,13 @@
-import requests
-import threading
-import time
 import sys
 
-if __name__ == '__main__':
+if sys.argv[1] == "dev":
+    from H2DB import MyDB
+else:
+    from MySQLDB import MyDB
 
-    try:
-        print("%s process starts" % sys.argv[0])
-        for i in range(10):
-            print(i)
-            time.sleep(0.5)
+db = MyDB.get_instance()
 
-        print("process ends successfully")
+data = db.getAll()
 
-    except Exception as e:
-        print(e)
-        print("process ends with error")
+for row in data:
+    print(row)

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring_jsp.board.BoardMapper">
+    <update id="createTable">
+        CREATE TABLE boardtbl (
+                                  IDX INT AUTO_INCREMENT PRIMARY KEY,
+                                  SUBJECT VARCHAR(100) NOT NULL,
+                                  CONTENT TEXT NOT NULL,
+                                  POSTDATE TIMESTAMP NOT NULL,
+                                  LIKES INT NOT NULL DEFAULT 0,
+                                  VIEWS INT NOT NULL DEFAULT 0,
+                                  membertbl_ID varchar(20) NOT NULL,
+                                  FOREIGN KEY (membertbl_ID) REFERENCES membertbl (ID)
+        );
+    </update>
+
+    <update id="dropTable">
+        DROP TABLE IF EXISTS boardtbl;
+    </update>
+    
+    
+    
+    
+    
+    <!-- 이 위에는 안 건드리고 밑 내용만 건드림 -->
+
+
+
+
+
+	<!-- 기본 boardtbl select 구문 -->
+	<select id="boardSelect" resultType="com.example.spring_jsp.board.BoardDTO">
+		select
+		*
+		from
+		boardtbl
+	</select>
+	
+	<!--  기본 boardtbl dto 구문(게시글 등록) -->
+	<insert id="boardInsert">
+		insert
+		into
+		boardtbl
+		(SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_ID)
+		values
+		(#{subject}, #{content}, now(), 0, 0, #{membertbl_id})
+	</insert>
+	
+	<!-- 기본 boardtbl update 구문(게시글 수정) -->
+	<update id="boardUpdate">
+		update boardtbl set
+		SUBJECT = #{subject},
+		CONTENT = #{content}
+		where
+		idx = #{idx}
+	</update>
+	
+	<!-- 기본 boardtbl delete 구문(게시글 삭제) -->
+	<delete id="boardDelete">
+		delete
+		from
+		boardtbl
+		where
+		IDX = #{idx}
+	</delete>
+	
+	<!-- 글 상세 정보 -->
+	<select id="boardDetail" resultType="com.example.spring_jsp.board.BoardDTO">
+		<![CDATA[
+	    select
+	    *
+	    from
+	    boardtbl
+	    where
+	    IDX = #{idx}
+	    ]]>
+	</select>
+
+
+</mapper>

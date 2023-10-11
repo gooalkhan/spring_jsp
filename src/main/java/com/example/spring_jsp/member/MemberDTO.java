@@ -1,17 +1,16 @@
 package com.example.spring_jsp.member;
 
+import java.sql.Timestamp;
+
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-public class MemberVO {
-    private int idx;
+public class MemberDTO {
     private String id;
     private String pw;
     private String email;
     private Boolean hasEmailAuthed;
     private String name;
-    private Date joindate;
-    private Date modifydate;
+    private Timestamp joinDate;
+    private Timestamp modifyDate;
 }
