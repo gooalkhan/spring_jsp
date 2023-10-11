@@ -1,6 +1,7 @@
 package com.example.spring_jsp;
 
 import com.example.spring_jsp.board.BoardServiceImpl;
+import com.example.spring_jsp.comment.CommentServiceImpl;
 import com.example.spring_jsp.member.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ public class HomeController {
 
     private final MemberServiceImpl memberServiceImpl;
     private final BoardServiceImpl boardServiceImpl;
+    private final CommentServiceImpl commentServiceImpl;
 
     @GetMapping("/")
     public String index() {
@@ -25,6 +27,7 @@ public class HomeController {
         logger.info("user: " + System.getProperty("user.name"));
         memberServiceImpl.printAll();
         boardServiceImpl.printAll();
+        commentServiceImpl.printAll();
         pythonService.start_process();
 
         return "index";

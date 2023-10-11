@@ -2,6 +2,8 @@ package com.example.spring_jsp.config;
 
 import com.example.spring_jsp.board.BoardDTO;
 import com.example.spring_jsp.board.BoardMapper;
+import com.example.spring_jsp.comment.CommentDTO;
+import com.example.spring_jsp.comment.CommentMapper;
 import com.example.spring_jsp.member.MemberDTO;
 import com.example.spring_jsp.member.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private final MemberMapper memberMapper;
     private final BoardMapper boardMapper;
+    private final CommentMapper commentMapper;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -33,12 +36,14 @@ public class DatabaseLoader implements CommandLineRunner {
 
         // 초기 테이블 생성
         if (activeProfile.equals("prod")) {
+            commentMapper.dropTable();
             boardMapper.dropTable();
             memberMapper.dropTable();
         }
 
         memberMapper.createTable();
         boardMapper.createTable();
+        commentMapper.createTable();
 
         // 초기 데이터 추가
         MemberDTO entity = new MemberDTO();
@@ -52,8 +57,14 @@ public class DatabaseLoader implements CommandLineRunner {
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setSubject("제목은");
         boardDTO.setContent("내용이다");
-        boardDTO.setMembertbl_IDX("hong");
+        boardDTO.setMembertbl_ID("hong");
         boardMapper.boardInsert(boardDTO);
+
+        CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setContent("댓글이다");
+        commentDTO.setMembertbl_ID("hong");
+        commentDTO.setBoardtbl_IDX(1);
+        commentMapper.save(commentDTO);
     }
 
     @Bean(initMethod = "start", destroyMethod = "stop")

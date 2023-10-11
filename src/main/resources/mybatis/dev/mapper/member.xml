@@ -7,14 +7,13 @@
     </select>
 
     <update id="save">
-        insert into membertbl (ID, PW, EMAIL, NAME, JOINDATE)
-        values (#{id}, #{pw}, #{email}, #{name}, #{joindate});
+        insert into membertbl (ID, PW, EMAIL, NAME)
+        values (#{id}, #{pw}, #{email}, #{name});
     </update>
 
     <update id="createTable">
         create table MEMBERTBL
         (
-            IDX            INTEGER auto_increment,
             ID             CHARACTER VARYING(20)            not null
                 constraint MEMBERTBL_PK
                     unique,
@@ -22,10 +21,10 @@
             EMAIL          CHARACTER VARYING(100),
             HASEMAILAUTHED BOOLEAN   default 0              not null,
             NAME           CHARACTER VARYING(30)            not null,
-            JOINDATE       TIMESTAMP                        not null,
-            MODIFYDATE     TIMESTAMP default LOCALTIMESTAMP not null,
+            JOINDATE       TIMESTAMP default CURRENT_TIMESTAMP not null,
+            MODIFYDATE     TIMESTAMP default CURRENT_TIMESTAMP not null,
             constraint MEMBERTBL_PK2
-                primary key (IDX)
+                primary key (ID)
         );
     </update>
 

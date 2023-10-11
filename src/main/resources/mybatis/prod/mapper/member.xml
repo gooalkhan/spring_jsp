@@ -8,23 +8,20 @@
 
     <update id="save">
         insert into membertbl (ID, PW, EMAIL, NAME, JOINDATE)
-        values (#{id}, #{pw}, #{email}, #{name}, #{joindate});
+        values (#{id}, #{pw}, #{email}, #{name}, now());
     </update>
 
     <update id="createTable">
-        create table membertbl
-        (
-            IDX            INTEGER      not null auto_increment,
-            ID             VARCHAR(20)  not null,
-            PW             VARCHAR(100) not null,
-            EMAIL          VARCHAR(100) null,
-            HASEMAILAUTHED TINYINT      not null default 0,
-            NAME           VARCHAR(30)  not null,
-            JOINDATE       TIMESTAMP    not null,
-            MODIFYDATE     TIMESTAMP    not null default current_timestamp,
-            PRIMARY KEY (IDX),
-            UNIQUE KEY `id_UNIQUE` (`ID`)
-        );
+        CREATE TABLE membertbl (
+                                   ID varchar(20) NOT NULL,
+                                   PW varchar(100) NOT NULL,
+                                   EMAIL varchar(100) NOT NULL,
+                                   HASEMAILAUTHED tinyint NOT NULL DEFAULT '0',
+                                   NAME varchar(30) NOT NULL,
+                                   JOINDATE timestamp NOT NULL,
+                                   MODIFYDATE timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                   PRIMARY KEY (ID)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
     </update>
 
     <update id="dropTable">

@@ -8,10 +8,10 @@
                                   SUBJECT VARCHAR(100) NOT NULL,
                                   CONTENT TEXT NOT NULL,
                                   POSTDATE TIMESTAMP NOT NULL,
-                                  LIKES INT NOT NULL,
-                                  VIEWS INT NOT NULL,
-                                  membertbl_IDX varchar(20) NOT NULL,
-                                  FOREIGN KEY (membertbl_IDX) REFERENCES membertbl (ID)
+                                  LIKES INT NOT NULL DEFAULT 0,
+                                  VIEWS INT NOT NULL DEFAULT 0,
+                                  membertbl_ID varchar(20) NOT NULL,
+                                  FOREIGN KEY (membertbl_ID) REFERENCES membertbl (ID)
         );
     </update>
 
@@ -29,9 +29,9 @@
 
     <update id="boardInsert">
 
-        insert into boardtbl (SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_IDX)
+        insert into boardtbl (SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_ID)
 
-        values (#{subject}, #{content}, now(), 0, 0, #{membertbl_IDX});
+        values (#{subject}, #{content}, now(), 0, 0, #{membertbl_ID});
 
     </update>
 

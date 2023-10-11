@@ -3,19 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.spring_jsp.board.BoardMapper">
     <update id="createTable">
-        create table BOARDTBL
-        (
-            IDX           int          NOT NULL AUTO_INCREMENT,
-            SUBJECT       varchar(100) NOT NULL,
-            CONTENT       text         NOT NULL,
-            POSTDATE      timestamp    NOT NULL,
-            LIKES         int          NOT NULL,
-            VIEWS         int          NOT NULL,
-            membertbl_IDX varchar(20)  NOT NULL,
-            PRIMARY KEY (IDX),
-            KEY           fk_boardtbl_membertbl1_IDX (membertbl_IDX),
-            CONSTRAINT fk_boardtbl_membertbl1 FOREIGN KEY (membertbl_IDX) REFERENCES membertbl (ID)
-        );
+        CREATE TABLE boardtbl (
+                                  IDX int NOT NULL AUTO_INCREMENT,
+                                  SUBJECT varchar(100) NOT NULL,
+                                  CONTENT text NOT NULL,
+                                  POSTDATE timestamp NOT NULL,
+                                  LIKES int NOT NULL default 0,
+                                  VIEWS int NOT NULL default 0,
+                                  membertbl_ID varchar(20) NOT NULL,
+                                  PRIMARY KEY (IDX),
+                                  KEY fk_boardtbl_membertbl1_idx (membertbl_ID),
+                                  CONSTRAINT fk_boardtbl_membertbl1 FOREIGN KEY (membertbl_ID) REFERENCES membertbl (ID)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
     </update>
 
     <update id="dropTable">
@@ -24,7 +23,7 @@
 
     <select id="boardSelect" resultType="com.example.spring_jsp.board.BoardDTO">
 
-        select * from boardtbl
+        select * from boardtbl;
 
     </select>
 
@@ -32,9 +31,9 @@
 
     <update id="boardInsert">
 
-        insert into boardtbl (SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_IDX)
+        insert into boardtbl (SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_ID)
 
-        values (#{subject}, #{content}, now(), 0, 0, #{membertbl_IDX})
+        values (#{subject}, #{content}, now(), 0, 0, #{membertbl_ID});
 
     </update>
 
@@ -44,7 +43,7 @@
 
     <delete id="boardDelete">
 
-        delete from boardtbl where IDX = #{idx}
+        delete from boardtbl where IDX = #{idx};
 
     </delete>
 
@@ -52,7 +51,7 @@
 
     <select id="boardDetail" resultType="com.example.spring_jsp.board.BoardDTO">
 
-        select * from boardtbl where IDX = #{idx}
+        select * from boardtbl where IDX = #{idx};
 
     </select>
 </mapper>

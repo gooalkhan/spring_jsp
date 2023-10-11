@@ -12,5 +12,5 @@ public class BoardDTO {
     private Timestamp postdate;
     private int likes;
     private int views;
-    private String membertbl_IDX;
+    private String membertbl_ID;
 }
