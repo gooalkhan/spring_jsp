@@ -51,4 +51,9 @@ public class MemberServiceImpl implements MemberService{
 		return affectRowCount == 1;
 	}
     
+	@Override
+	public boolean memberDelete(MemberDTO memberDTO) {
+		int affectRowCount = this.memberMapper.memberDelete(memberDTO);
+		return affectRowCount == 1;
+	}
 }
