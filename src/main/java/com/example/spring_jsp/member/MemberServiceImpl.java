@@ -1,20 +1,18 @@
 package com.example.spring_jsp.member;
 
-import java.util.List;
-import java.util.Map;
-
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService{
-	private final MemberMapper memberMapper;
+    private final MemberMapper memberMapper;
     final static Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
-	
+    
     @Override
     public void printAll() {
         List<MemberDTO> memberDTO = memberMapper.getAll();
@@ -29,12 +27,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public String memberJoin(Map<String, Object> map) {
-		int affectRowCount = this.memberMapper.memberJoin(map);
-		if (affectRowCount == 1) {
-			return map.get("id").toString();
+	public String memberJoin(MemberDTO memberDTO) {
+	int affectRowCount = this.memberMapper.memberJoin(memberDTO);
+	if (affectRowCount == 1) {
+		return memberDTO.getId();
 		}
-		return null;
+	return null;
 	}
 	
 	@Override
@@ -46,4 +44,11 @@ public class MemberServiceImpl implements MemberService{
 	public MemberDTO memberLogin(String id) throws Exception{
 		return memberMapper.memberLogin(id);
 	}
+	
+	@Override
+	public boolean memberUpdate(MemberDTO memberDTO) {
+		int affectRowCount = this.memberMapper.memberUpdate(memberDTO);
+		return affectRowCount == 1;
+	}
+    
 }

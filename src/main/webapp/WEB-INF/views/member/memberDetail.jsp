@@ -10,10 +10,10 @@
 	<h1>회원 상세 정보</h1>
 	<p>아이디 : ${data.id}</p>
 	<p>비밀번호 : ${data.pw}</p>
-	<p>이메일 : ${data.name}</p>
+	<p>이메일 : ${data.email}</p>
 	 <!-- TODO : 나중에 0이면 뭐뜨고 1이면 뭐뜨고 이렇게 수정 -->
 	<p>이메일 인증 여부 : ${data.hasEmailAuthed}</p>
-	<p>이름 : ${data.email}</p>
+	<p>이름 : ${data.name}</p>
 	<p>가입일 : ${data.joinDate}</p>
 	<p>최종 수정일 : ${data.modifyDate}</p>
 	

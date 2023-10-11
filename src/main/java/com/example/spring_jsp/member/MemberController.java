@@ -1,12 +1,10 @@
 package com.example.spring_jsp.member;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,9 +31,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberJoin")
-	public ModelAndView memberJoinPost(@RequestParam Map<String, Object> map) {
+	public ModelAndView memberJoinPost(MemberDTO memberDTO) {
 		ModelAndView mav = new ModelAndView();
-		String id = this.memberService.memberJoin(map);
+		String id = this.memberService.memberJoin(memberDTO);
 		if (id == null) {
 			mav.setViewName("redirect:/memberJoin");
 		}else {
@@ -68,12 +66,10 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		MemberDTO DTO = memberService.memberLogin(request.getParameter("id"));
 		mav.addObject("data", DTO);
-		String idx = String.valueOf(DTO.getIdx());
 		String id = DTO.getId();
 		String pw = DTO.getPw();
 		String name = DTO.getName();
 		HttpSession Session = request.getSession();
-		Session.setAttribute("sidx", idx);
 		Session.setAttribute("sid", id);
 		Session.setAttribute("spw", pw);
 		Session.setAttribute("sname", name);
@@ -88,5 +84,34 @@ public class MemberController {
 		session.invalidate();
 		return "/indexTEMP";
 	}
+	
+	@GetMapping("/memberUpdate")
+	public ModelAndView memberUpdate(String id) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		MemberDTO DTO = this.memberService.memberDetail(id);
+		mav.addObject("data", DTO);
+		mav.setViewName("/member/memberUpdate");
+		return mav;	
+	}
+	
+	@PostMapping("/memberUpdate")
+	public ModelAndView memberUpdatePost(MemberDTO memberDTO) {
+		ModelAndView mav = new ModelAndView();
+		
+		boolean isUpdateSuccess = this.memberService.memberUpdate(memberDTO);
+		if(isUpdateSuccess) {
+			String id = memberDTO.getId();
+			mav.setViewName("redirect:/memberDetail?id="+id);
+		} else {
+			mav.setViewName("/error");
+		}
+		return mav;
+	}
+	
+	@GetMapping("/memberSearch")
+	public String memberSearch() {
+		return "/member/memberSearch";
+	}
+	
 	
 }

@@ -1,27 +1,18 @@
 package com.example.spring_jsp.member;
 
 import java.util.List;
-import java.util.Map;
 
 public interface MemberService {
 
+	void printAll();
+	
 	List<MemberDTO> memberSelect() throws Exception;
-
-	String memberJoin(Map<String, Object> map);
+	
+	String memberJoin(MemberDTO memberDTO);
 	
 	MemberDTO memberDetail(String id) throws Exception;
 
 	MemberDTO memberLogin(String id) throws Exception;
 
-	void printAll();
-
-	
-
-
-
-	
-
-
-
-
+	boolean memberUpdate(MemberDTO memberDTO);
 }

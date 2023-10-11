@@ -1,46 +1,50 @@
 package com.example.spring_jsp.board;
 
-import java.util.List;
-import java.util.Map;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class BoardServiceImpl implements BoardService{
-	private final BoardMapper boardMapper;
-	
+
+    private final BoardMapper boardMapper;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
+    @Override
+    public void printAll() {
+        List<BoardDTO> boardDTO = boardMapper.boardSelect();
+        for (BoardDTO b: boardDTO) {
+            logger.info(b.getSubject() + " " + b.getContent());
+        }
+    }
+    
 	@Override
 	public List<BoardDTO> boardSelect() throws Exception {
 		return boardMapper.boardSelect();
 	}
 	
-//	@Override
-//	public String boardInsert(Map<String, Object> map) {
-//		int affectRowCount = this.boardMapper.boardInsert(map);
-//		if (affectRowCount == 1) {
-//			return map.get("id").toString();
-//		}
-//		return null;
-//	}
-	
-//	@Override
-//	public String boardInsert(BoardDTO boardDTO) {
-//		int affectRowCount = this.boardMapper.boardInsert(boardDTO);
-//		if (affectRowCount == 1) {
-//			return String.valueOf(boardDTO.getIdx());
-//		}
-//		return null;
-//	}
 	@Override
-	public void boardInsert(BoardDTO boardDTO) {
-		boardMapper.boardInsert(boardDTO);
+	public String boardInsert(BoardDTO boardDTO) {
+		int affectRowCount = this.boardMapper.boardInsert(boardDTO);
+		if (affectRowCount == 1) {
+			return String.valueOf(boardDTO.getIdx());
+		}
+		return null;
 	}
 	
 	@Override
 	public BoardDTO boardDetail(int idx) throws Exception {
 		return boardMapper.boardDetail(idx);
+	}
+	
+	@Override
+	public boolean boardUpdate(BoardDTO boardDTO) {
+		int affectRowCount = this.boardMapper.boardUpdate(boardDTO);
+		return affectRowCount == 1;
 	}
 }

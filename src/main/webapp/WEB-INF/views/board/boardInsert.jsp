@@ -11,7 +11,7 @@
 	<div>
 		<h1>게시글 등록</h1>
 		<form method="Post" action = "boardInsertPost">
-			<input type="hidden" name="sid" value="${sid}">
+			<input type="hidden" name="membertbl_id" value="${sid}">
 			<div>
 				<p>제목 : <input type="text" name ="subject"></p>
 			</div>

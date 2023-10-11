@@ -10,15 +10,18 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface MemberMapper {
     List<MemberDTO> getAll();
+
     void createTable();
+
     void save(MemberDTO memberDTO);
+
     void dropTable();
     
+    //TODO : map으로 된 거 다 DTO로 고칠 예정
 	List<MemberDTO> memberSelect();
-	int memberJoin(Map<String, Object> map);
-	int memberUpdate(Map<String, Object> map);
+	int memberJoin(MemberDTO memberDTO);
+	int memberUpdate(MemberDTO memberDTO);
 	int memberDelete(Map<String, Object> map);
 	MemberDTO memberDetail(String id);
 	MemberDTO memberLogin(String id);
-	
 }

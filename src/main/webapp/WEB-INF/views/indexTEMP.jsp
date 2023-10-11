@@ -12,7 +12,7 @@
 		<input type="hidden" name="sid" value="${sid}">
 		<input type="submit" value="로그아웃">
 	</form>
-	<form method="Post" action="/memberSearch">
+	<form method="get" action="/memberDetail">
 		<input type="hidden" name="id" value="${sid}">
 		<input type="submit" value="내정보">
 	</form>

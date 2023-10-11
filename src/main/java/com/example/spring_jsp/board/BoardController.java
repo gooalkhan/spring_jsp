@@ -1,12 +1,10 @@
 package com.example.spring_jsp.board;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
@@ -30,44 +28,47 @@ public class BoardController {
 		return "/board/boardInsert";
 	}
 	
-//	@PostMapping("/boardInsertPost")
-//	public ModelAndView boardInsertPost(@RequestParam Map<String, Object> map) {
-//		ModelAndView mav = new ModelAndView();
-//		String id = this.boardService.boardInsert(map);
-//		if (id == null) {
-//			mav.setViewName("redirect:/boardInsert");
-//		}else {
-//			mav.setViewName("redirect:/boardList");
-//		}
-//		return mav;
-//	}
-	
-//	@PostMapping("/boardInsertPost")
-//	public ModelAndView boardInsertPost(BoardDTO boardDTO) {
-//		ModelAndView mav = new ModelAndView();
-//		String id = this.boardService.boardInsert(boardDTO);
-//		if (id == null) {
-//			mav.setViewName("redirect:/boardInsert");
-//		}else {
-//			mav.setViewName("redirect:/boardList");
-//		}
-//		return mav;
-//	}
-	
 	@PostMapping("/boardInsertPost")
 	public ModelAndView boardInsertPost(BoardDTO boardDTO) {
-		boardService.boardInsert(boardDTO);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/boardList");
+		String id = this.boardService.boardInsert(boardDTO);
+		if (id == null) {
+			mav.setViewName("redirect:/boardInsert");
+		}else {
+			mav.setViewName("redirect:/boardList");
+		}
 		return mav;
 	}
-	
+
 	@GetMapping("/boardDetail")
 	public ModelAndView boardDetail(int idx) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		BoardDTO DTO = boardService.boardDetail(idx);
 		mav.addObject("data", DTO);
 		mav.setViewName("/board/boardDetail");
+		return mav;
+	}
+	
+	@GetMapping("/boardUpdate")
+	public ModelAndView boardUpdate(int idx) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		BoardDTO DTO = this.boardService.boardDetail(idx);
+		mav.addObject("data", DTO);
+		mav.setViewName("/board/boardUpdate");
+		return mav;	
+	}
+	
+	@PostMapping("/boardUpdate")
+	public ModelAndView boardUpdatePost(BoardDTO boardDTO) {
+		ModelAndView mav = new ModelAndView();
+		
+		boolean isUpdateSuccess = this.boardService.boardUpdate(boardDTO);
+		if(isUpdateSuccess) {
+			int idx = boardDTO.getIdx();
+			mav.setViewName("redirect:/boardDetail?idx="+idx);
+		} else {
+			mav.setViewName("/error");
+		}
 		return mav;
 	}
 }
