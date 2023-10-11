@@ -19,6 +19,6 @@ public interface BoardMapper {
 	List<BoardDTO> boardSelect();
 	int boardInsert(BoardDTO boardDTO);
 	int boardUpdate(BoardDTO boardDTO);
-	int boardDelete(Map<String, Object> map);
+	int boardDelete(BoardDTO boardDTO);
 	BoardDTO boardDetail(int idx);
 }

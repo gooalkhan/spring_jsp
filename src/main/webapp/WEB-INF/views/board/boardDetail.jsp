@@ -42,7 +42,7 @@
 	<p><a href="/boardUpdate?idx=${data.idx}">수정</a></p>
 	
 	<form method="Post" action="/boardDelete">
-		<input type="hidden" name="id" value="${data.idx}">
+		<input type="hidden" name="idx" value="${data.idx}">
 		<input type="submit" value="삭제">
 	</form>
 	<p><a href="/boardList">게시글 목록으로</a>
