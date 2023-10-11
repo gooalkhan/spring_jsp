@@ -21,7 +21,7 @@ public interface MemberMapper {
 	List<MemberDTO> memberSelect();
 	int memberJoin(MemberDTO memberDTO);
 	int memberUpdate(MemberDTO memberDTO);
-	int memberDelete(Map<String, Object> map);
+	int memberDelete(MemberDTO memberDTO);
 	MemberDTO memberDetail(String id);
 	MemberDTO memberLogin(String id);
 }

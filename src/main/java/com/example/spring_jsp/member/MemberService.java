@@ -15,4 +15,6 @@ public interface MemberService {
 	MemberDTO memberLogin(String id) throws Exception;
 
 	boolean memberUpdate(MemberDTO memberDTO);
+
+	boolean memberDelete(MemberDTO memberDTO);
 }

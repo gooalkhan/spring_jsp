@@ -113,5 +113,17 @@ public class MemberController {
 		return "/member/memberSearch";
 	}
 	
+	@PostMapping("/memberDelete")
+	public ModelAndView memberDeletePost(MemberDTO memberDTO) {
+		ModelAndView mav = new ModelAndView();
+		boolean isDeleteSuccess = this.memberService.memberDelete(memberDTO);
+		if(isDeleteSuccess) {
+			mav.setViewName("/member/memberDeleteSuccess");
+		}else {
+			String id = memberDTO.getId();
+			mav.setViewName("redirect:/memberDetail?id=" + id);
+		}
+		return mav;
+	}
 	
 }

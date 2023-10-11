@@ -22,7 +22,7 @@
 	
 	<!-- TODO: 나중에 세션 아이디가 같을 때만 회원 삭제가 가능하도록 수정, 그리고 이 버튼이 뜨도록 수정 -->
 	<form method="Post" action="/memberDelete">
-		<input type="hidden" name="id" value="${id}">
+		<input type="hidden" name="id" value="${data.id}">
 		<input type="submit" value="삭제">
 	</form>
 	<p><a href="/">메인으로</a></p>
