@@ -47,4 +47,10 @@ public class BoardServiceImpl implements BoardService{
 		int affectRowCount = this.boardMapper.boardUpdate(boardDTO);
 		return affectRowCount == 1;
 	}
+	
+	@Override
+	public boolean boardDelete(BoardDTO boardDTO) {
+		int affectRowCount = this.boardMapper.boardDelete(boardDTO);
+		return affectRowCount == 1;
+	}
 }

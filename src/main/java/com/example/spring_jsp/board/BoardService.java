@@ -14,4 +14,6 @@ public interface BoardService {
 
 	boolean boardUpdate(BoardDTO boardDTO);
 
+	boolean boardDelete(BoardDTO boardDTO);
+
 }

@@ -71,4 +71,19 @@ public class BoardController {
 		}
 		return mav;
 	}
+	
+	@PostMapping("/boardDelete")
+	public ModelAndView boardDeletePost(BoardDTO boardDTO) {
+		ModelAndView mav = new ModelAndView();
+		
+		boolean isDeleteSuccess = this.boardService.boardDelete(boardDTO);
+		if(isDeleteSuccess) {
+			
+			mav.setViewName("redirect:/boardList");
+		} else {
+			int idx = boardDTO.getIdx();
+			mav.setViewName("redirect:/boardDetail?idx="+idx);
+		}
+		return mav;
+	}
 }
