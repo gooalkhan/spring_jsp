@@ -92,4 +92,18 @@
 	    ]]>
 	</select>
 	
+	<!-- 댓글 보기 -->
+	<select id="commentShow" resultType="com.example.spring_jsp.board.BoardDTO">
+		<![CDATA[
+		select
+	    content, name, postdate
+	    from
+	    commenttbl
+	    join membertbl
+	    on commenttbl.membertbl_id = membertbl.id
+	    where
+	    boardtbl_IDX = #{idx}
+	    ]]>
+	</select>
+	
 </mapper>
