@@ -86,4 +86,13 @@ public class BoardController {
 		}
 		return mav;
 	}
+	
+	@GetMapping("/boardSearch")
+	public ModelAndView boardSearch(String subject) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		List<BoardDTO> DTO = this.boardService.boardSearch(subject);
+		mav.addObject("data", DTO);
+		mav.setViewName("/board/boardList");
+		return mav;
+	}
 }
