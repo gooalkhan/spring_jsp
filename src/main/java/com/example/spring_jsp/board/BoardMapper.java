@@ -22,4 +22,5 @@ public interface BoardMapper {
 	int boardDelete(BoardDTO boardDTO);
 	BoardDTO boardDetail(int idx);
 	List<BoardDTO> boardSearch(String subject);
+	List<BoardDTO> commentShow(int idx);
 }

@@ -58,4 +58,9 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardDTO> boardSearch(String subject) throws Exception{
 		return boardMapper.boardSearch(subject);
 	}
+	
+	@Override
+	public List<BoardDTO> commentShow(int idx) throws Exception{
+		return boardMapper.commentShow(idx);
+	}
 }

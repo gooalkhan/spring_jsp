@@ -44,7 +44,9 @@ public class BoardController {
 	public ModelAndView boardDetail(int idx) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		BoardDTO DTO = boardService.boardDetail(idx);
+		List<BoardDTO> CDTO = boardService.commentShow(idx);
 		mav.addObject("data", DTO);
+		mav.addObject("show", CDTO);
 		mav.setViewName("/board/boardDetail");
 		return mav;
 	}

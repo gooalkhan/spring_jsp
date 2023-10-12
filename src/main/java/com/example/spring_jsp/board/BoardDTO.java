@@ -13,4 +13,6 @@ public class BoardDTO {
     private int likes;
     private int views;
     private String membertbl_id;
+    
+    private String name;
 }

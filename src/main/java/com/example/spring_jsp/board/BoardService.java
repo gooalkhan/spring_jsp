@@ -18,4 +18,6 @@ public interface BoardService {
 
 	List<BoardDTO> boardSearch(String subject) throws Exception;
 
+	List<BoardDTO> commentShow(int idx) throws Exception;
+
 }
