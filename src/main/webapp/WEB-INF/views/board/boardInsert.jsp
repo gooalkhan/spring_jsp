@@ -1,25 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>게시글 등록</title>
-</head>
-<body>
-<!-- 나중에 멤버가 완성되면, 벨류값 바꿀것 -->
-	<div>
-		<h1>게시글 등록</h1>
-		<form method="Post" action = "boardInsertPost">
-			<input type="hidden" name="membertbl_id" value="${sid}">
-			<div>
-				<p>제목 : <input type="text" name ="subject"></p>
-			</div>
-			<div>
-				<p>내용 : <textarea name="content" rows="10"></textarea></p>
-			</div>
-			<input type="submit" value="글 등록">
-		</form>
-	</div>
-</body>
-</html>
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:layout>
+    <div class="container py-3">
+        <div class="row text-center my-3">
+            <h3>게시글 등록</h3>
+        </div>
+        <form method="Post" action="boardInsertPost">
+            <input type="hidden" name="membertbl_id" value="${sid}">
+            <div class="mb-3">
+                <label for="subject">제목</label>
+                <input type="text" class="form-control" id="subject" name="subject">
+            </div>
+            <div class="mb-3">
+                <label for="content">내용</label>
+                <textarea class="form-control" id="content" rows="8" name="content"></textarea>
+            </div>
+            <div class="container d-flex justify-content-center">
+            <input type="submit" class="btn btn-primary" value="글 등록">
+            </div>
+        </form>
+    </div>
+</t:layout>

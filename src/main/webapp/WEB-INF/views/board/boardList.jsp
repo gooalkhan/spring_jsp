@@ -1,23 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/default.css"/>
-    <title>브랜드명</title>
-</head>
 
-<body>
-
-<div class="container bg-white">
-    <%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <%-- 여기부터 내용시작 --%>
+<t:layout>
     <div class="container pb-3">
     <table class="table table-striped">
         <thead>
@@ -52,10 +37,4 @@
         </form>
     </div>
     </div>
-</div>
-
-    <%-- 여기에서 내용 끝 --%>
-    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-</body>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-</html>
+</t:layout>

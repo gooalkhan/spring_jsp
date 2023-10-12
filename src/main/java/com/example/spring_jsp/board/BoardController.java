@@ -96,6 +96,7 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		
 		boolean isDeleteSuccess = this.boardService.boardDelete(boardDTO);
+		//TODO: 댓글이 달려있으면 게시물이 지워지지 않으므로 cascasde로 처리하던 해야함
 		if(isDeleteSuccess) {
 			
 			mav.setViewName("redirect:/boardList");
