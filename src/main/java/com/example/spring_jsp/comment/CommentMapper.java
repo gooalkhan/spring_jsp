@@ -15,4 +15,9 @@ public interface CommentMapper {
     void save(CommentDTO commentDTO);
 
     void dropTable();
+    
+    int commentInsert(CommentDTO commentDTO);
+    
+    
+    
 }
