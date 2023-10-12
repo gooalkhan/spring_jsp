@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	private final BoardService boardService;
 	
+	//게시글 목록
 	@GetMapping("/boardList")
 	public ModelAndView boardList() throws Exception{
 		ModelAndView mav = new ModelAndView();
@@ -23,11 +24,19 @@ public class BoardController {
 		return mav;
 	}
 	
+	//게시글 쓰기 페이지
 	@GetMapping("/boardInsert")
 	public String boardInsert() {
 		return "/board/boardInsert";
 	}
 	
+	//게시글 쓰기 처리
+	/*
+	ServiceImpl에서 짰던 것 처럼, id가 null이라면(insert가 성공적으로 이루어지지 않았다면)
+	boardInsert로 리다이렉트 되고
+	null이 아니라 값이 있다면
+	boardList로 리다이렉트됨
+	*/
 	@PostMapping("/boardInsertPost")
 	public ModelAndView boardInsertPost(BoardDTO boardDTO) {
 		ModelAndView mav = new ModelAndView();
@@ -39,7 +48,12 @@ public class BoardController {
 		}
 		return mav;
 	}
-
+	
+	//게시글 상세 정보
+	/*
+	DTO는 글 상세정보를 보기 위함이고, CDTO는 댓글들을 보기 위함
+	각각을 view에서 활용해주기 위해 mav.addObject로 key와 value를 담아서 보내줌
+	*/
 	@GetMapping("/boardDetail")
 	public ModelAndView boardDetail(int idx) throws Exception{
 		ModelAndView mav = new ModelAndView();
@@ -51,6 +65,7 @@ public class BoardController {
 		return mav;
 	}
 	
+	//게시글 수정 페이지
 	@GetMapping("/boardUpdate")
 	public ModelAndView boardUpdate(int idx) throws Exception{
 		ModelAndView mav = new ModelAndView();
@@ -60,6 +75,7 @@ public class BoardController {
 		return mav;	
 	}
 	
+	//게시글 수정 처리
 	@PostMapping("/boardUpdate")
 	public ModelAndView boardUpdatePost(BoardDTO boardDTO) {
 		ModelAndView mav = new ModelAndView();
@@ -74,6 +90,7 @@ public class BoardController {
 		return mav;
 	}
 	
+	//게시글 삭제 처리
 	@PostMapping("/boardDelete")
 	public ModelAndView boardDeletePost(BoardDTO boardDTO) {
 		ModelAndView mav = new ModelAndView();
@@ -89,6 +106,7 @@ public class BoardController {
 		return mav;
 	}
 	
+	//게시글 찾기
 	@GetMapping("/boardSearch")
 	public ModelAndView boardSearch(String subject) throws Exception {
 		ModelAndView mav = new ModelAndView();

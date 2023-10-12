@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class CommentController {
 	private final CommentService commentService;
 	
+	//댓글 쓰기
 	@PostMapping("/commentInsert")
 	public ModelAndView commentCreatePost(CommentDTO commentDTO) throws Exception {
 		ModelAndView mav = new ModelAndView();

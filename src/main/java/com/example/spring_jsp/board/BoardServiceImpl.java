@@ -28,6 +28,9 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.boardSelect();
 	}
 	
+	// 인서트가 성공적으로 완료 되면, affectRowCount의 값은 1이 되며,
+	// affectRowCount의 값이 1이면, IDX를 문자열 형식으로 반환하고,
+	// 그렇지 않으면 null을 반환함.
 	@Override
 	public String boardInsert(BoardDTO boardDTO) {
 		int affectRowCount = this.boardMapper.boardInsert(boardDTO);
