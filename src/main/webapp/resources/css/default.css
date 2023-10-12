@@ -1,0 +1,15 @@
+body {
+    background-color: #f5eeee;
+}
+
+.nav-link {
+    color:white;
+}
+
+.nav-link:hover {
+    color: black;
+}
+
+.lorem {
+    padding: 2em 0;
+}
