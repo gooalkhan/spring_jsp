@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 	private final MemberService memberService;
 	
+	//회원 목록
 	@GetMapping("/memberList")
 	public ModelAndView memberList() throws Exception{
 		ModelAndView mav = new ModelAndView();
@@ -25,11 +26,13 @@ public class MemberController {
 		return mav;
 	}
 	
+	//회원 가입 페이지
 	@GetMapping("/memberJoin")
 	public String memberJoin() {
 		return "/member/memberJoin";
 	}
 	
+	//회원 가입 처리
 	@PostMapping("/memberJoin")
 	public ModelAndView memberJoinPost(MemberDTO memberDTO) {
 		ModelAndView mav = new ModelAndView();
@@ -42,11 +45,13 @@ public class MemberController {
 		return mav;
 	}
 	
+	//회원 가입 성공 시 이 페이지로 이동
 	@GetMapping("/memberJoinSuccess")
 	public String memberJoinSuccess() {
 		return "/member/memberJoinSuccess";
 	}
 	
+	//회원 정보
 	@GetMapping("/memberDetail")
 	public ModelAndView memberDetail(String id) throws Exception{
 		ModelAndView mav = new ModelAndView();
@@ -56,11 +61,14 @@ public class MemberController {
 		return mav;
 	}
 	
+	//회원 로그인 페이지
 	@GetMapping("/memberLogin")
 	public String login() {
 		return "/member/memberLogin";
 	}
 	
+	//회원 로그인 처리
+	//세션에 저장해줌
 	@PostMapping("/memberLogin")
 	public ModelAndView memberLoginPost(HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -78,6 +86,8 @@ public class MemberController {
 		return mav;
 	}
 	
+	//회원 로그아웃 처리
+	//세션을 없애버림
 	@PostMapping("/memberLogout")
 	public String logout(HttpServletRequest request){
 		HttpSession session = request.getSession();
@@ -85,6 +95,7 @@ public class MemberController {
 		return "/indexTEMP";
 	}
 	
+	//회원 정보 수정 페이지
 	@GetMapping("/memberUpdate")
 	public ModelAndView memberUpdate(String id) throws Exception{
 		ModelAndView mav = new ModelAndView();
@@ -94,6 +105,7 @@ public class MemberController {
 		return mav;	
 	}
 	
+	//회원 정보 수정 처리
 	@PostMapping("/memberUpdate")
 	public ModelAndView memberUpdatePost(MemberDTO memberDTO) {
 		ModelAndView mav = new ModelAndView();
@@ -108,11 +120,13 @@ public class MemberController {
 		return mav;
 	}
 	
+	//회원 찾기
 	@GetMapping("/memberSearch")
 	public String memberSearch() {
 		return "/member/memberSearch";
 	}
 	
+	//회원 삭제
 	@PostMapping("/memberDelete")
 	public ModelAndView memberDeletePost(MemberDTO memberDTO) {
 		ModelAndView mav = new ModelAndView();
