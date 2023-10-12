@@ -1,37 +1,35 @@
-<%@ page contentType="text/html; charset=utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<%--    <link rel="text/javascript" href="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"/>--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"/>
-    <title>Document</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/default.css"/>
+    <title>브랜드명</title>
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Home</a>
-        </div>
-        <div>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-            </ul>
-        </div>
+<div class="container bg-white">
+    <%@ include file="/WEB-INF/views/common/header.jsp" %>
+
+    <%-- 여기부터 내용시작 --%>
+    <div class="container d-flex justify-content-center">
+      <p class="lorem">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,<br>
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
+          Ut enim ad minim veniam,<br>
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br>
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.<br>
+          Excepteur sint occaecat cupidatat non proident,<br>
+          sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
     </div>
-</nav>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+
+</div>
+
+<%-- 여기에서 내용 끝 --%>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </html>

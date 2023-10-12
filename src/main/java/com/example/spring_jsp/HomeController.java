@@ -28,7 +28,7 @@ public class HomeController {
         memberServiceImpl.printAll();
         boardServiceImpl.printAll();
         commentServiceImpl.printAll();
-        pythonService.start_process();
+        //pythonService.start_process();
 
         return "index";
     }
