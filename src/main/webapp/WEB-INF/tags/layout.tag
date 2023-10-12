@@ -23,4 +23,5 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 </html>

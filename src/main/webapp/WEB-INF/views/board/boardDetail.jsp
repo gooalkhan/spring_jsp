@@ -30,7 +30,7 @@
         <div class="container d-flex justify-content-center">
             <div class="row">
                 <div class="col">
-                    <button type="button" class="btn btn-primary" href="/boardUpdate?idx=${data.idx}">수정</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='/boardUpdate?idx=${data.idx}'">수정</button>
                 </div>
                 <div class="col">
                     <form method="Post" action="/boardDelete">

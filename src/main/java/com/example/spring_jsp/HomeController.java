@@ -14,21 +14,17 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
 
     private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
-    private final PythonService pythonService;
-
-    private final MemberServiceImpl memberServiceImpl;
-    private final BoardServiceImpl boardServiceImpl;
-    private final CommentServiceImpl commentServiceImpl;
+//    private final PythonService pythonService;
+//
+//    private final MemberServiceImpl memberServiceImpl;
+//    private final BoardServiceImpl boardServiceImpl;
+//    private final CommentServiceImpl commentServiceImpl;
 
     @GetMapping("/")
     public String index() {
         logger.info("welcome home");
         logger.info("os: " + System.getProperty("os.name"));
         logger.info("user: " + System.getProperty("user.name"));
-        memberServiceImpl.printAll();
-        boardServiceImpl.printAll();
-        commentServiceImpl.printAll();
-        //pythonService.start_process();
 
         return "index";
     }

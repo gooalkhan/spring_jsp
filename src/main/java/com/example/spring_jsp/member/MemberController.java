@@ -82,7 +82,7 @@ public class MemberController {
 		Session.setAttribute("spw", pw);
 		Session.setAttribute("sname", name);
 		
-		mav.setViewName("/indexTEMP");
+		mav.setViewName("/index");
 		return mav;
 	}
 	
@@ -92,7 +92,7 @@ public class MemberController {
 	public String logout(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		session.invalidate();
-		return "/indexTEMP";
+		return "/index";
 	}
 	
 	//회원 정보 수정 페이지
