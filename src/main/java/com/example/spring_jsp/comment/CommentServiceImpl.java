@@ -13,10 +13,22 @@ import lombok.RequiredArgsConstructor;
 public class CommentServiceImpl implements CommentService {
     private final CommentMapper commentMapper;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
+    @Override
     public void printAll() {
         List<CommentDTO> commentDTO = commentMapper.getAll();
         for (CommentDTO c: commentDTO) {
             logger.info(c.getMembertbl_id() + " " + c.getContent());
         }
     }
+    
+    @Override
+    public String commentInsert(CommentDTO commentDTO) {
+    	int affectRowCount = this.commentMapper.commentInsert(commentDTO);
+    	if(affectRowCount==1) {
+    		return String.valueOf(commentDTO.getIdx());
+    	}
+    	return null;
+    }
+    
 }

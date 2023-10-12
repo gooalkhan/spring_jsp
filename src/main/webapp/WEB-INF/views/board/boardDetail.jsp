@@ -32,7 +32,7 @@
 	    </tbody>
 	</table>
 	<p>댓글</p>
-	<form method="Post" action="/commentCreate">
+	<form method="Post" action="/commentInsert">
 		<input type="hidden" name="membertbl_id" value="${sid}">
 		<input type="hidden" name="boardtbl_idx" value="${data.idx}">
 		<textarea cols="50" rows="10" name="content"></textarea>
