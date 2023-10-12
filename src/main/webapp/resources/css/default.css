@@ -13,3 +13,12 @@ body {
 .lorem {
     padding: 2em 0;
 }
+
+label {
+    font-size: 1.2em;
+}
+
+.desc {
+    font-size: 0.8em;
+    color: rgb(128, 128, 128);
+}
