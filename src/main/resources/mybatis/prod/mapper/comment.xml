@@ -30,4 +30,22 @@
         select * from commenttbl;
     </select>
 
+
+
+
+
+    <!-- 이 위에는 안 건드리고 밑 내용만 건드림 -->
+    
+    
+    
+    
+    
+    <!-- 댓글 생성 -->
+    <insert id="commentInsert">
+	    insert into commentTBL
+	    (CONTENT, POSTDATE, membertbl_ID, boardtbl_IDX)
+	    values
+	    (#{content}, now(), #{membertbl_id}, #{boardtbl_idx})
+    </insert>
+
 </mapper>

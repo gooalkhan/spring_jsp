@@ -53,4 +53,9 @@ public class BoardServiceImpl implements BoardService{
 		int affectRowCount = this.boardMapper.boardDelete(boardDTO);
 		return affectRowCount == 1;
 	}
+	
+	@Override
+	public List<BoardDTO> boardSearch(String subject) throws Exception{
+		return boardMapper.boardSearch(subject);
+	}
 }

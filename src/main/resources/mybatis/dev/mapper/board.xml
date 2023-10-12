@@ -76,6 +76,18 @@
 	    IDX = #{idx}
 	    ]]>
 	</select>
+	
+	<!-- 글 찾기 -->
+	<select id="boardSearch" resultType="com.example.spring_jsp.board.BoardDTO">
+		<![CDATA[
+	    select
+	    *
+	    from
+	    boardtbl
+	    where
+	    SUBJECT like '%'||#{subject}||'%'
+	    ]]>
+	</select>
 
 
 </mapper>

@@ -16,4 +16,6 @@ public interface BoardService {
 
 	boolean boardDelete(BoardDTO boardDTO);
 
+	List<BoardDTO> boardSearch(String subject) throws Exception;
+
 }
