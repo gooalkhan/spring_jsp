@@ -1,10 +1,10 @@
 function validateMemberForm(key) {
     if (key === "join") {
-        let pw = document.forms["memberjoinform"]["pw"].value;
-        let pw2 = document.forms["memberjoinform"]["pw2"].value;
+        var pw = document.forms["memberjoinform"]["pw"].value;
+        var pw2 = document.forms["memberjoinform"]["pw2"].value;
     } else if (key === "update") {
-        let pw = document.forms["memberUpdateForm"]["pw"].value;
-        let pw2 = document.forms["memberUpdateForm"]["pw2"].value;
+        var pw = document.forms["memberUpdateForm"]["pw"].value;
+        var pw2 = document.forms["memberUpdateForm"]["pw2"].value;
     }
 
     if (pw !== pw2) {
