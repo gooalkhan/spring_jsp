@@ -109,7 +109,6 @@ public class MemberController {
 	@PostMapping("/memberUpdate")
 	public ModelAndView memberUpdatePost(MemberDTO memberDTO) {
 		ModelAndView mav = new ModelAndView();
-		
 		boolean isUpdateSuccess = this.memberService.memberUpdate(memberDTO);
 		if(isUpdateSuccess) {
 			String id = memberDTO.getId();
