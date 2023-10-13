@@ -23,5 +23,5 @@ public interface MemberMapper {
 	int memberUpdate(MemberDTO memberDTO);
 	int memberDelete(MemberDTO memberDTO);
 	MemberDTO memberDetail(String id);
-	MemberDTO memberLogin(String id);
+	MemberDTO memberLogin(MemberDTO memberDTO);
 }

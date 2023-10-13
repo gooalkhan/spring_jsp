@@ -70,9 +70,9 @@ public class MemberController {
 	//회원 로그인 처리
 	//세션에 저장해줌
 	@PostMapping("/memberLogin")
-	public ModelAndView memberLoginPost(HttpServletRequest request) throws Exception {
+	public ModelAndView memberLoginPost(MemberDTO memberDTO, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		MemberDTO DTO = memberService.memberLogin(request.getParameter("id"));
+		MemberDTO DTO = memberService.memberLogin(memberDTO);
 		mav.addObject("data", DTO);
 		String id = DTO.getId();
 		String pw = DTO.getPw();

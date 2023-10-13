@@ -12,9 +12,11 @@ public interface MemberService {
 	
 	MemberDTO memberDetail(String id) throws Exception;
 
-	MemberDTO memberLogin(String id) throws Exception;
+	MemberDTO memberLogin(MemberDTO memberDTO) throws Exception;
 
 	boolean memberUpdate(MemberDTO memberDTO);
 
 	boolean memberDelete(MemberDTO memberDTO);
+
+
 }
