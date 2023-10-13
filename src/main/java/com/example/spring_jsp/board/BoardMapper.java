@@ -13,14 +13,14 @@ public interface BoardMapper {
 
     void dropTable();
 
-    BoardDTO boardDetail(BoardDTO boardDTO);
     
-    //TODO : map으로 된 거 다 DTO로 고칠 예정
+    
 	List<BoardDTO> boardSelect();
 	int boardInsert(BoardDTO boardDTO);
 	int boardUpdate(BoardDTO boardDTO);
 	int boardDelete(BoardDTO boardDTO);
-	BoardDTO boardDetail(int idx);
+	BoardDTO boardDetail(BoardDTO boardDTO);
 	List<BoardDTO> boardSearch(String subject);
-	List<BoardDTO> commentShow(int idx);
+	List<BoardDTO> commentShow(BoardDTO boardDTO);
+	int boardView(int idx);
 }

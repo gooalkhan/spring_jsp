@@ -53,12 +53,15 @@ public class BoardController {
 	/*
 	DTO는 글 상세정보를 보기 위함이고, CDTO는 댓글들을 보기 위함
 	각각을 view에서 활용해주기 위해 mav.addObject로 key와 value를 담아서 보내줌
+	boardDetail로 요청이 올 때 마다 조회수를 올리기 위해 boardService.boardView(idx); 추가
 	*/
 	@GetMapping("/boardDetail")
-	public ModelAndView boardDetail(int idx) throws Exception{
+	public ModelAndView boardDetail(BoardDTO boardDTO) throws Exception{
 		ModelAndView mav = new ModelAndView();
-		BoardDTO DTO = boardService.boardDetail(idx);
-		List<BoardDTO> CDTO = boardService.commentShow(idx);
+		BoardDTO DTO = boardService.boardDetail(boardDTO);
+		List<BoardDTO> CDTO = boardService.commentShow(boardDTO);
+		int idx = boardDTO.getIdx();
+		boardService.boardView(idx);
 		mav.addObject("data", DTO);
 		mav.addObject("show", CDTO);
 		mav.setViewName("/board/boardDetail");
@@ -67,9 +70,9 @@ public class BoardController {
 	
 	//게시글 수정 페이지
 	@GetMapping("/boardUpdate")
-	public ModelAndView boardUpdate(int idx) throws Exception{
+	public ModelAndView boardUpdate(BoardDTO boardDTO) throws Exception{
 		ModelAndView mav = new ModelAndView();
-		BoardDTO DTO = this.boardService.boardDetail(idx);
+		BoardDTO DTO = this.boardService.boardDetail(boardDTO);
 		mav.addObject("data", DTO);
 		mav.setViewName("/board/boardUpdate");
 		return mav;	

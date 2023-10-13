@@ -106,4 +106,16 @@
 	    ]]>
 	</select>
 	
+	<!-- 조회수 -->
+	<update id = "boardView">
+		<![CDATA[
+		update
+		boardtbl
+		set
+		views = views+1
+		where
+		idx = #{idx}
+		]]>
+	</update>
+	
 </mapper>
