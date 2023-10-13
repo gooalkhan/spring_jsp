@@ -41,8 +41,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public MemberDTO memberLogin(String id) throws Exception{
-		return memberMapper.memberLogin(id);
+	public MemberDTO memberLogin(MemberDTO memberDTO) throws Exception{
+		return memberMapper.memberLogin(memberDTO);
 	}
 	
 	@Override

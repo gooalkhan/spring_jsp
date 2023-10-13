@@ -19,8 +19,8 @@ public class CommentController {
 	    if (id == null) {
 	        mav.setViewName("redirect:/error");
 	    }else {
-			//TODO: 댓글쓰기 성공해도 해당 게시물로 리다이렉트되게끔 하기
-	        mav.setViewName("redirect:/boardList");
+	    	int boardtbl_idx = commentDTO.getBoardtbl_idx();
+	        mav.setViewName("redirect:/boardDetail?idx="+boardtbl_idx);
 	    } 
 	    return mav;
 	}
