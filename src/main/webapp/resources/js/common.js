@@ -12,3 +12,25 @@ function validateMemberForm(key) {
         return false;
     }
 }
+
+function comment_form_check() {
+    var comment = document.forms["comment_form"]["content"].value;
+
+    if (comment === "") {
+        alert("댓글을 입력해주세요.");
+        return false;
+    }
+}
+
+function board_form_check() {
+    var subject = document.forms["board_form"]["subject"].value;
+    var content = document.forms["board_form"]["content"].value;
+
+    if (subject === "") {
+        alert("제목을 입력해주세요.");
+        return false;
+    } else if (content === "") {
+        alert("내용을 입력해주세요.");
+        return false;
+    }
+}
