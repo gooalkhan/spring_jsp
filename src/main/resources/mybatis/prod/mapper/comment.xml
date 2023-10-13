@@ -47,5 +47,14 @@
 	    values
 	    (#{content}, now(), #{membertbl_id}, #{boardtbl_idx})
     </insert>
+    
+    <!-- 댓글 삭제 -->
+    <delete id="commentDelete">
+    	delete
+		from
+		commenttbl
+		where
+		IDX = #{idx}
+    </delete>
 
 </mapper>

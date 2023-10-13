@@ -24,5 +24,20 @@ public class CommentController {
 	    } 
 	    return mav;
 	}
+	
+	//댓글 삭제
+	@PostMapping("/commentDelete")
+	public ModelAndView memberDeletePost(CommentDTO commentDTO) {
+		ModelAndView mav = new ModelAndView();
+		boolean isDeleteSuccess = this.commentService.commentDelete(commentDTO);
+		if(isDeleteSuccess) {
+			int bidx = commentDTO.getBidx();
+			mav.setViewName("redirect:/boardDetail?idx="+bidx);
+		}else {
+			//TODO : 삭제에 실패하면 어디로 가게 할지 생각해보기 일단 삭제가 실패하면 게시글목록으로 이동
+			mav.setViewName("redirect:/boardList");
+		}
+		return mav;
+	}
 
 }

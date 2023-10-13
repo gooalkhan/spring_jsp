@@ -8,4 +8,6 @@ public interface CommentService {
 
 	String commentInsert(CommentDTO commentDTO);
 
+	boolean commentDelete(CommentDTO commentDTO);
+
 }

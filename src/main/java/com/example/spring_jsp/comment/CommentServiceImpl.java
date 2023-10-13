@@ -31,4 +31,9 @@ public class CommentServiceImpl implements CommentService {
     	return null;
     }
     
+    @Override
+	public boolean commentDelete(CommentDTO commentDTO) {
+		int affectRowCount = this.commentMapper.commentDelete(commentDTO);
+		return affectRowCount == 1;
+	}
 }
