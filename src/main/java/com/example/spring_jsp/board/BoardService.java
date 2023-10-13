@@ -10,14 +10,16 @@ public interface BoardService {
 	
 	String boardInsert(BoardDTO boardDTO);
 	
-	BoardDTO boardDetail(int idx) throws Exception;
+	BoardDTO boardDetail(BoardDTO boardDTO) throws Exception;
 
 	boolean boardUpdate(BoardDTO boardDTO);
 
 	boolean boardDelete(BoardDTO boardDTO);
 
 	List<BoardDTO> boardSearch(String subject) throws Exception;
-
-	List<BoardDTO> commentShow(int idx) throws Exception;
+	
+	List<BoardDTO> commentShow(BoardDTO boardDTO) throws Exception;
+	
+	int boardView(int idx);
 
 }

@@ -41,8 +41,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public BoardDTO boardDetail(int idx) throws Exception {
-		return boardMapper.boardDetail(idx);
+	public BoardDTO boardDetail(BoardDTO boardDTO) throws Exception {
+		return boardMapper.boardDetail(boardDTO);
 	}
 	
 	@Override
@@ -63,7 +63,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public List<BoardDTO> commentShow(int idx) throws Exception{
-		return boardMapper.commentShow(idx);
+	public List<BoardDTO> commentShow(BoardDTO boardDTO) throws Exception{
+		return boardMapper.commentShow(boardDTO);
+	}
+	
+	@Override
+	public int boardView(int idx) {
+		return this.boardMapper.boardView(idx);
 	}
 }
