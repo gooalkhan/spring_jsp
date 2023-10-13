@@ -91,9 +91,6 @@
 	    ]]>
 	</select>
 	
-	<!-- 	    and
-	    PW = #{pw}
-	    아직 미완성 나중에 수정 -->
 	<!-- 로그인 -->
 	<select id="memberLogin" resultType="com.example.spring_jsp.member.MemberDTO">
 		<![CDATA[
@@ -103,6 +100,8 @@
 	    membertbl
 	    where
 	    ID = #{id}
+	    and
+	    PW = #{pw}
 	    ]]>
 	</select>
 </mapper>

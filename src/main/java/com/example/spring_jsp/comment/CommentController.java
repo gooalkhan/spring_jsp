@@ -16,10 +16,12 @@ public class CommentController {
 	public ModelAndView commentCreatePost(CommentDTO commentDTO) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String id = this.commentService.commentInsert(commentDTO);
+		
 	    if (id == null) {
 	        mav.setViewName("redirect:/error");
 	    }else {
-	        mav.setViewName("redirect:/boardList");
+	    	int boardtbl_idx = commentDTO.getBoardtbl_idx();
+	        mav.setViewName("redirect:/boardDetail?idx="+boardtbl_idx);
 	    } 
 	    return mav;
 	}

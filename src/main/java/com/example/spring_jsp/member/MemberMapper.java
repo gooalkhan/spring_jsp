@@ -23,5 +23,7 @@ public interface MemberMapper {
 	int memberUpdate(MemberDTO memberDTO);
 	int memberDelete(MemberDTO memberDTO);
 	MemberDTO memberDetail(String id);
-	MemberDTO memberLogin(String id);
+//	이거 지우지 말고 흔적으로 남겨주세요.
+//	MemberDTO memberLogin(String id);
+	MemberDTO memberLogin(MemberDTO memberDTO);
 }

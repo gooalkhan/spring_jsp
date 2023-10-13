@@ -67,12 +67,30 @@ public class MemberController {
 		return "/member/memberLogin";
 	}
 	
+//	이거 지우지 말고 흔적으로 남겨주세요.
+//	@PostMapping("/memberLogin")
+//	public ModelAndView memberLoginPost(HttpServletRequest request) throws Exception {
+//		ModelAndView mav = new ModelAndView();
+//		MemberDTO DTO = memberService.memberLogin(request.getParameter("id"));
+//		mav.addObject("data", DTO);
+//		String id = DTO.getId();
+//		String pw = DTO.getPw();
+//		String name = DTO.getName();
+//		HttpSession Session = request.getSession();
+//		Session.setAttribute("sid", id);
+//		Session.setAttribute("spw", pw);
+//		Session.setAttribute("sname", name);
+//		
+//		mav.setViewName("/indexTEMP");
+//		return mav;
+//	}
+	
 	//회원 로그인 처리
 	//세션에 저장해줌
 	@PostMapping("/memberLogin")
-	public ModelAndView memberLoginPost(HttpServletRequest request) throws Exception {
+	public ModelAndView memberLoginPost(MemberDTO memberDTO, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		MemberDTO DTO = memberService.memberLogin(request.getParameter("id"));
+		MemberDTO DTO = memberService.memberLogin(memberDTO);
 		mav.addObject("data", DTO);
 		String id = DTO.getId();
 		String pw = DTO.getPw();

@@ -40,9 +40,15 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.memberDetail(id);
 	}
 	
+//	이거 지우지 말고 흔적으로 남겨주세요.
+//	@Override
+//	public MemberDTO memberLogin(String id) throws Exception{
+//		return memberMapper.memberLogin(id);
+//	}
+	
 	@Override
-	public MemberDTO memberLogin(String id) throws Exception{
-		return memberMapper.memberLogin(id);
+	public MemberDTO memberLogin(MemberDTO memberDTO) throws Exception{
+		return memberMapper.memberLogin(memberDTO);
 	}
 	
 	@Override
