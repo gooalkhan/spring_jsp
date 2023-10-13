@@ -20,9 +20,6 @@
             </div>
         </div>
             <div class="row mb-3">
-            <h5>내용</h5>
-            </div>
-            <div class="row mb-3">
             <article>
                 <p class="border p-3">${data.content}</p>
             </article>
@@ -44,26 +41,27 @@
         <hr>
         <div class="container">
             <h5>댓글</h5>
-            <table class="table table-striped">
+            <table class="table table-borderless">
                 <thead>
                 <tr>
-                    <th>글쓴이</th>
-                    <th>내용</th>
-                    <th>올린날짜</th>
+                    <th scope="col" class="text-start">글쓴이</th>
+                    <th scope="col" class="text-center">내용</th>
+                    <th scope="col" class="text-center">올린날짜</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="show" items="${show}">
                     <tr>
-                        <td>${show.name}</td>
-                        <td>${show.content}</td>
-                        <td>${show.postDate}</td>
-                        <td>
-                        <form method="Post" action="commentDelete">
-                        	<input type="hidden" name="idx" value="${show.idx}">
-                        	<input type="hidden" name="bidx" value="${data.idx}">
-                        	<input type="submit" value="삭제">
-                        </form>
+                        <td class="text-start">${show.name}</td>
+                        <td class="text-center">${show.content}</td>
+                        <td class="text-center">${show.postDate}</td>
+                        <td class="text-end">
+                            <form method="Post" action="commentDelete">
+                                <input type="hidden" name="idx" value="${show.idx}">
+                                <input type="hidden" name="bidx" value="${data.idx}">
+<%--                                <input type="submit" class="btn btn-warning" value="삭제">--%>
+                                <a href="#" onclick="this.parentNode.submit()">삭제</a>
+                            </form>
                         </td>
                     </tr>
                 </c:forEach>
@@ -73,12 +71,12 @@
         <hr>
         <div class="container">
 
-            <form method="Post" action="/commentInsert">
+            <form method="Post" name="comment_form" onsubmit="return comment_form_check()" action="/commentInsert">
                 <input type="hidden" name="membertbl_id" value="${sid}">
                 <input type="hidden" name="boardtbl_idx" value="${data.idx}">
                 <div class="mb-3">
                     <label for="comment_ta" class="form-label">댓글 쓰기</label>
-                    <textarea class="form-control" id="comment_ta" name="content"></textarea>
+                    <textarea class="form-control" id="comment_ta" name="content" required></textarea>
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-primary" value="댓글 쓰기">
