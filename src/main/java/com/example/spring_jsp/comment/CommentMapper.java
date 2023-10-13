@@ -18,6 +18,6 @@ public interface CommentMapper {
     
     int commentInsert(CommentDTO commentDTO);
     
-    
+    int commentDelete(CommentDTO commentDTO);
     
 }

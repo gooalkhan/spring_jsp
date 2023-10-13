@@ -11,4 +11,6 @@ public class CommentDTO {
     private Timestamp postDate;
     private String membertbl_id;
     private int boardtbl_idx;
+    
+    private int bidx;
 }

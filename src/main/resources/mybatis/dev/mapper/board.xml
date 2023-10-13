@@ -93,7 +93,7 @@
 	<select id="commentShow" resultType="com.example.spring_jsp.board.BoardDTO">
 		<![CDATA[
 		select
-	    content, name, postdate
+	    idx, content, name, postdate
 	    from
 	    commenttbl
 	    join membertbl

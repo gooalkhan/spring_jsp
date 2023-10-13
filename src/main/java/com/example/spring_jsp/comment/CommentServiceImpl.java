@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.example.spring_jsp.member.MemberDTO;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -31,4 +33,9 @@ public class CommentServiceImpl implements CommentService {
     	return null;
     }
     
+    @Override
+	public boolean commentDelete(CommentDTO commentDTO) {
+		int affectRowCount = this.commentMapper.commentDelete(commentDTO);
+		return affectRowCount == 1;
+	}
 }
