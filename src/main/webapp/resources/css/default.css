@@ -22,3 +22,11 @@ label {
     font-size: 0.8em;
     color: rgb(128, 128, 128);
 }
+
+.book-pic {
+min-height: 300px;
+}
+
+.book-card {
+    min-height: 175px;
+}

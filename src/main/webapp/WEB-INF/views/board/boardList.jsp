@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <t:layout>
     <div class="container pb-3">
@@ -21,7 +22,7 @@
                 <td>${data.idx}</td>
                 <td><a href="/boardDetail?idx=${data.idx}">${data.subject}</a></td>
                 <td>${data.membertbl_id}</td>
-                <td>${data.postDate}</td>
+                <td><fmt:formatDate pattern="yyyy-MM-dd" value="${data.postDate}"/></td>
                 <td>${data.views}</td>
                 <td>${data.likes}</td>
             </tr>

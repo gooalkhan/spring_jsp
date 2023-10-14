@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring_jsp.book.keyword.KeywordMapper">
+    <update id="createTable">
+        CREATE TABLE keywordtbl
+        (
+            idx         INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            bookid      BIGINT      NOT NULL,
+            keyword     VARCHAR(90) NOT NULL,
+            last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE (bookid, keyword),
+            FOREIGN KEY (bookid) REFERENCES booktbl (bookid)
+        );
+
+    </update>
+
+    <update id="dropTable">
+        drop table if exists keywordtbl;
+    </update>
+
+    <select id="keywordSelect" resultType="com.example.spring_jsp.book.keyword.KeywordDTO">
+        select
+        *
+        from
+        keywordtbl
+        where
+        bookid = #{bookid}
+    </select>
+
+    <insert id="keywordInsert">
+        insert
+        into
+        keywordtbl
+        (bookid, keyword, last_update)
+        values
+        (#{bookid}, #{keyword}, #{last_update})
+    </insert>
+</mapper>

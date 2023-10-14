@@ -2,41 +2,45 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <t:layout>
     <div class="container p-3">
         <div class="container">
-        <div class="row mb-3">
-            <h4>${data.subject}</h4>
-        </div>
-
-        <div class="row mb-3 justify-content-start">
-            <div class="col-2">
-                <span class="desc">글쓴이 : ${data.membertbl_id}</span>
-            </div>
-            <div class="col-4">
-<%-- TODO: 타임스탬프를 날짜로 변경하기               --%>
-                <span class="desc">게시일 : ${data.postDate}</span>
-            </div>
-        </div>
             <div class="row mb-3">
-            <article>
-                <p class="border p-3">${data.content}</p>
-            </article>
+                <h4>${data.subject}</h4>
             </div>
-        <div class="container d-flex justify-content-center">
-            <div class="row">
-                <div class="col">
-                    <button type="button" class="btn btn-primary" onclick="location.href='/boardUpdate?idx=${data.idx}'">수정</button>
+
+            <div class="row mb-3 justify-content-start">
+                <div class="col-2">
+                    <span class="desc">글쓴이 : ${data.membertbl_id}</span>
                 </div>
-                <div class="col">
-                    <form method="Post" action="/boardDelete">
-                        <input type="hidden" name="idx" value="${data.idx}">
-                        <input type="submit" class="btn btn-danger" value="삭제">
-                    </form>
+                <div class="col-4">
+                    <span class="desc">게시일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${data.postDate}"/></span>
                 </div>
             </div>
-        </div>
+            <div class="row mb-3">
+                <article>
+                    <p class="border p-3">${data.content}</p>
+                </article>
+            </div>
+            <div class="container d-flex justify-content-center">
+                <c:if test="${data.membertbl_id == sid}">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary"
+                                    onclick="location.href='/boardUpdate?idx=${data.idx}'">수정
+                            </button>
+                        </div>
+                        <div class="col">
+                            <form method="Post" action="/boardDelete">
+                                <input type="hidden" name="idx" value="${data.idx}">
+                                <input type="submit" class="btn btn-danger" value="삭제">
+                            </form>
+                        </div>
+                    </div>
+                </c:if>
+            </div>
         </div>
         <hr>
         <div class="container">
@@ -54,14 +58,15 @@
                     <tr>
                         <td class="text-start">${show.name}</td>
                         <td class="text-center">${show.content}</td>
-                        <td class="text-center">${show.postDate}</td>
+                        <td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd" value="${show.postDate}"/></td>
                         <td class="text-end">
-                            <form method="Post" action="commentDelete">
-                                <input type="hidden" name="idx" value="${show.idx}">
-                                <input type="hidden" name="bidx" value="${data.idx}">
-<%--                                <input type="submit" class="btn btn-warning" value="삭제">--%>
-                                <a href="#" onclick="this.parentNode.submit()">삭제</a>
-                            </form>
+                            <c:if test="${show.membertbl_id != sid}">
+                                <form method="Post" action="commentDelete">
+                                    <input type="hidden" name="idx" value="${show.idx}">
+                                    <input type="hidden" name="bidx" value="${data.idx}">
+                                    <a href="#" onclick="this.parentNode.submit()">삭제</a>
+                                </form>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

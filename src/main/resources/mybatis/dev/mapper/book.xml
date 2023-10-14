@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring_jsp.book.BookMapper">
+    <update id="createTable">
+        CREATE TABLE booktbl
+        (
+            bookid           BIGINT       NOT NULL,
+            title            VARCHAR(100) NOT NULL,
+            author           VARCHAR(20)  NOT NULL,
+            publisher        VARCHAR(20)  NOT NULL,
+            publish_date     DATE       DEFAULT NULL,
+            reg_date         TIMESTAMP   DEFAULT NULL,
+            category         SMALLINT     NOT NULL,
+            review_count     INT        DEFAULT NULL,
+            preference_count INT        DEFAULT NULL,
+            is_complete      BOOLEAN DEFAULT NULL,
+            is_gidamu        BOOLEAN DEFAULT NULL,
+            is_adult_only    BOOLEAN DEFAULT NULL,
+            last_update      TIMESTAMP     NOT NULL,
+            PRIMARY KEY (bookid)
+        );
+    </update>
+    <update id="dropTable">
+        DROP TABLE IF EXISTS booktbl;
+    </update>
+
+    <select id="bookSelectAll" resultType="com.example.spring_jsp.book.BookDTO">
+        select
+        *
+        from
+        booktbl
+    </select>
+
+    <select id="bookPagination" resultType="com.example.spring_jsp.book.BookDTO">
+        select
+        *
+        from
+        booktbl
+        order by bookid desc
+        limit #{limit} offset #{offset}
+    </select>
+
+    <select id="bookPaginationByTitle" resultType="com.example.spring_jsp.book.BookDTO">
+        select
+        *
+        from
+        booktbl
+        where
+        title like '%'||#{searchword}||'%'
+        order by bookid desc
+        limit #{limit} offset #{offset}
+    </select>
+
+    <select id="bookPaginationByAuthor" resultType="com.example.spring_jsp.book.BookDTO">
+        select
+            *
+        from
+            booktbl
+        where
+            author like '%'||#{searchword}||'%'
+        order by bookid desc
+        limit #{limit} offset #{offset}
+    </select>
+
+    <select id="bookPaginationByPublisher" resultType="com.example.spring_jsp.book.BookDTO">
+        select
+            *
+        from
+            booktbl
+        where
+            publisher like '%'||#{searchword}||'%'
+        order by bookid desc
+        limit #{limit} offset #{offset}
+    </select>
+
+    <insert id="bookInsert">
+        insert
+        into
+        booktbl
+        (bookid, title, author, publisher, publish_date, reg_date, category, review_count, preference_count, is_complete, is_gidamu, is_adult_only, last_update)
+        values
+        (#{bookid}, #{title}, #{author}, #{publisher}, #{publish_date}, #{reg_date}, #{category}, #{review_count}, #{preference_count}, #{is_complete}, #{is_gidamu}, #{is_adult_only}, #{last_update})
+    </insert>
+
+    <select id="bookCount">
+        select count(*) from booktbl;
+    </select>
+
+    <select id="bookCountByTitle">
+        select count(*) from booktbl where title like '%'||#{searchword}||'%';
+    </select>
+
+    <select id="bookCountByAuthor">
+        select count(*) from booktbl where AUTHOR like '%'||#{searchword}||'%';
+    </select>
+
+    <select id="bookCountByPublisher">
+        select count(*) from booktbl where publisher like '%'||#{searchword}||'%';
+    </select>
+
+    <select id="bookSelect">
+        select * from booktbl where bookid = #{bookid};
+    </select>
+</mapper>
