@@ -10,6 +10,11 @@ import com.example.spring_jsp.comment.CommentDTO;
 import com.example.spring_jsp.comment.CommentMapper;
 import com.example.spring_jsp.member.MemberDTO;
 import com.example.spring_jsp.member.MemberMapper;
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 import lombok.RequiredArgsConstructor;
 import org.h2.tools.Server;
 import org.slf4j.Logger;
@@ -95,15 +100,16 @@ public class DatabaseLoader implements CommandLineRunner {
     }
 
     public void initBooktbl() {
-        URL url = this.getClass().getResource("/sample_data/booktbl.csv");
+        URL url = this.getClass().getResource("/sample_data/booktbl2.csv");
         try {
             File file = new File(url.toURI());
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            // 책 소개 내용에 콤마, 큰따옴표가 포함되어 있어서 구분자를 |로 설정
+            CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
+            CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withCSVParser(parser).build();
 
-            String line; String[] arr; BookDTO bookDTO; int counter = 0;
-            while ((line = br.readLine()) != null) {
+            String[] arr; BookDTO bookDTO; int counter = 0;
+            while ((arr = reader.readNext()) != null) {
                 counter++;
-                arr = line.split("\\|");
                 bookDTO = new BookDTO();
                 bookDTO.setBookid(Long.parseLong(arr[0]));
                 bookDTO.setTitle(arr[1]);
@@ -111,32 +117,34 @@ public class DatabaseLoader implements CommandLineRunner {
                 bookDTO.setPublisher(arr[3]);
                 bookDTO.setPublish_date(arr[4].equals("NULL")?null:java.sql.Date.valueOf(arr[4]));
                 bookDTO.setReg_date(arr[5].equals("NULL")?null:dateFormat.parse(arr[5]));
-                bookDTO.setCategory(Integer.parseInt(arr[6]));
+                bookDTO.setCategory(arr[6]);
                 bookDTO.setReview_count(arr[7].equals("NULL")? null:Integer.parseInt(arr[7]));
                 bookDTO.setPreference_count(arr[8].equals("NULL")?null:Integer.parseInt(arr[8]));
-                bookDTO.setIs_complete(arr[9].equals("NULL")?null:arr[9].equals("1"));
-                bookDTO.setIs_gidamu(arr[10].equals("NULL")?null:arr[10].equals("1"));
-                bookDTO.setIs_adult_only(arr[11].equals("NULL")?null:arr[11].equals("1"));
-                bookDTO.setLast_update(dateFormat.parse(arr[12]));
+                bookDTO.setSeries_count(arr[9].equals("NULL")?null:Integer.parseInt(arr[9]));
+                bookDTO.setDescription(arr[10]);
+                bookDTO.setIs_complete(arr[11].equals("NULL")?null:arr[11].equals("1")); // 1이면 true, 0이면 false
+                bookDTO.setIs_gidamu(arr[12].equals("NULL")?null:arr[12].equals("1"));
+                bookDTO.setIs_adult_only(arr[13].equals("NULL")?null:arr[13].equals("1"));
+                bookDTO.setLast_update(dateFormat.parse(arr[14]));
 
                 bookMapper.bookInsert(bookDTO);
             }
-            br.close();
+            reader.close();
             logger.info("booktbl inserted {} rows of sample data", counter);
-        } catch (URISyntaxException | IOException | ParseException e) {
+        } catch (URISyntaxException | IOException | ParseException | CsvValidationException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void initKeywordtbl() {
-        URL url = this.getClass().getResource("/sample_data/keywordtbl.csv");
+        URL url = this.getClass().getResource("/sample_data/keywordtbl2.csv");
         try {
             File file = new File(url.toURI());
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
+            CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withCSVParser(parser).build();
 
-            String line; String[] arr; KeywordDTO keywordDTO; int counter = 0;
-            while ((line = br.readLine()) != null) {
-                arr = line.split("\\|");
+            String[] arr; KeywordDTO keywordDTO; int counter = 0;
+            while ((arr = reader.readNext()) != null) {
                 keywordDTO = new KeywordDTO();
                 keywordDTO.setBookid(Long.parseLong(arr[1]));
                 keywordDTO.setKeyword(arr[2]);
@@ -145,8 +153,9 @@ public class DatabaseLoader implements CommandLineRunner {
                 keywordMapper.keywordInsert(keywordDTO);
                 counter++;
             }
+            reader.close();
             logger.info("keywordtbl inserted {} rows of sample data", counter);
-        } catch (URISyntaxException | IOException | ParseException e) {
+        } catch (URISyntaxException | IOException | ParseException | CsvValidationException e) {
             throw new RuntimeException(e);
         }
     }

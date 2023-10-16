@@ -12,9 +12,11 @@ public class BookDTO {
     private String publisher;
     private Date publish_date;
     private Date reg_date;
-    private int category;
+    private String category;
     private Integer review_count;
     private Integer preference_count;
+    private Integer series_count;
+    private String description;
     private Boolean is_complete;
     private Boolean is_gidamu;
     private Boolean is_adult_only;
