@@ -1,11 +1,12 @@
 package com.example.spring_jsp.member;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
@@ -27,10 +28,10 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public String memberJoin(MemberDTO memberDTO) {
-	int affectRowCount = this.memberMapper.memberJoin(memberDTO);
+	public String memberJoin(MemberJoinDTO memberJoinDTO) {
+	int affectRowCount = this.memberMapper.memberJoin(memberJoinDTO);
 	if (affectRowCount == 1) {
-		return memberDTO.getId();
+		return memberJoinDTO.getId();
 		}
 	return null;
 	}
@@ -55,5 +56,21 @@ public class MemberServiceImpl implements MemberService{
 	public boolean memberDelete(MemberDTO memberDTO) {
 		int affectRowCount = this.memberMapper.memberDelete(memberDTO);
 		return affectRowCount == 1;
+	}
+	
+	@Override
+	public MemberDTO checkIdDuplication(String id) throws Exception {
+		return memberMapper.existsById(id);
+	}
+
+	@Override
+	public MemberDTO checkNameDuplication(String name) throws Exception {
+		return memberMapper.existsByName(name);
+		
+	}
+
+	@Override
+	public MemberDTO checkEmailDuplication(String email) throws Exception {
+		return memberMapper.existsByEmail(email);
 	}
 }

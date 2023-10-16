@@ -1,14 +1,19 @@
 package com.example.spring_jsp.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -34,23 +39,66 @@ public class MemberController {
 	
 	//회원 가입 처리
 	@PostMapping("/memberJoin")
-	public ModelAndView memberJoinPost(MemberDTO memberDTO) {
+	public ModelAndView memberJoinPost(@Valid MemberJoinDTO memberJoinDTO, BindingResult bindingResult, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		String id = this.memberService.memberJoin(memberDTO);
-		if (id == null) {
-			mav.setViewName("redirect:/memberJoin");
+		/* 검증 */
+		if(bindingResult.hasErrors()) {
+			/* 회원가입 실패 시 입력했던 데이터 값 유지 */
+			mav.addObject("userDTO", memberJoinDTO);
+			
+			/* 유효성 검사를 통과하지 못 한 필드와 메시지 핸들링 */
+			List<FieldError> list = bindingResult.getFieldErrors();
+			Map<String, String> errorMsg = new HashMap<>();
+			
+			for(int i=0;i<list.size();i++) {
+				String field = list.get(i).getField(); 
+				String message = list.get(i).getDefaultMessage(); 
+				
+				System.out.println("필드 = " + field);
+				System.out.println("메세지 = " +message);
+				
+				errorMsg.put(field, message);
+			}
+			/* 에러 메시지 데이터 저장 */
+			mav.addObject("errorMsg", errorMsg);
+			
+			/* 회원가입 페이지로 리턴 */
+			mav.setViewName("/member/memberJoin");
+//		String id = this.memberService.memberJoin(memberDTO);
 		}else {
-			mav.setViewName("redirect:/memberJoinSuccess");
+			String id = memberJoinDTO.getId();
+			String name = memberJoinDTO.getName();
+			String email = memberJoinDTO.getEmail();
+			MemberDTO eId = this.memberService.checkIdDuplication(id);
+			MemberDTO eName = this.memberService.checkNameDuplication(name);
+			MemberDTO eEmail = this.memberService.checkEmailDuplication(email);
+				/* 아이디 중복 검사 */
+			if(eId != null) {
+		    	request.setAttribute("msg", "중복된 아이디입니다. 다시 아이디를 입력해주세요.");
+		    	request.setAttribute("url", "/memberJoin");
+				mav.setViewName("/alert");
+				/* 이름 중복 검사 */
+			}else if(eName != null){
+		    	request.setAttribute("msg", "중복된 이름입니다. 다시 이름을 입력해주세요.");
+		    	request.setAttribute("url", "/memberJoin");
+				mav.setViewName("/alert");
+				/* 아메일 중복 검사 */
+			}else if(eEmail != null) {
+		    	request.setAttribute("msg", "중복된 이메일입니다. 다시 이메일을 입력해주세요.");
+		    	request.setAttribute("url", "/memberJoin");
+				mav.setViewName("/alert");
+			}
+			/* 회원가입 성공 시 */
+			else {
+				this.memberService.memberJoin(memberJoinDTO);
+		    	request.setAttribute("msg", "회원가입이 완료되었습니다.");
+		    	request.setAttribute("url", "/");
+				mav.setViewName("/alert");
+			}
 		}
 		return mav;
 	}
-	
-	//회원 가입 성공 시 이 페이지로 이동
-	@GetMapping("/memberJoinSuccess")
-	public String memberJoinSuccess() {
-		return "/member/memberJoinSuccess";
-	}
-	
+		
 	//회원 정보
 	@GetMapping("/memberDetail")
 	public ModelAndView memberDetail(String id) throws Exception{
@@ -83,10 +131,10 @@ public class MemberController {
 		String id = DTO.getId();
 		String pw = DTO.getPw();
 		String name = DTO.getName();
-		HttpSession Session = request.getSession();
-		Session.setAttribute("sid", id);
-		Session.setAttribute("spw", pw);
-		Session.setAttribute("sname", name);
+		HttpSession session = request.getSession();
+		session.setAttribute("sid", id);
+		session.setAttribute("spw", pw);
+		session.setAttribute("sname", name);
 		
 		mav.setViewName("/index");
 		}

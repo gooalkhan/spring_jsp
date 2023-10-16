@@ -10,11 +10,11 @@
             </div>
             <div class="mb-3">
                 <label for="subject" class="form-label">제목</label>
-                <input type="text" class="form-control" id="subject" name="subject" value="${data.subject}">
+                <input type="text" class="form-control" id="subject" name="subject" value="${data.subject}" required>
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label">내용</label>
-                <textarea class="form-control" id="content" name="content">${data.content}</textarea>
+                <textarea class="form-control" id="content" name="content" required>${data.content}</textarea>
             </div>
             <div class="mb-3">
                 <input type="submit" class="btn btn-primary" value="변경사항저장">

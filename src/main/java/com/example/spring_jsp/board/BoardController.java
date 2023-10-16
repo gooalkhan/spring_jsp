@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -38,12 +40,16 @@ public class BoardController {
 	boardList로 리다이렉트됨
 	*/
 	@PostMapping("/boardInsertPost")
-	public ModelAndView boardInsertPost(BoardDTO boardDTO) {
+	public ModelAndView boardInsertPost(BoardDTO boardDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		String id = this.boardService.boardInsert(boardDTO);
-		if (id == null) {
-			mav.setViewName("redirect:/boardInsert");
+		HttpSession session = request.getSession();
+	    if (session.getAttribute("sid") == null) {
+	    	request.setAttribute("msg", "로그인 시 작성 가능합니다. 로그인 해주세요.");
+	    	request.setAttribute("url", "/memberLogin");
+	        mav.setViewName("/alert");
 		}else {
+			// 여긴 굳이 알림창을 띄울 필요가 없어서 안 띄움
+			this.boardService.boardInsert(boardDTO);
 			mav.setViewName("redirect:/boardList");
 		}
 		return mav;
@@ -80,32 +86,39 @@ public class BoardController {
 	
 	//게시글 수정 처리
 	@PostMapping("/boardUpdate")
-	public ModelAndView boardUpdatePost(BoardDTO boardDTO) {
+	public ModelAndView boardUpdatePost(BoardDTO boardDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		
 		boolean isUpdateSuccess = this.boardService.boardUpdate(boardDTO);
 		if(isUpdateSuccess) {
 			int idx = boardDTO.getIdx();
-			mav.setViewName("redirect:/boardDetail?idx="+idx);
+	    	request.setAttribute("msg", "수정이 완료되었습니다.");
+	    	request.setAttribute("url", "/boardDetail?idx="+idx);
+			mav.setViewName("/alert");
 		} else {
-			mav.setViewName("/error");
+	    	request.setAttribute("msg", "올바르지 않은 수정입니다.");
+	    	request.setAttribute("url", "/boardList");
+	        mav.setViewName("/alert");
 		}
 		return mav;
 	}
 	
 	//게시글 삭제 처리
 	@PostMapping("/boardDelete")
-	public ModelAndView boardDeletePost(BoardDTO boardDTO) {
+	public ModelAndView boardDeletePost(BoardDTO boardDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		
 		boolean isDeleteSuccess = this.boardService.boardDelete(boardDTO);
 		//TODO: 댓글이 달려있으면 게시물이 지워지지 않으므로 cascasde로 처리하던 해야함
 		if(isDeleteSuccess) {
-			
-			mav.setViewName("redirect:/boardList");
+	    	request.setAttribute("msg", "삭제가 완료되었습니다.");
+	    	request.setAttribute("url", "/boardList");
+			mav.setViewName("/alert");
 		} else {
 			int idx = boardDTO.getIdx();
-			mav.setViewName("redirect:/boardDetail?idx="+idx);
+	    	request.setAttribute("msg", "올바르지 않은 삭제입니다.");
+	    	request.setAttribute("url", "/boardDetail?idx="+idx);
+	        mav.setViewName("/alert");
 		}
 		return mav;
 	}

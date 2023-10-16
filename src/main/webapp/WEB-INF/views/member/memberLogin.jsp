@@ -14,11 +14,11 @@
                 <div class="col-5 mb-3">
                     <div class="mb-1">
                         <label for="id">아이디</label>
-                        <input type="text" class="form-control" id="id" name="id" placeholder="아이디"></p>
+                        <input type="text" class="form-control" id="id" name="id" placeholder="아이디" required></p>
                     </div>
                     <div class="mb-1">
                         <label for="pw">비밀번호</label>
-                        <input type="password" class="form-control" id="pw" name="pw" placeholder="비밀번호">
+                        <input type="password" class="form-control" id="pw" name="pw" placeholder="비밀번호" required>
                     </div>
                 </div>
             </div>
