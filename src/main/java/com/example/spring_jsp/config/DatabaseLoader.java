@@ -68,7 +68,7 @@ public class DatabaseLoader implements CommandLineRunner {
         // 초기 데이터 추가
         MemberDTO entity = new MemberDTO();
         entity.setId("hong");
-        entity.setPw("1234");
+        entity.setPw("Hong!1234");
         entity.setEmail("hong@gmail.com");
         entity.setName("홍길동");
         entity.setJoinDate(new Timestamp(System.currentTimeMillis()));

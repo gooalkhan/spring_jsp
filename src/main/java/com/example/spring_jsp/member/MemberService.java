@@ -8,7 +8,7 @@ public interface MemberService {
 	
 	List<MemberDTO> memberSelect() throws Exception;
 	
-	String memberJoin(MemberDTO memberDTO);
+	String memberJoin(MemberJoinDTO memberJoinDTO);
 	
 	MemberDTO memberDetail(String id) throws Exception;
 
@@ -17,6 +17,18 @@ public interface MemberService {
 	boolean memberUpdate(MemberDTO memberDTO);
 
 	boolean memberDelete(MemberDTO memberDTO);
+
+	MemberDTO checkIdDuplication(String id) throws Exception;
+
+	MemberDTO checkNameDuplication(String name) throws Exception;
+
+	MemberDTO checkEmailDuplication(String email) throws Exception;
+
+
+
+
+
+
 
 
 }
