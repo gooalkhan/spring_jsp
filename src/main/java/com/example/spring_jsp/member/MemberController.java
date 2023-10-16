@@ -73,6 +73,12 @@ public class MemberController {
 	public ModelAndView memberLoginPost(MemberDTO memberDTO, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		MemberDTO DTO = memberService.memberLogin(memberDTO);
+		if(DTO == null) {
+			request.setAttribute("msg", "아이디와 비밀번호가 틀렸습니다. 다시 입력해주세요.");
+			request.setAttribute("url", "/memberLogin");
+			mav.setViewName("/alert");
+		}
+		else {
 		mav.addObject("data", DTO);
 		String id = DTO.getId();
 		String pw = DTO.getPw();
@@ -83,6 +89,7 @@ public class MemberController {
 		Session.setAttribute("sname", name);
 		
 		mav.setViewName("/index");
+		}
 		return mav;
 	}
 	
