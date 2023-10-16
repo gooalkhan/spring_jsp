@@ -10,6 +10,9 @@
                 <a class="nav-link" href="/memberUpdate?id=${sid}">회원 정보 수정</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/shop">포인트 샵</a>
+            </li>
+            <li class="nav-item">
                 <form action="/memberLogout" method="POST">
                     <a class="nav-link" href="#" onclick="this.parentNode.submit()">로그아웃</a>
                 </form>

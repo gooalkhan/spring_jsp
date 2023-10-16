@@ -15,4 +15,6 @@ public interface KeywordMapper {
     List<KeywordDTO> keywordSelect(long bookid);
 
     int keywordInsert(KeywordDTO keywordDTO);
+
+    int keywordCount(long bookid);
 }
