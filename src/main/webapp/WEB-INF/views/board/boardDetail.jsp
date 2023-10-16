@@ -60,7 +60,7 @@
                         <td class="text-center">${show.content}</td>
                         <td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd" value="${show.postDate}"/></td>
                         <td class="text-end">
-                            <c:if test="${show.membertbl_id != sid}">
+                            <c:if test="${show.name == sname}">
                                 <form method="Post" action="commentDelete">
                                     <input type="hidden" name="idx" value="${show.idx}">
                                     <input type="hidden" name="bidx" value="${data.idx}">
