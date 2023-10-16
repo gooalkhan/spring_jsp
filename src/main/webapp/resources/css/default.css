@@ -23,9 +23,9 @@ label {
     color: rgb(128, 128, 128);
 }
 
-.book-pic {
-min-height: 300px;
-}
+/*.book-pic {*/
+/*min-height: 300px;*/
+/*}*/
 
 .book-card {
     min-height: 175px;

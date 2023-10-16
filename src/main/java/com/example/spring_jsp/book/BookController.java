@@ -68,4 +68,12 @@ public class BookController {
         return "/book/books";
     }
 
+    @GetMapping("/bookDetail")
+    public String bookDetail(@RequestParam(name="id") long id, Model model) {
+        model.addAttribute("keywords", keywordServiceImpl.keywordSelect(id));
+        model.addAttribute("id", id);
+        model.addAttribute("selectedBook", bookServiceImpl.bookSelect(id));
+        return "/book/bookDetail";
+    }
+
 }
