@@ -27,4 +27,8 @@ public class KeywordServiceImpl {
         return keywordMapper.keywordInsert(keywordDTO);
     }
 
+    public int keywordCount(long bookid) {
+        return keywordMapper.keywordCount(bookid);
+    }
+
 }

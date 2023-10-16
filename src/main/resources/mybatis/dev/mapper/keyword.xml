@@ -36,4 +36,13 @@
         values
         (#{bookid}, #{keyword}, #{last_update})
     </insert>
+
+    <select id="keywordCount" resultType="int">
+        select
+        count(*)
+        from
+        keywordtbl
+        where
+        bookid = #{bookid}
+    </select>
 </mapper>
