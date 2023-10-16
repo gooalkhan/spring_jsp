@@ -4,7 +4,7 @@
     <c:choose>
         <c:when test="${sname != null}">
             <li class="nav-item">
-                <a class="nav-link text-white disabled">안녕하세요 ${sname}님 </a>
+                <a class="nav-link" href="/memberDetail?id=${sid}">안녕하세요 ${sname} 님 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/memberUpdate?id=${sid}">회원 정보 수정</a>
