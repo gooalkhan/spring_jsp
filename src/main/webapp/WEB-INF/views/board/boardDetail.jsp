@@ -25,8 +25,9 @@
                 </article>
             </div>
             <div class="container d-flex justify-content-center">
+            	<div class="row">
                 <c:if test="${data.membertbl_id == sid}">
-                    <div class="row">
+                    
                         <div class="col">
                             <button type="button" class="btn btn-primary"
                                     onclick="location.href='/boardUpdate?idx=${data.idx}'">수정
@@ -38,14 +39,17 @@
                                 <input type="submit" class="btn btn-danger" value="삭제">
                             </form>
                         </div>
+                </c:if>
+                <c:if test="${sid != null}">
                         <div class="col">
                             <form method="Post" action="/boardLike">
-                                <input type="hidden" name="idx" value="${data.idx}">
+                            	<input type="hidden" name="boardtbl_idx" value="${data.idx}">
+                				<input type="hidden" name="membertbl_id" value="${sid}">
                                 <input type="submit" class="btn btn-success" value="추천">
                             </form>
                         </div>
-                    </div>
                 </c:if>
+                </div>
             </div>
         </div>
         <hr>

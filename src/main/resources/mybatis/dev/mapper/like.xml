@@ -5,7 +5,7 @@
 	<update id="createTable">
 	CREATE TABLE `liketbl` (
 	  IDX int NOT NULL AUTO_INCREMENT,
-	  LIKECHECK tinyint NOT NULL,
+	  LIKECHECK tinyint NOT NULL default 0,
 	  LIKEDATE timestamp NOT NULL,
 	  membertbl_ID varchar(20) NOT NULL,
 	  boardtbl_IDX int NOT NULL,
@@ -26,6 +26,7 @@
 	<update id="likeUpdate">
 	update
 	boardtbl
+	set
 	LIKES = LIKES+1
 	where IDX = #{idx}
 	</update>
@@ -34,13 +35,63 @@
 	<update id="likeUpdateCancel">
 	update
 	boardtbl
+	set
 	LIKES = LIKES-1
 	where IDX = #{idx}
 	</update>
 	
 	<!-- 게시글 추천 시 Like 테이블에 insert -->
 	<insert id="likeInsert">
-	insert into liketbl(boardtbl_IDX , membertbl_ID)
-	values(#{boardtbl_idx} ,#{membertbl_id})
+	insert
+	into
+	liketbl(boardtbl_IDX , membertbl_ID, LIKEDATE)
+	values(#{boardtbl_idx}, #{membertbl_id}, now())
 	</insert>
+	
+	<!-- 게시글 추천취소 시 delete -->
+	<delete id="likeDelete">
+	delete
+	from
+	liketbl
+	where
+	boardtbl_idx = #{boardtbl_idx}
+	and
+	membertbl_id = #{membertbl_id}
+	</delete>
+	
+	<!-- 게시글 추천 시 Check를 1로 만들어서 중복방지-->
+	<update id="likeUpdateCheck">
+	update
+	liketbl
+	set
+	LIKECHECK = 1
+	where
+	boardtbl_idx = #{boardtbl_idx}
+	and
+	membertbl_id = #{membertbl_id}
+	</update>
+	
+	<!-- 게시글 추천취소 시 다시 0  -->
+	<update id="likeUpdateCheckCancel">
+	update
+	liketbl
+	set
+	LIKECHECK = 0
+	where
+	boardtbl_idx = #{boardtbl_idx}
+	and
+	membertbl_id = #{membertbl_id}
+	</update>
+	
+	<!-- 게시글 추천 중복방지 select문 -->
+	<select id="likeCheck">
+	select
+	count(*)
+	from
+	liketbl
+	where
+	boardtbl_idx = #{boardtbl_idx}
+	and
+	membertbl_id = #{membertbl_id} 
+	</select>
 </mapper>

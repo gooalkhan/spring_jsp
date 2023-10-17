@@ -20,6 +20,7 @@
                                    NAME varchar(30) NOT NULL,
                                    JOINDATE timestamp NOT NULL,
                                    MODIFYDATE timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                   ENABLEMEMBER tinyint NOT NULL DEFAULT '1',
                                    PRIMARY KEY (ID)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
     </update>

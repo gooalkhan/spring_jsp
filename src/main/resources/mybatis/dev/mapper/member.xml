@@ -24,6 +24,7 @@
             NAME           CHARACTER VARYING(30)            not null,
             JOINDATE       TIMESTAMP default CURRENT_TIMESTAMP not null,
             MODIFYDATE     TIMESTAMP default CURRENT_TIMESTAMP not null,
+            ENABLEMEMBER BOOLEAN default 1 not NULL,
             constraint MEMBERTBL_PK2
                 primary key (ID)
         );
