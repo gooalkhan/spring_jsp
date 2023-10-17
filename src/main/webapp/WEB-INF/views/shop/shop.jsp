@@ -4,6 +4,20 @@
 <%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>--%>
 <t:layout>
     <div class="container py-3">
+        <c:if test="${not empty success}">
+        <c:choose>
+        <c:when test="${success=='true'}">
+        <div class="alert alert-success" role="alert">
+            포인트 구입을 성공하였습니다.
+        </div>
+        </c:when>
+        <c:otherwise>
+        <div class="alert alert-danger" role="alert">
+            포인트 구입에 실패하였습니다.
+        </div>
+        </c:otherwise>
+        </c:choose>
+        </c:if>
         <div class="row justify-content-center">
             <div class="col-4 m-3 text-center">
                 <h3>포인트 샵</h3>
@@ -42,8 +56,10 @@
                             <hr>
                             <div class="card card-body mb-3 p-3">
                                 <p class="card-text">구매 방법</p>
-                                <form class="form-control p-5" method="post">
-                                    <input type="hidden" name="campaignUid" value="${offer.uid}">
+                                <form class="form-control p-5" action="/shop/purchase" method="post">
+                                    <input type="hidden" name="campaignUID" value="${offer.uid}">
+                                    <input type="hidden" name="userid" value="${sid}">
+                                    <input type="hidden" name="addedPoint" value="${offer.point}">
                                     <div class="row justify-content-center mb-3">
                                         <jsp:include page="include/paymethod.jsp"/>
                                     </div>
@@ -65,9 +81,9 @@
                                                             aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    ${offer.point} 포인트 구입을 확정하시겠습니까?
+                                                        ${offer.point} 포인트 구입을 확정하시겠습니까?
                                                     <br>
-                                                    ${offer.additionalPoint} 포인트가 추가로 적립됩니다.
+                                                        ${offer.additionalPoint} 포인트가 추가로 적립됩니다.
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -86,94 +102,6 @@
                     </c:forEach>
                 </div>
             </div>
-                <%--                <div id="purchase-group">--%>
-                <%--                    <div id="accordion-group">--%>
-                <%--                        <div class="collapse" id="hundred" data-bs-parent="#purchase-group">--%>
-                <%--                            <hr>--%>
-                <%--                            <div class="card card-body mb-3 p-3">--%>
-                <%--                                <p class="card-text">구매 방법</p>--%>
-                <%--                                <form class="form-control p-5" method="post">--%>
-                <%--                                    <div class="row justify-content-center mb-3">--%>
-                <%--                                        <div class="col-auto form-check mb-3">--%>
-                <%--                                            <input class="form-check-input" type="radio" name="purchase-method"--%>
-                <%--                                                   id="kakaopay" checked>--%>
-                <%--                                            <label class="form-check-label" for="kakaopay">--%>
-                <%--                                                <img src="${pageContext.request.contextPath}/resources/images/img-kakaopay.png"--%>
-                <%--                                                     alt="kakaopay">--%>
-                <%--                                            </label>--%>
-                <%--                                        </div>--%>
-                <%--                                        <div class="col-auto form-check mb-3">--%>
-                <%--                                            <input class="form-check-input" type="radio" name="purchase-method"--%>
-                <%--                                                   id="naverpay">--%>
-                <%--                                            <label class="form-check-label" for="naverpay">--%>
-                <%--                                                <img src="${pageContext.request.contextPath}/resources/images/img-naverpay.png"--%>
-                <%--                                                     alt="naverpay">--%>
-                <%--                                            </label>--%>
-                <%--                                        </div>--%>
-                <%--                                        <div class="col-auto form-check mb-3">--%>
-                <%--                                            <input class="form-check-input" type="radio" name="purchase-method"--%>
-                <%--                                                   id="payco">--%>
-                <%--                                            <label class="form-check-label" for="payco">--%>
-                <%--                                                <img src="${pageContext.request.contextPath}/resources/images/img-payco.png"--%>
-                <%--                                                     alt="payco">--%>
-                <%--                                            </label>--%>
-                <%--                                        </div>--%>
-                <%--                                        <div class="col-auto form-check mb-3">--%>
-                <%--                                            <input class="form-check-input" type="radio" name="purchase-method"--%>
-                <%--                                                   id="credit-card">--%>
-                <%--                                            <label class="form-check-label" for="credit-card">--%>
-                <%--                                                신용카드--%>
-                <%--                                            </label>--%>
-                <%--                                        </div>--%>
-                <%--                                    </div>--%>
-                <%--                                    <div class="text-center">--%>
-                <%--                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirm-buy">--%>
-                <%--                                        구매 하기--%>
-                <%--                                        </button>--%>
-                <%--                                    </div>--%>
-
-                <%--                                    <!-- Modal -->--%>
-                <%--                                    <div class="modal fade" id="confirm-buy" tabindex="-1" aria-labelledby="confirm-buy-label" aria-hidden="true">--%>
-                <%--                                        <div class="modal-dialog">--%>
-                <%--                                            <div class="modal-content">--%>
-                <%--                                                <div class="modal-header">--%>
-                <%--                                                    <h1 class="modal-title fs-5" id="confirm-buy-label">확인</h1>--%>
-                <%--                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
-                <%--                                                </div>--%>
-                <%--                                                <div class="modal-body">--%>
-                <%--                                                    구입을 확정하시겠습니까?--%>
-                <%--                                                </div>--%>
-                <%--                                                <div class="modal-footer">--%>
-                <%--                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>--%>
-                <%--                                                    <input type="submit" class="btn btn-primary" value="확인">--%>
-                <%--                                                </div>--%>
-                <%--                                            </div>--%>
-                <%--                                        </div>--%>
-                <%--                                    </div>--%>
-
-                <%--                                </form>--%>
-
-
-                <%--                            </div>--%>
-                <%--                        </div>--%>
-
-                <%--                        <div class="collapse" id="five-hundred" data-bs-parent="#purchase-group">--%>
-                <%--                            <hr>--%>
-                <%--                            <div class="card card-body mb-3 p-3">--%>
-                <%--                                <p class="card-text">구매 방법</p>--%>
-                <%--                            </div>--%>
-                <%--                        </div>--%>
-
-                <%--                        <div class="collapse" id="thousand" data-bs-parent="#purchase-group">--%>
-                <%--                            <hr>--%>
-                <%--                            <div class="card card-body mb-3 p-3">--%>
-                <%--                                <p class="card-text">구매 방법</p>--%>
-                <%--                            </div>--%>
-                <%--                        </div>--%>
-                <%--                    </div>--%>
-                <%--                </div>--%>
-
-
             </c:when>
             <c:otherwise>
                 <div class="row justify-content-center">

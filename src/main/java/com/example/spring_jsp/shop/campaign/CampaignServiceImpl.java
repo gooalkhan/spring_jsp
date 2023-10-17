@@ -1,15 +1,25 @@
 package com.example.spring_jsp.shop.campaign;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CampaignService {
+public class CampaignServiceImpl {
     List<CampaignDTO> campaignList = new ArrayList<>();
 
+    //uid로 행사 가져오기, 폼과 비교용
+    public CampaignDTO selectCampaign(String uid) {
+        for (CampaignDTO campaignDTO : campaignList) {
+            if (campaignDTO.getUid().equals(uid)) {
+                return campaignDTO;
+            }
+        }
+        return null;
+    };
+
+    //모든 진행중인 행사 가져오기 - 테이블 안만들고 간이로 사용
     public List<CampaignDTO> getCurrentCampaign() {
         campaignList.clear();
 
