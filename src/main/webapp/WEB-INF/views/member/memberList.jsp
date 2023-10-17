@@ -15,9 +15,11 @@
 	            <th>아이디</th>
 	            <th>비밀번호</th>
 	            <th>이메일</th>
+	            <th>이메일 인증 여부</th>
 	            <th>이름</th>
 	            <th>가입일</th>
 	            <th>최종수정일</th>
+	            <th>계정 활성화/비활성화 여부</th>
 	        </tr>
 	    </thead>
 	    <tbody>
@@ -26,9 +28,11 @@
 	            <td><a href="/memberDetail?id=${data.id}">${data.id}</a></td>
 	            <td>${data.pw}</td>
 	            <td>${data.email}</td>
+	            <td>${data.hasEmailAuthed}</td>
 	            <td>${data.name}</td>
 	            <td>${data.joinDate}</td>
 	            <td>${data.modifyDate}</td>
+	            <td>${data.enableMember}</td>
 	        </tr>
 	        </c:forEach>
 	    </tbody>

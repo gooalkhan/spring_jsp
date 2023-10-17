@@ -38,7 +38,7 @@
     
     
     
-    <!-- 기본 membertbl select 구문 -->
+    <!-- 기본 membertbl select 구문(회원 리스트)-->
 	<select id="memberSelect" resultType="com.example.spring_jsp.member.MemberDTO">
 		select
 		*
@@ -46,7 +46,7 @@
 		membertbl
 	</select>
 	
-	<!-- 기본 membertbl insert 구문(게시글 등록) -->
+	<!-- 기본 membertbl insert 구문(회원 가입) -->
 	<insert id="memberJoin">
 		insert
 		into
@@ -56,7 +56,8 @@
 		(#{id}, #{pw}, #{email}, #{name}, now(), now())
 	</insert>
 	
-	<!-- 기본 membertbl update 구문(게시글 수정) -->
+	<!-- 기본 membertbl update 구문(회원 정보 수정) -->
+	<!-- 회원탈퇴(비활성화)된 유저는 못함 -->
 	<update id="memberUpdate">
 		update membertbl set
 		PW = #{pw},
@@ -65,9 +66,11 @@
 		MODIFYDATE = now()
 		where
 		ID = #{id}
+		and
+		NOT ENABLEMEMBER=0;
 	</update>
 	
-	<!-- 기본 membertbl delete 구문(게시글 삭제) -->
+	<!-- 기본 membertbl delete 구문(회원 탈퇴) 이제는 탈퇴 시 비활성화로 갈거기 때문에, 일단 흔적으로 남겨둠
 	<delete id="memberDelete">
 		delete
 		from
@@ -75,8 +78,18 @@
 		where
 		ID = #{id}
 	</delete>
+	 -->
+	<!-- 회원 탈퇴(비활성화 방식) -->
+	<!-- 이제 탈퇴된 회원을 보고싶지 않다면, where NOT enablemember = 0 이렇게 써줘야됨 -->
+	<update id="memberDelete">
+		update membertbl set
+		ENABLEMEMBER = 0
+		where
+		ID = #{id}
+	</update>
 	
 	<!-- 회원 상세 정보 -->
+	<!-- 회원탈퇴(비활성화)된 유저는 못함 -->
 	<select id="memberDetail" resultType="com.example.spring_jsp.member.MemberDTO">
 		<![CDATA[
 	    select
@@ -85,10 +98,13 @@
 	    membertbl
 	    where
 	    ID = #{id}
+	    and
+	    NOT ENABLEMEMBER=0;
 	    ]]>
 	</select>
 	
 	<!-- 로그인 -->
+	<!-- 회원탈퇴(비활성화)된 유저는 못함 -->
 	<select id="memberLogin" resultType="com.example.spring_jsp.member.MemberDTO">
 		<![CDATA[
 	    select
@@ -99,6 +115,8 @@
 	    ID = #{id}
 	    and
 	    PW = #{pw}
+	    and
+	    NOT ENABLEMEMBER=0;
 	    ]]>
 	</select>
 		

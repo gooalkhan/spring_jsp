@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:layout>
     <div class="container py-3">
@@ -8,6 +9,7 @@
                 <h3>회원 정보 수정</h3>
             </div>
         </div>
+        <c:if test="${sid != null && data.id == sid}">
         <form name="memberUpdateForm" onsubmit="return validateMemberForm('update')" method="Post">
             <div class="row justify-content-center">
                 <div class="col-6">
@@ -37,5 +39,6 @@
                 </div>
             </div>
         </form>
+        </c:if>
     </div>
 </t:layout>

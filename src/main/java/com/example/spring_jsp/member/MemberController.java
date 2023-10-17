@@ -182,14 +182,20 @@ public class MemberController {
 	
 	//회원 삭제
 	@PostMapping("/memberDelete")
-	public ModelAndView memberDeletePost(MemberDTO memberDTO) {
+	public ModelAndView memberDeletePost(MemberDTO memberDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		boolean isDeleteSuccess = this.memberService.memberDelete(memberDTO);
 		if(isDeleteSuccess) {
-			mav.setViewName("/member/memberDeleteSuccess");
+			HttpSession session = request.getSession();
+			session.invalidate();
+			request.setAttribute("msg", "회원 탈퇴에 성공했습니다. 지금까지 이용해주셔서 감사합니다.");
+			request.setAttribute("url", "/");
+			mav.setViewName("/alert");
 		}else {
 			String id = memberDTO.getId();
-			mav.setViewName("redirect:/memberDetail?id=" + id);
+			request.setAttribute("msg", "회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+			request.setAttribute("url", "/memberDetail?id=" + id);
+			mav.setViewName("/alert");
 		}
 		return mav;
 	}

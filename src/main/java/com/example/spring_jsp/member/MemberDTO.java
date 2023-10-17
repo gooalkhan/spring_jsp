@@ -14,6 +14,7 @@ public class MemberDTO {
     private String name;
     private Timestamp joinDate;
     private Timestamp modifyDate;
+    private boolean enableMember;
     
     //그 외에 값을 담기 위해 만든 변수
 }
