@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.spring_jsp.shop.bookkeeping.BookkeepingMapper">
+
+    <update id="createTable">
+        create table bookkeepingtbl
+        (
+            uuid              CHAR(36)                              not null,
+            referenceuuid     CHAR(36)                              not null,
+            userid            VARCHAR(20)                           NOT NULL,
+            addedpoint        INTEGER   default 0                   not null,
+            usedpoint         INTEGER   default 0                   not null,
+            purchasemethoduid varchar(30)                           not null,
+            campaignuid       varchar(30),
+            unlockeduid       varchar(30),
+            adddate           timestamp default CURRENT_TIMESTAMP() not null,
+            constraint bookkeepingtbl_pk
+                primary key (uuid),
+            constraint bookkeepingtbl_membertbl_ID_fk
+                foreign key (userid) references MEMBERTBL (ID),
+            constraint bookkeepingtbl_bookkeepingtbl_uuid_fk
+                foreign key (referenceuuid) references bookkeepingtbl (uuid)
+        ) ENGINE = InnoDB
+          DEFAULT CHARSET = utf8mb3;
+    </update>
+
+    <update id="dropTable">
+        drop table if exists bookkeepingtbl;
+    </update>
+
+    <insert id="bookkeepingInsert" parameterType="com.example.spring_jsp.shop.bookkeeping.BookkeepingDTO">
+        insert into bookkeepingtbl (uuid, referenceuuid, userid, addedpoint, usedpoint, purchasemethoduid, campaignuid,
+                                    unlockeduid)
+        values (#{UUID}, #{referenceUUID}, #{userid}, #{addedPoint}, #{usedPoint}, #{purchaseMethodUID}, #{campaignUID},
+                #{unlockedUID});
+    </insert>
+
+    <select id="bookkeepingSelect" parameterType="String">
+        select *
+        from bookkeepingtbl
+        where userid = #{userid};
+    </select>
+
+</mapper>
