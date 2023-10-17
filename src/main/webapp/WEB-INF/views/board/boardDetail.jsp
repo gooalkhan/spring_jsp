@@ -38,6 +38,12 @@
                                 <input type="submit" class="btn btn-danger" value="삭제">
                             </form>
                         </div>
+                        <div class="col">
+                            <form method="Post" action="/boardLike">
+                                <input type="hidden" name="idx" value="${data.idx}">
+                                <input type="submit" class="btn btn-success" value="추천">
+                            </form>
+                        </div>
                     </div>
                 </c:if>
             </div>

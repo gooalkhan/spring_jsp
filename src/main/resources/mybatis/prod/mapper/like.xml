@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring_jsp.like.LikeMapper">
+	<update id="createTable">
+	CREATE TABLE `liketbl` (
+	  `IDX` int NOT NULL AUTO_INCREMENT,
+	  `LIKECHECK` tinyint NOT NULL,
+	  `LIKEDATE` timestamp NOT NULL,
+	  `membertbl_ID` varchar(20) NOT NULL,
+	  `boardtbl_IDX` int NOT NULL,
+	  PRIMARY KEY (`IDX`),
+	  KEY `fk_liketbl_membertbl1_idx` (`membertbl_ID`),
+	  KEY `fk_liketbl_boardtbl1_idx` (`boardtbl_IDX`),
+	  CONSTRAINT `fk_liketbl_boardtbl1` FOREIGN KEY (`boardtbl_IDX`) REFERENCES `boardtbl` (`IDX`) ON DELETE CASCADE,
+	  CONSTRAINT `fk_liketbl_membertbl1` FOREIGN KEY (`membertbl_ID`) REFERENCES `membertbl` (`ID`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+	</update>
+	
+	<update id="dropTable">
+        DROP TABLE IF EXISTS liketbl;
+    </update>
+    
+    
+    
+    
+    <!-- 게시글 추천 + -->
+	<update id="likeUpdate">
+	update
+	boardtbl
+	LIKES = LIKES+1
+	where IDX = #{idx}
+	</update>
+	
+	<!-- 게시글 추천 - -->
+	<update id="likeUpdateCancel">
+	update
+	boardtbl
+	LIKES = LIKES-1
+	where IDX = #{idx}
+	</update>
+	
+	<!-- 게시글 추천 시 Like 테이블에 insert -->
+	<insert id="likeInsert">
+	insert into liketbl(boardtbl_IDX , membertbl_ID)
+	values(#{boardtbl_idx} ,#{membertbl_id})
+	</insert>
+</mapper>
