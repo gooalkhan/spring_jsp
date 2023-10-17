@@ -12,6 +12,7 @@
                 </div>
             </div>
         </div>
+        <c:if test="${sid != null && data.id == sid}">
         <div class="row">
             <div class="col-5 text-end">
                 <p>아이디 : </p>
@@ -72,10 +73,8 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3 text-center">
-                    <!-- TODO: 나중에 세션 아이디가 같을 때만 정보 수정이 가능하도록, 그리고 이 버튼이 뜨도록 수정 -->
                     <a href="/memberUpdate?id=${data.id}">정보 수정</a>
 
-                    <!-- TODO: 나중에 세션 아이디가 같을 때만 회원 삭제가 가능하도록 수정, 그리고 이 버튼이 뜨도록 수정 -->
                     <form method="Post" action="/memberDelete" style="display: inline">
                         <input type="hidden" name="id" value="${data.id}">
                         <a href="#" onclick="this.parentNode.submit()">삭제</a>
@@ -84,5 +83,7 @@
                 </div>
             </div>
         </div>
+    </c:if>
     </div>
+    
 </t:layout>
