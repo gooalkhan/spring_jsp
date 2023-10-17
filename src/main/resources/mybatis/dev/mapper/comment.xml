@@ -15,7 +15,7 @@
                                     membertbl_ID varchar(20) NOT NULL,
                                     boardtbl_IDX int NOT NULL,
                                     PRIMARY KEY (IDX),
-                                    CONSTRAINT fk_commenttbl_boardtbl1 FOREIGN KEY (boardtbl_IDX) REFERENCES boardtbl (IDX),
+                                    CONSTRAINT fk_commenttbl_boardtbl1 FOREIGN KEY (boardtbl_IDX) REFERENCES boardtbl (IDX) ON DELETE CASCADE,
                                     CONSTRAINT fk_commenttbl_membertbl FOREIGN KEY (membertbl_ID) REFERENCES membertbl (ID)
         );
     </update>
