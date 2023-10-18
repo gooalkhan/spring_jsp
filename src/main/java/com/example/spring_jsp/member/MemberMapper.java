@@ -25,4 +25,6 @@ public interface MemberMapper {
 	MemberDTO existsById(String id);
 	MemberDTO existsByName(String name);
 	MemberDTO existsByEmail(String email);
+	int subadminAppoint(MemberDTO memberDTO);
+	int subadminAppointCancel(MemberDTO memberDTO);
 }

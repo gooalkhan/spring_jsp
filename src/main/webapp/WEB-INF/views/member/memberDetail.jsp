@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <c:if test="${(sid != null && data.id == sid) || sid == 'hong'}">
+        <c:if test="${(sid != null && data.id == sid) || sadmin == 'admin' || sadmin == 'subadmin'}">
         <div class="row">
             <div class="col-5 text-end">
                 <p>아이디 : </p>
@@ -37,7 +37,6 @@
                 <p>${data.email}</p>
             </div>
         </div>
-        <!-- TODO : 나중에 0이면 뭐뜨고 1이면 뭐뜨고 이렇게 수정 -->
         <div class="row">
             <div class="col-5 text-end">
                 <p>이메일 인증 여부 : </p>
@@ -68,6 +67,22 @@
             </div>
             <div class="col-5 text-start">
                 <p><fmt:formatDate pattern="yyyy-MM-dd" value="${data.modifyDate}"/></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5 text-end">
+                <p>계정 활성화 여부 : </p>
+            </div>
+            <div class="col-5 text-start">
+                <p>${data.enableMember}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5 text-end">
+                <p>관리자 여부 : </p>
+            </div>
+            <div class="col-5 text-start">
+                <p>${data.admin}</p>
             </div>
         </div>
         <div class="row">

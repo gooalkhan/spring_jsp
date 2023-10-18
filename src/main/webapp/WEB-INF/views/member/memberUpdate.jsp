@@ -9,7 +9,7 @@
                 <h3>회원 정보 수정</h3>
             </div>
         </div>
-        <c:if test="${(sid != null && data.id == sid) || sid == 'hong'}">
+        <c:if test="${(sid != null && data.id == sid) || sadmin == 'admin' || sadmin == 'subadmin'}">
         <form name="memberUpdateForm" onsubmit="return validateMemberForm('update')" method="Post">
             <div class="row justify-content-center">
                 <div class="col-6">
@@ -41,4 +41,18 @@
         </form>
         </c:if>
     </div>
+    <c:if test="${(sid != null && sadmin == 'admin' && data.admin != 'admin')}">
+    <div class="container d-flex justify-content-center">
+    	<form method="Post" action="/subadminAppoint">
+    		<input type="hidden" name="id" value="${data.id}">
+    		<input type="hidden" name="admin" value="${data.admin}">
+    		<c:if test="${data.admin != 'subadmin'}">
+    		<input type="submit" class="btn btn-success" value="이 유저에게 부관리자 권한 주기">
+    		</c:if>
+    		<c:if test="${data.admin == 'subadmin'}">
+    		<input type="submit" class="btn btn-danger" value="이 유저에게 부관리자 권한 박탈하기">
+    		</c:if>
+    	</form>
+    </div>   	
+    </c:if>      
 </t:layout>

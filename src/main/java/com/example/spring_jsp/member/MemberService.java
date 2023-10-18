@@ -24,6 +24,10 @@ public interface MemberService {
 
 	MemberDTO checkEmailDuplication(String email) throws Exception;
 
+	boolean subadminAppoint(MemberDTO memberDTO);
+
+	boolean subadminAppointCancel(MemberDTO memberDTO);
+
 
 
 

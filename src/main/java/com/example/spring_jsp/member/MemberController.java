@@ -131,11 +131,12 @@ public class MemberController {
 		String id = DTO.getId();
 		String pw = DTO.getPw();
 		String name = DTO.getName();
+		String admin = DTO.getAdmin();
 		HttpSession session = request.getSession();
 		session.setAttribute("sid", id);
 		session.setAttribute("spw", pw);
 		session.setAttribute("sname", name);
-		
+		session.setAttribute("sadmin", admin);
 		mav.setViewName("/index");
 		}
 		return mav;
@@ -196,6 +197,46 @@ public class MemberController {
 			request.setAttribute("msg", "회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
 			request.setAttribute("url", "/memberDetail?id=" + id);
 			mav.setViewName("/alert");
+		}
+		return mav;
+	}
+	
+	//부관리자 임명과 박탈
+	@PostMapping("/subadminAppoint")
+	public ModelAndView subadminAppoint(MemberDTO memberDTO, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String admin = memberDTO.getAdmin();
+		if(admin.equals("subadmin")) {
+			boolean isUpdateSuccess = this.memberService.subadminAppointCancel(memberDTO);
+			if(isUpdateSuccess) {
+				String id = memberDTO.getId();
+				request.setAttribute("msg", "부관리자 박탈에 성공했습니다.");
+				request.setAttribute("url", "/memberUpdate?id="+id);
+				mav.setViewName("/alert");
+			} else {
+				String id = memberDTO.getId();
+				request.setAttribute("msg", "부관리자 박탈에 실패했습니다. 다시 시도해주세요.");
+				request.setAttribute("url", "/memberUpdate?id="+id);
+				mav.setViewName("/alert");
+			}
+		}else if(admin.equals("admin")) {
+			String id = memberDTO.getId();
+			request.setAttribute("msg", "잘못된 요청입니다.");
+			request.setAttribute("url", "/memberUpdate?id="+id);
+			mav.setViewName("/alert");
+		}else {
+			boolean isUpdateSuccess = this.memberService.subadminAppoint(memberDTO);
+			if(isUpdateSuccess) {
+				String id = memberDTO.getId();
+				request.setAttribute("msg", "부관리자 임명에 성공했습니다.");
+				request.setAttribute("url", "/memberUpdate?id="+id);
+				mav.setViewName("/alert");
+			} else {
+				String id = memberDTO.getId();
+				request.setAttribute("msg", "부관리자 임명에 실패했습니다. 다시 시도해주세요.");
+				request.setAttribute("url", "/memberUpdate?id="+id);
+				mav.setViewName("/alert");
+			}
 		}
 		return mav;
 	}
