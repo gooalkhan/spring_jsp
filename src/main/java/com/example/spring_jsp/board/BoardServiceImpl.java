@@ -71,4 +71,14 @@ public class BoardServiceImpl implements BoardService{
 	public int boardView(int idx) {
 		return this.boardMapper.boardView(idx);
 	}
+	
+	@Override
+	public BoardDTO boardDetailJoin(BoardDTO boardDTO) throws Exception {
+		return boardMapper.boardDetailJoin(boardDTO);
+	}
+	
+	@Override
+	public List<BoardDTO> boardListJoin() throws Exception{
+		return boardMapper.boardListJoin();
+	}
 }

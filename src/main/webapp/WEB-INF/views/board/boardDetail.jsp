@@ -13,10 +13,16 @@
 
             <div class="row mb-3 justify-content-start">
                 <div class="col-2">
-                    <span class="desc">글쓴이 : ${data.membertbl_id}</span>
+                    <span class="desc">글쓴이 : ${data.name}</span>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <span class="desc">게시일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${data.postDate}"/></span>
+                </div>
+                <div class="col-2">
+                    <span class="desc">조회수 : ${data.views}</span>
+                </div>
+                <div class="col-2">
+                    <span class="desc">좋아요 : ${data.likes}</span>
                 </div>
             </div>
             <div class="row mb-3">
@@ -26,7 +32,7 @@
             </div>
             <div class="container d-flex justify-content-center">
             	<div class="row">
-                <c:if test="${data.membertbl_id == sid}">
+                <c:if test="${data.membertbl_id == sid || sid == 'hong'}">
                     
                         <div class="col">
                             <button type="button" class="btn btn-primary"
@@ -70,7 +76,7 @@
                         <td class="text-center">${show.content}</td>
                         <td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd" value="${show.postDate}"/></td>
                         <td class="text-end">
-                            <c:if test="${show.name == sname}">
+                            <c:if test="${show.name == sname || sid == 'hong'}">
                                 <form method="Post" action="commentDelete">
                                     <input type="hidden" name="idx" value="${show.idx}">
                                     <input type="hidden" name="bidx" value="${data.idx}">

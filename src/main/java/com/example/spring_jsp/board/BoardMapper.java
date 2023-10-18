@@ -23,4 +23,6 @@ public interface BoardMapper {
 	List<BoardDTO> boardSearch(String subject);
 	List<BoardDTO> commentShow(BoardDTO boardDTO);
 	int boardView(int idx);
+	BoardDTO boardDetailJoin(BoardDTO boardDTO);
+	List<BoardDTO> boardListJoin();
 }

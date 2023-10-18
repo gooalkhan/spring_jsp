@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${sid == 'hong'}">
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +38,13 @@
 	        </c:forEach>
 	    </tbody>
 	</table>
+	<form method="get" action="/memberDetail">
+		<p>찾고자 하는 회원의 id를 입력해주세요 :
+		<input type="text" name="id">
+		<input type="submit" value="찾기">
+		</p>
+	</form>
 	<p><a href="/">메인으로</a></p>
 </body>
 </html>
+</c:if>

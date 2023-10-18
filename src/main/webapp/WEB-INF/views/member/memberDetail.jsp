@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <c:if test="${sid != null && data.id == sid}">
+        <c:if test="${(sid != null && data.id == sid) || sid == 'hong'}">
         <div class="row">
             <div class="col-5 text-end">
                 <p>아이디 : </p>
