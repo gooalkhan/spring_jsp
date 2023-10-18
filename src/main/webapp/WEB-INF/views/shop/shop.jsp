@@ -8,7 +8,7 @@
         <c:choose>
         <c:when test="${success=='true'}">
         <div class="alert alert-success" role="alert">
-            포인트 구입을 성공하였습니다.
+            포인트 구입에 성공하였습니다.
         </div>
         </c:when>
         <c:otherwise>

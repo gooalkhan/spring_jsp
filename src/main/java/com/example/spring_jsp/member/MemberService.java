@@ -1,5 +1,7 @@
 package com.example.spring_jsp.member;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.util.List;
 
 public interface MemberService {
@@ -27,6 +29,8 @@ public interface MemberService {
 	boolean subadminAppoint(MemberDTO memberDTO);
 
 	boolean subadminAppointCancel(MemberDTO memberDTO);
+
+	void memberLogout(HttpSession session);
 
 
 

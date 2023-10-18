@@ -1,47 +1,36 @@
 package com.example.spring_jsp.notification;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
+import java.time.LocalDateTime;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+@RequiredArgsConstructor
 @Service
 public class NotificationService {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private Map<String, WebSocketSession> sessions = new HashMap<>();
+    private final NotificationQueue notificationQueue;
 
-    public void addSession(WebSocketSession session) {
-        sessions.put(session.getId(), session);
+    public void initSession(String sid) {
+        notificationQueue.addQueue(sid);
     }
 
-    public WebSocketSession getSession(String sessionid) {
-        return sessions.get(sessionid);
-    }
-
-    public void removeSession(WebSocketSession session) {
-        sessions.remove(session.getId());
+    public void destroySession(String sid) {
+        notificationQueue.removeQueue(sid);
+        notificationQueue.removeSession(sid);
     }
 
     public void send(String sessionid, String message) {
-        WebSocketSession session = getSession(sessionid);
 
-        if (session == null || !session.isOpen()) {
-            LOGGER.error("WebSocket session is null or closed");
-        } else {
-            try {
-                session.sendMessage(new TextMessage(message));
-            } catch (IOException e) {
-                LOGGER.error("Exception while sending a message", e);
-            }
-        }
+        NotificationDTO notificationDTO = new NotificationDTO();
+
+        notificationDTO.setSessionId(sessionid);
+        notificationDTO.setMessage(message);
+        notificationDTO.setMessageDate(LocalDateTime.now());
+
+        notificationQueue.sendMessage(notificationDTO);
     }
 }

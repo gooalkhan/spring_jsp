@@ -18,11 +18,29 @@
     <%-- 여기부터 내용시작 --%>
     <jsp:doBody/>
     <%-- 여기에서 내용 끝 --%>
+
+    <!-- 토스트 컨테이너 -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toast-container">
+        <!-- 토스트 메시지 -->
+        <div class="toast" id="myToast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">알림</strong>
+                <small class="text-muted" id="toast-title">
+<%-- 웹소켓 수신 시각 --%>
+                </small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-body">
+<%-- 웹소켓 수신 내용 --%>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/sockjs.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
 </html>

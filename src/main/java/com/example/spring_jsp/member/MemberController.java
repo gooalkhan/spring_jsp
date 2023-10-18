@@ -147,7 +147,7 @@ public class MemberController {
 	@PostMapping("/memberLogout")
 	public String logout(HttpServletRequest request){
 		HttpSession session = request.getSession();
-		session.invalidate();
+		memberService.memberLogout(session);
 		return "/index";
 	}
 	

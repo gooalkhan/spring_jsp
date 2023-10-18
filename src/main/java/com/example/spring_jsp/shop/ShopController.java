@@ -49,6 +49,7 @@ public class ShopController {
         logger.debug("start purchasing - bookkeepingDTO: {}", bookkeepingDTO);
         String nextPage = "redirect:/shop?success=false";
 
+        //TODO: handlerintercepter로 처리!
         String sid = (String)httpSession.getAttribute("sid");
 
         //세션아이디와 폼에서 받은 아이디가 일치하는지 확인
