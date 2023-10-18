@@ -1,5 +1,6 @@
 package com.example.spring_jsp.board;
 
+import com.example.spring_jsp.notification.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ public class BoardServiceImpl implements BoardService{
 
     private final BoardMapper boardMapper;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final NotificationService notificationService;
     
     @Override
     public void printAll() {
@@ -34,7 +36,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public String boardInsert(BoardDTO boardDTO) {
 		int affectRowCount = this.boardMapper.boardInsert(boardDTO);
+
+		String sid = boardDTO.getMembertbl_id();
+		//notificationService 사용예시
 		if (affectRowCount == 1) {
+			notificationService.send(sid, "글 작성에 성공했습니다");
 			return String.valueOf(boardDTO.getIdx());
 		}
 		return null;

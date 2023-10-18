@@ -12,8 +12,9 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebSocketConfig implements WebSocketConfigurer {
 
     private final TextSocketHandler textSocketHandler;
+    private final WebSocketHandshakeInterceptor webSocketHandshakeInterceptor;
 
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(textSocketHandler, "/message").withSockJS().setInterceptors(new WebSocketHandshakeInterceptor());
+        registry.addHandler(textSocketHandler, "/message").withSockJS().setInterceptors(webSocketHandshakeInterceptor);
     }
 }

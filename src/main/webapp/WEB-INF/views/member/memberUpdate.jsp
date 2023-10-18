@@ -5,7 +5,7 @@
 <t:layout>
     <div class="container py-3">
         <div class="row justify-content-center">
-            <div class="col-4 m-3 text-center">
+            <div class="col-4 mb-3 text-center">
                 <h3>회원 정보 수정</h3>
             </div>
         </div>

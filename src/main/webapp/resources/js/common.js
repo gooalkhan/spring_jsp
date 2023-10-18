@@ -35,17 +35,53 @@ function board_form_check() {
     }
 }
 
+function isSameMessage(message) {
+    let toastContainer = document.getElementById('toast-container');
+    let toastList = toastContainer.querySelectorAll('.toast');
+
+    for (let i = 0; i < toastList.length; i++) {
+        let toastText = toastList[i].querySelector('#toast-body').innerText;
+
+        if (toastText === message) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 let sock = new SockJS('http://localhost:8080/message');
+
 sock.onopen = function () {
     console.log('open');
     sock.send('test message from client');
+    console.log("websocket start")
 };
 
 sock.onmessage = function (e) {
-    alert(e.data);
+    console.log('message', e.data);
+
+    let data = JSON.parse(e.data);
+    let datetime = Math.floor((Date.now() - Date.parse(data.messageDate)) / 60000);
+
+    let toastContainer = document.getElementById('toast-container');
+    let myToast = document.getElementById('myToast').cloneNode(true);
+
+    let toastText = myToast.querySelector('#toast-body')
+    let toastTitle = myToast.querySelector('#toast-title')
+
+    toastTitle.innerText = datetime + "분 전";
+    toastText.innerText = data.message;
+
+    if (!isSameMessage(data.message)) {
+        toastContainer.appendChild(myToast);
+        let myToastInstance = new bootstrap.Toast(myToast);
+        myToastInstance.show();
+    }
+
 };
 
 sock.onclose = function () {
-    console.log('close');
+    console.log('websocket close');
 };
-console.log("websocket start")
