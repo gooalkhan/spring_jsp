@@ -81,4 +81,10 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardDTO> boardListJoin() throws Exception{
 		return boardMapper.boardListJoin();
 	}
+	
+	@Override
+	public BoardDTO likeButton(BoardDTO boardDTO) throws Exception {
+		return boardMapper.likeButton(boardDTO);
+	}
+	
 }

@@ -26,4 +26,6 @@ public interface BoardService {
 
 	List<BoardDTO> boardListJoin() throws Exception;
 
+	BoardDTO likeButton(BoardDTO boardDTO) throws Exception;
+
 }

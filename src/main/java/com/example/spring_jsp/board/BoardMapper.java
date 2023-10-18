@@ -25,4 +25,5 @@ public interface BoardMapper {
 	int boardView(int idx);
 	BoardDTO boardDetailJoin(BoardDTO boardDTO);
 	List<BoardDTO> boardListJoin();
+	BoardDTO likeButton(BoardDTO boardDTO);
 }

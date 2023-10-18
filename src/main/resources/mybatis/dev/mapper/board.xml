@@ -136,4 +136,18 @@
 	join membertbl
 	on boardtbl.membertbl_id = membertbl.id
 	</select>
+	
+	<!-- 좋아요 버튼 -->
+	<select id="likeButton">
+		select
+		id
+		from
+		liketbl
+		join membertbl
+		on liketbl.membertbl_id = membertbl.id
+		where
+		boardtbl_idx = #{idx}
+		and
+		id = #{id};
+	</select>
 </mapper>

@@ -51,7 +51,12 @@
                             <form method="Post" action="/boardLike">
                             	<input type="hidden" name="boardtbl_idx" value="${data.idx}">
                 				<input type="hidden" name="membertbl_id" value="${sid}">
-                                <input type="submit" class="btn btn-success" value="추천">
+                				<c:if test="${like.id != sid}">
+                                <input type="submit" class="btn btn-success" value="좋아요">
+                                </c:if>
+                               	<c:if test="${like.id == sid}">
+                                <input type="submit" class="btn btn-warning" value="좋아요 취소">
+                                </c:if>
                             </form>
                         </div>
                 </c:if>
