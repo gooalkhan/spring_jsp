@@ -34,3 +34,18 @@ function board_form_check() {
         return false;
     }
 }
+
+let sock = new SockJS('http://localhost:8080/message');
+sock.onopen = function () {
+    console.log('open');
+    sock.send('test message from client');
+};
+
+sock.onmessage = function (e) {
+    alert(e.data);
+};
+
+sock.onclose = function () {
+    console.log('close');
+};
+console.log("websocket start")

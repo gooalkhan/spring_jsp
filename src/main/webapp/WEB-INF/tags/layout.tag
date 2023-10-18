@@ -1,4 +1,4 @@
-<%@ tag description="layout" pageEncoding="UTF-8"%>
+<%@ tag description="layout" pageEncoding="UTF-8" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -16,12 +16,13 @@
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
     <%-- 여기부터 내용시작 --%>
-        <jsp:doBody/>
+    <jsp:doBody/>
     <%-- 여기에서 내용 끝 --%>
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 </html>
