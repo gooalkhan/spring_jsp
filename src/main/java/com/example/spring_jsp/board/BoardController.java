@@ -62,14 +62,21 @@ public class BoardController {
 	boardDetail로 요청이 올 때 마다 조회수를 올리기 위해 boardService.boardView(idx); 추가
 	*/
 	@GetMapping("/boardDetail")
-	public ModelAndView boardDetail(BoardDTO boardDTO) throws Exception{
+	public ModelAndView boardDetail(BoardDTO boardDTO, HttpServletRequest request) throws Exception{
 		ModelAndView mav = new ModelAndView();
-		BoardDTO DTO = boardService.boardDetailJoin(boardDTO);
-		List<BoardDTO> CDTO = boardService.commentShow(boardDTO);
 		int idx = boardDTO.getIdx();
 		boardService.boardView(idx);
+		HttpSession session = request.getSession();
+		BoardDTO DTO = boardService.boardDetailJoin(boardDTO);
+		List<BoardDTO> CDTO = boardService.commentShow(boardDTO);
 		mav.addObject("data", DTO);
 		mav.addObject("show", CDTO);
+		if(session.getAttribute("sid") != null) {
+			String id = session.getAttribute("sid").toString();
+			boardDTO.setId(id);
+		}
+		BoardDTO LDTO = boardService.likeButton(boardDTO);
+		mav.addObject("like", LDTO);
 		mav.setViewName("/board/boardDetail");
 		return mav;
 	}

@@ -17,4 +17,5 @@ public class BoardDTO {
     
     //그 외에 값을 담기 위해 만든 변수
     private String name;
+    private String id;
 }
