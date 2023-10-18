@@ -8,8 +8,8 @@
     </select>
 
     <update id="save">
-        insert into membertbl (ID, PW, EMAIL, NAME, JOINDATE, MODIFYDATE)
-        values (#{id}, #{pw}, #{email}, #{name}, now(), now());
+        insert into membertbl (ID, PW, EMAIL, NAME, JOINDATE, ADMIN)
+        values (#{id}, #{pw}, #{email}, #{name}, #{joinDate}, 'admin');
     </update>
 
     <update id="createTable">
@@ -23,6 +23,7 @@
                                    JOINDATE timestamp NOT NULL,
                                    MODIFYDATE timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                    ENABLEMEMBER tinyint NOT NULL DEFAULT 1,
+                                   ADMIN varchar(30) DEFAULT NULL,
                                    PRIMARY KEY (ID)
         );
     </update>
@@ -158,4 +159,24 @@
 	    Email = #{email}
 	    ]]>
 	</select>
+	
+	<!-- 부관리자 임명 -->
+	<update id="subadminAppoint" >
+		update
+		membertbl
+		set
+		ADMIN = 'subadmin'
+		where
+		ID = #{id}
+	</update>
+	
+	<!-- 부관리자 박탈 -->
+		<update id="subadminAppointCancel" >
+		update
+		membertbl
+		set
+		ADMIN = null
+		where
+		ID = #{id}
+	</update>
 </mapper>

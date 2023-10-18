@@ -32,7 +32,7 @@
             </div>
             <div class="container d-flex justify-content-center">
             	<div class="row">
-                <c:if test="${data.membertbl_id == sid || sid == 'hong'}">
+                <c:if test="${data.membertbl_id == sid || sadmin == 'admin' || sadmin == 'subadmin'}">
                     
                         <div class="col">
                             <button type="button" class="btn btn-primary"
@@ -81,7 +81,7 @@
                         <td class="text-center">${show.content}</td>
                         <td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd" value="${show.postDate}"/></td>
                         <td class="text-end">
-                            <c:if test="${show.name == sname || sid == 'hong'}">
+                            <c:if test="${show.name == sname || sadmin == 'admin' || sadmin == 'subadmin'}">
                                 <form method="Post" action="commentDelete">
                                     <input type="hidden" name="idx" value="${show.idx}">
                                     <input type="hidden" name="bidx" value="${data.idx}">

@@ -73,4 +73,16 @@ public class MemberServiceImpl implements MemberService{
 	public MemberDTO checkEmailDuplication(String email) throws Exception {
 		return memberMapper.existsByEmail(email);
 	}
+	
+	@Override
+	public boolean subadminAppoint(MemberDTO memberDTO) {
+		int affectRowCount = this.memberMapper.subadminAppoint(memberDTO);
+		return affectRowCount == 1;
+	}
+	
+	@Override
+	public boolean subadminAppointCancel(MemberDTO memberDTO) {
+		int affectRowCount = this.memberMapper.subadminAppointCancel(memberDTO);
+		return affectRowCount == 1;
+	}
 }

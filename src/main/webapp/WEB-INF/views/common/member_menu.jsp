@@ -3,7 +3,7 @@
 <ul class="nav justify-content-end">
     <c:choose>
         <c:when test="${sname != null}">
-        	<c:if test="${sid == 'hong'}">
+        	<c:if test="${sadmin == 'admin' || sadmin == 'subadmin'}">
             <li class="nav-item">
                 <a class="nav-link" href="/memberList">회원 목록 보러 가기</a>
             </li>
