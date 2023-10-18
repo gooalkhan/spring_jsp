@@ -22,4 +22,8 @@ public interface BoardService {
 	
 	int boardView(int idx);
 
+	BoardDTO boardDetailJoin(BoardDTO boardDTO) throws Exception;
+
+	List<BoardDTO> boardListJoin() throws Exception;
+
 }

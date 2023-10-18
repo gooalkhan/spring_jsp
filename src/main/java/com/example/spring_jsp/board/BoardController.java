@@ -20,7 +20,7 @@ public class BoardController {
 	@GetMapping("/boardList")
 	public ModelAndView boardList() throws Exception{
 		ModelAndView mav = new ModelAndView();
-		List<BoardDTO> list = boardService.boardSelect();
+		List<BoardDTO> list = boardService.boardListJoin();
 		mav.addObject("data", list);
 		mav.setViewName("/board/boardList");
 		return mav;
@@ -64,7 +64,7 @@ public class BoardController {
 	@GetMapping("/boardDetail")
 	public ModelAndView boardDetail(BoardDTO boardDTO) throws Exception{
 		ModelAndView mav = new ModelAndView();
-		BoardDTO DTO = boardService.boardDetail(boardDTO);
+		BoardDTO DTO = boardService.boardDetailJoin(boardDTO);
 		List<BoardDTO> CDTO = boardService.commentShow(boardDTO);
 		int idx = boardDTO.getIdx();
 		boardService.boardView(idx);

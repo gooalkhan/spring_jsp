@@ -117,5 +117,27 @@
 		idx = #{idx}
 		]]>
 	</update>
+		
+	<!-- 게시글에 글쓴이가 이름으로 나오기 위한 쿼리 -->
+	<select id="boardDetailJoin">
+	select
+	IDX, SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_ID, NAME
+	from
+	boardtbl
+	join membertbl
+	on boardtbl.membertbl_id = membertbl.id
+	where
+	IDX = #{idx}
+	</select>
+	
+	<!-- 게시글목록에 글쓴이가 이름으로 나오기 위한 쿼리 -->
+	<select id="boardListJoin">
+	select
+	IDX, SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_ID, NAME
+	from
+	boardtbl
+	join membertbl
+	on boardtbl.membertbl_id = membertbl.id
+	</select>
 	
 </mapper>

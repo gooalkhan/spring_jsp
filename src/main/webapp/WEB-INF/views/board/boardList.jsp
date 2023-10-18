@@ -21,7 +21,7 @@
                 <tr>
                     <td>${data.idx}</td>
                     <td><a href="/boardDetail?idx=${data.idx}">${data.subject}</a></td>
-                    <td>${data.membertbl_id}</td>
+                    <td>${data.name}</td>
                     <td><fmt:formatDate pattern="yyyy-MM-dd" value="${data.postDate}"/></td>
                     <td>${data.views}</td>
                     <td>${data.likes}</td>

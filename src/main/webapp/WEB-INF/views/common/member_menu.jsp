@@ -3,6 +3,11 @@
 <ul class="nav justify-content-end">
     <c:choose>
         <c:when test="${sname != null}">
+        	<c:if test="${sid == 'hong'}">
+            <li class="nav-item">
+                <a class="nav-link" href="/memberList">회원 목록 보러 가기</a>
+            </li>
+            </c:if>
             <li class="nav-item">
                 <a class="nav-link" href="/memberDetail?id=${sid}">안녕하세요 ${sname} 님 </a>
             </li>

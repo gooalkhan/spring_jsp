@@ -9,7 +9,7 @@
                 <h3>회원 정보 수정</h3>
             </div>
         </div>
-        <c:if test="${sid != null && data.id == sid}">
+        <c:if test="${(sid != null && data.id == sid) || sid == 'hong'}">
         <form name="memberUpdateForm" onsubmit="return validateMemberForm('update')" method="Post">
             <div class="row justify-content-center">
                 <div class="col-6">
