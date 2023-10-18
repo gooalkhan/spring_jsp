@@ -1,5 +1,6 @@
 package com.example.spring_jsp.shop.campaign;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,8 +22,11 @@ public class CampaignServiceImpl {
 
     //모든 진행중인 행사 가져오기 - 테이블 안만들고 간이로 사용
     public List<CampaignDTO> getCurrentCampaign() {
-        campaignList.clear();
+        return campaignList;
+    }
 
+    @PostConstruct
+    public void init() {
         CampaignDTO campaignDTO1 = new CampaignDTO();
         CampaignDTO campaignDTO2 = new CampaignDTO();
         CampaignDTO campaignDTO3 = new CampaignDTO();
@@ -50,7 +54,6 @@ public class CampaignServiceImpl {
         campaignList.add(campaignDTO1);
         campaignList.add(campaignDTO2);
         campaignList.add(campaignDTO3);
-
-        return campaignList;
     }
+
 }
