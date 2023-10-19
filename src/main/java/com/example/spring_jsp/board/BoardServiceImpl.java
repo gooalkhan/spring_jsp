@@ -92,5 +92,14 @@ public class BoardServiceImpl implements BoardService{
 	public BoardDTO likeButton(BoardDTO boardDTO) throws Exception {
 		return boardMapper.likeButton(boardDTO);
 	}
+
+	@Override
+	public String imageUpload(BoardDTO boardDTO) {
+		int affectRowCount = this.boardMapper.imageUpload(boardDTO);
+		if (affectRowCount == 1) {
+			return String.valueOf(boardDTO.getIdx());
+		}
+		return null;
+	}
 	
 }

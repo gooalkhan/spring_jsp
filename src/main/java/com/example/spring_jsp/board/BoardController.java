@@ -1,10 +1,14 @@
 package com.example.spring_jsp.board;
 
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +44,7 @@ public class BoardController {
 	boardList로 리다이렉트됨
 	*/
 	@PostMapping("/boardInsertPost")
-	public ModelAndView boardInsertPost(BoardDTO boardDTO, HttpServletRequest request) {
+	public ModelAndView boardInsertPost(BoardDTO boardDTO, HttpServletRequest request, MultipartFile[] uploadfile) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 	    if (session.getAttribute("sid") == null) {
@@ -50,6 +54,50 @@ public class BoardController {
 		}else {
 			// 여긴 굳이 알림창을 띄울 필요가 없어서 안 띄움
 			this.boardService.boardInsert(boardDTO);
+			int idx = boardDTO.getIdx();
+			boardDTO.setBoardtbl_idx(idx);
+			for(MultipartFile files : uploadfile) {
+				// 폴더 생성과 파일명 새로 부여를 위한 현재 시간 알아내기
+			    LocalDateTime now = LocalDateTime.now();
+			    int year = now.getYear();
+			    int month = now.getMonthValue();
+			    int day = now.getDayOfMonth();
+			    int hour = now.getHour();
+			    int minute = now.getMinute();
+			    int second = now.getSecond();
+			    int millis = now.get(ChronoField.MILLI_OF_SECOND);
+			    String imageName = files.getOriginalFilename();
+			    boardDTO.setOriginImageName(imageName);
+			    String absolutePath = new File("./src/main/webapp/resources").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
+			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
+			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
+			    String path = "images/test/" + year + "/" + month + "/" + day; // 저장될 폴더 경로
+			    String realPath = absolutePath + path;
+			    String realName = newFileName + fileExtension;
+			    try {
+			    	if(!files.isEmpty()) {
+			    		File file = new File(absolutePath + path);
+			            if(!file.exists()){
+			                file.mkdirs();
+			                // mkdir() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가
+			                // mkdirs() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
+			            }
+			            file = new File(absolutePath + path + "/" + newFileName + fileExtension);
+			            files.transferTo(file);
+
+
+			            boardDTO.setImageName(realName);
+			            boardDTO.setImagePath(realPath);
+
+			            this.boardService.imageUpload(boardDTO);
+			    	}
+			    	
+			    } catch (Exception e) {
+			    	e.printStackTrace();
+			    }
+			}
+		    
+			
 			mav.setViewName("redirect:/boardList");
 		}
 		return mav;

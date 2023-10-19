@@ -28,4 +28,6 @@ public interface BoardService {
 
 	BoardDTO likeButton(BoardDTO boardDTO) throws Exception;
 
+	String imageUpload(BoardDTO boardDTO);
+
 }
