@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring_jsp.image.ImageMapper">
+	<update id="createTable">
+		CREATE TABLE imagetbl (
+		  IDX int NOT NULL AUTO_INCREMENT,
+		  ORIGINIMAGENAME text NOT NULL,
+		  IMAGENAME text NOT NULL,
+		  IMAGEPATH text NOT NULL,
+		  IMAGEDATE timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		  boardtbl_IDX int NOT NULL,
+		  PRIMARY KEY (IDX),
+		  CONSTRAINT fk_imagetbl_boardtbl1 FOREIGN KEY (boardtbl_IDX) REFERENCES boardtbl (IDX) ON DELETE CASCADE
+		);
+    </update>
+
+    <update id="dropTable">
+        drop table if exists imagetbl;
+    </update>
+</mapper>

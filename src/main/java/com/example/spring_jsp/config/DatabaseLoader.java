@@ -11,6 +11,7 @@ import com.example.spring_jsp.comment.CommentMapper;
 import com.example.spring_jsp.member.MemberDTO;
 import com.example.spring_jsp.member.MemberMapper;
 import com.example.spring_jsp.like.LikeMapper;
+import com.example.spring_jsp.image.ImageMapper;
 import com.example.spring_jsp.shop.bookkeeping.BookkeepingMapper;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
@@ -48,6 +49,7 @@ public class DatabaseLoader implements CommandLineRunner {
     private final KeywordMapper keywordMapper;
     private final LikeMapper likeMapper;
     private final BookkeepingMapper bookkeepingMapper;
+    private final ImageMapper imageMapper;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -56,6 +58,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
         // 초기 테이블 생성
         if (activeProfile.equals("prod")) {
+        	imageMapper.dropTable();
             bookkeepingMapper.dropTable();
         	likeMapper.dropTable();
             commentMapper.dropTable();
@@ -72,6 +75,7 @@ public class DatabaseLoader implements CommandLineRunner {
         keywordMapper.createTable();
         likeMapper.createTable();
         bookkeepingMapper.createTable();
+        imageMapper.createTable();
 
         // 초기 데이터 추가
         MemberDTO entity = new MemberDTO();
