@@ -21,8 +21,33 @@ public class TextSocketHandler extends TextWebSocketHandler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage message) {
-        logger.info("message: " + message.getPayload());
+    public void handleTextMessage(WebSocketSession webSocketSession, TextMessage message) {
+        String uuid = message.getPayload();
+        logger.debug("id: " + message.getPayload() + " received");
+
+        Object session =  webSocketSession.getAttributes().get("session");
+        if (session != null && ((HttpSession)session).getAttribute("sid") != null) {
+            HttpSession httpSession = (HttpSession) session;
+            String sid = httpSession.getAttribute("sid").toString();
+
+            LinkedBlockingQueue<String> queue = notificationQueue.getQueue(sid);
+
+            String messageToSend;
+            while ((messageToSend = queue.poll()) != null) {
+                if (!messageToSend.contains(uuid)) {
+                    try {
+                        webSocketSession.sendMessage(new TextMessage(messageToSend));
+                        logger.debug("message: " + messageToSend + "sent");
+                    } catch (Exception e) {
+                        logger.error(e.getMessage());
+                    }
+                    break;
+                }
+                logger.debug("same message {} received, skipping", uuid);
+            }
+            logger.debug("{} messages are left in queue:",queue.size());
+        }
+
     }
 
     @Override
@@ -36,27 +61,32 @@ public class TextSocketHandler extends TextWebSocketHandler {
             notificationQueue.addSession(sid, webSocketSession);
 
             LinkedBlockingQueue<String> queue = notificationQueue.getQueue(sid);
-            while (!queue.isEmpty()) {
 
-                String message = queue.poll();
+            String message = queue.poll();
 
-                logger.debug("Start sending message: " + message);
+            if (message != null) {
                 try {
                     webSocketSession.sendMessage(new TextMessage(message));
+                    logger.debug("message: " + message + "sent");
                 } catch (Exception e) {
                     logger.error(e.getMessage());
                 }
             }
+
         }
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus status){
         HttpSession session = (HttpSession) webSocketSession.getAttributes().get("session");
-        if (session != null && session.getAttribute("sid") != null) {
-            String sid = session.getAttribute("sid").toString();
-            notificationQueue.removeSession(sid);
+        try {
+            if (session != null && session.getAttribute("sid") != null) {
+                String sid = session.getAttribute("sid").toString();
+                notificationQueue.removeSession(sid);
+            }
+            logger.debug("session: " + webSocketSession + " closed");
+        } catch (IllegalStateException e) {
+            logger.error("session is already invalidated");
         }
-        logger.debug("session: " + webSocketSession + " closed");
     }
 }
