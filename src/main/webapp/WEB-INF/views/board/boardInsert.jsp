@@ -17,7 +17,7 @@
                 <textarea class="form-control" id="content" rows="8" name="content" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="subject">이미지 첨부</label>
+                <label for="subject">이미지 첨부(제한 용량 : 100MB)</label>
                 <input type='file' class='form-control' name='uploadfile' accept='.jpg,.jpeg,.bmp,.png,.gif' multiple>
             </div>
             <div class="container d-flex justify-content-center">

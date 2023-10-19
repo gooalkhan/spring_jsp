@@ -26,6 +26,9 @@
                 </div>
             </div>
             <div class="row mb-3">
+            	<c:forEach var="image" items="${image}">
+                    <img src="${pageContext.request.contextPath}/resources/boardimages/${image.imageName}" alt="이미지" style="width: 20%; height: auto;">
+                </c:forEach>
                 <article>
                     <p class="border p-3">${data.content}</p>
                 </article>
