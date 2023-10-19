@@ -102,4 +102,8 @@ public class BoardServiceImpl implements BoardService{
 		return null;
 	}
 	
+	@Override
+	public List<BoardDTO> imageSelect(BoardDTO boardDTO){
+		return boardMapper.imageSelect(boardDTO);
+	}
 }

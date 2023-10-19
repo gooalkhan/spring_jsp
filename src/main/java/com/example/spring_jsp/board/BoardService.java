@@ -30,4 +30,6 @@ public interface BoardService {
 
 	String imageUpload(BoardDTO boardDTO);
 
+	List<BoardDTO> imageSelect(BoardDTO boardDTO);
+
 }

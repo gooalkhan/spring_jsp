@@ -71,7 +71,7 @@ public class BoardController {
 			    String absolutePath = new File("./src/main/webapp/resources").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
 			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
 			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
-			    String path = "images/test/" + year + "/" + month + "/" + day; // 저장될 폴더 경로
+			    String path = "boardimages"; // 저장될 폴더 경로
 			    String realPath = absolutePath + path;
 			    String realName = newFileName + fileExtension;
 			    try {
@@ -117,14 +117,19 @@ public class BoardController {
 		HttpSession session = request.getSession();
 		BoardDTO DTO = boardService.boardDetailJoin(boardDTO);
 		List<BoardDTO> CDTO = boardService.commentShow(boardDTO);
+		
 		mav.addObject("data", DTO);
 		mav.addObject("show", CDTO);
+		
 		if(session.getAttribute("sid") != null) {
 			String id = session.getAttribute("sid").toString();
 			boardDTO.setId(id);
 		}
 		BoardDTO LDTO = boardService.likeButton(boardDTO);
 		mav.addObject("like", LDTO);
+		boardDTO.setBoardtbl_idx(DTO.getIdx());
+		List<BoardDTO> IDTO = boardService.imageSelect(boardDTO);
+		mav.addObject("image", IDTO);
 		mav.setViewName("/board/boardDetail");
 		return mav;
 	}

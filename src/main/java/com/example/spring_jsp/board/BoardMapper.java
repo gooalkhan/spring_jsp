@@ -27,4 +27,5 @@ public interface BoardMapper {
 	List<BoardDTO> boardListJoin();
 	BoardDTO likeButton(BoardDTO boardDTO);
 	int imageUpload(BoardDTO boardDTO);
+	List<BoardDTO> imageSelect(BoardDTO boardDTO);
 }
