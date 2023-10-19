@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.UUID;
-
 import java.util.List;
 
 @RequestMapping("/shop")
@@ -55,54 +53,13 @@ public class ShopController {
         //세션아이디와 폼에서 받은 아이디가 일치하는지 확인
         if (sid != null && sid.equals(bookkeepingDTO.getUserid())) {
             logger.debug("id matching success - session id: {}, form id: {}", sid, bookkeepingDTO.getUserid());
-            String uuid = UUID.randomUUID().toString();
+            int[] result = bookkeepingServiceImpl.purchasePoint(bookkeepingDTO);
 
-            //폼에서 받은 판매정보가 서버의 판매정보와 일치하는지 확인
-            CampaignDTO campaignDTO =  campaignServiceImpl.selectCampaign(bookkeepingDTO.getCampaignUID());
-            if (campaignDTO != null) {
-                BookkeepingDTO toInsertBookkeepingDTO = new BookkeepingDTO();
-                toInsertBookkeepingDTO.setUUID(uuid);
-                toInsertBookkeepingDTO.setReferenceUUID(uuid);
-                toInsertBookkeepingDTO.setUserid(sid);
-                toInsertBookkeepingDTO.setAddedPoint(campaignDTO.getPoint());
-                toInsertBookkeepingDTO.setUsedPoint(0);
-                toInsertBookkeepingDTO.setPurchaseMethodUID(bookkeepingDTO.getPurchaseMethodUID());
-                toInsertBookkeepingDTO.setCampaignUID(campaignDTO.getUid());
-                toInsertBookkeepingDTO.setUnlockedUID(null);
-
-                int result = bookkeepingServiceImpl.bookkeepingInsert(toInsertBookkeepingDTO);
-                logger.debug("bookkeeping insert result: {}", result);
-
-                //포인트 증정 이벤트가 있을 경우 처리
-                int result2 = -1;
-                if (campaignDTO.getAdditionalPoint() > 0) {
-                    String uuid2 = UUID.randomUUID().toString();
-                    BookkeepingDTO additionalPointBookkeepingDTO = new BookkeepingDTO();
-                    additionalPointBookkeepingDTO.setUUID(uuid2);
-                    additionalPointBookkeepingDTO.setReferenceUUID(uuid);
-                    additionalPointBookkeepingDTO.setUserid(sid);
-                    additionalPointBookkeepingDTO.setAddedPoint(campaignDTO.getAdditionalPoint());
-                    additionalPointBookkeepingDTO.setUsedPoint(0);
-                    additionalPointBookkeepingDTO.setPurchaseMethodUID(bookkeepingDTO.getPurchaseMethodUID());
-                    additionalPointBookkeepingDTO.setCampaignUID(campaignDTO.getUid());
-                    additionalPointBookkeepingDTO.setUnlockedUID(null);
-
-                    result2 = bookkeepingServiceImpl.bookkeepingInsert(additionalPointBookkeepingDTO);
-                    logger.debug("bookkeeping insert result2: {}", result2);
-                }
-
-                //httpSession.setAttribute("point", bookkeepingServiceImpl.getPoint(sid));
-
-                //포인트 증정 없을 경우
-                if (result == 1 && result2 == -1) {
-                    nextPage = "redirect:/shop?success=true";
-
-                    //포인트 증정 있을 경우
-                } else if (result == 1 && result2 == 1) {
-                    nextPage = "redirect:/shop?success=true";
-                }
+            if (result[0] == 1 && result[1] != 0) {
+                logger.debug("purchase success");
+                nextPage = "redirect:/shop?success=true";
             } else {
-                logger.debug("cannot find campaign");
+                logger.debug("purchase failed");
             }
         }
         return nextPage;
