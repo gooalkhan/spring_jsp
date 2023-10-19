@@ -41,6 +41,7 @@
         </form>
         </c:if>
     </div>
+    <!-- 
     <c:if test="${(sid != null && sadmin == 'admin' && data.admin != 'admin')}">
     <div class="container d-flex justify-content-center">
     	<form method="Post" action="/subadminAppoint">
@@ -53,6 +54,7 @@
     		<input type="submit" class="btn btn-danger" value="이 유저에게 부관리자 권한 박탈하기">
     		</c:if>
     	</form>
-    </div>   	
-    </c:if>      
+    </div>
+    </c:if>
+     -->
 </t:layout>
