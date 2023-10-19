@@ -6,7 +6,7 @@
         <div class="row text-center my-3">
             <h3>게시글 등록</h3>
         </div>
-        <form method="Post" name="board_form" onsubmit="return board_form_check()" action="boardInsertPost">
+        <form method="Post" name="board_form" onsubmit="return board_form_check()" action="boardInsertPost" enctype="multipart/form-data">
             <input type="hidden" name="membertbl_id" value="${sid}">
             <div class="mb-3">
                 <label for="subject">제목</label>
@@ -16,14 +16,12 @@
                 <label for="content">내용</label>
                 <textarea class="form-control" id="content" rows="8" name="content" required></textarea>
             </div>
-            <div class="container d-flex justify-content-center">
-            <input type="submit" class="btn btn-primary" value="글 등록">
-            </div>
-        </form>
-        <form method="Post" action ="/imageUpload">
             <div class="mb-3">
                 <label for="subject">이미지 첨부</label>
-                <input type="file" class="form-control" name="originImageName" required>
+                <input type='file' class='form-control' name='uploadfile' accept='.jpg,.jpeg,.bmp,.png,.gif' multiple>
+            </div>
+            <div class="container d-flex justify-content-center">
+          		<input type="submit" class="btn btn-primary" value="글 등록">
             </div>
         </form>
     </div>

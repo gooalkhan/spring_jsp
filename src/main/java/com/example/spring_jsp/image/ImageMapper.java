@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface ImageMapper {
     void createTable();
     void dropTable();
-    
-    int imageUpload(ImageDTO imageDTO);
 }

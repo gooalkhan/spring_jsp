@@ -41,7 +41,7 @@
 	</select>
 	
 	<!--  기본 boardtbl dto 구문(게시글 등록) -->
-	<insert id="boardInsert">
+	<insert id="boardInsert"  useGeneratedKeys="true" keyProperty="idx">
 		insert
 		into
 		boardtbl
@@ -153,4 +153,13 @@
 		and
 		id = #{id};
 	</select>
+	
+	<!-- 이미지 업로드 -->
+	<insert id="imageUpload">
+    	insert
+    	into
+    	imagetbl (ORIGINIMAGENAME, IMAGENAME, IMAGEPATH, boardtbl_IDX)
+    	values
+    	(#{originImageName}, #{imageName}, #{imagePath}, #{boardtbl_idx})
+    </insert>
 </mapper>

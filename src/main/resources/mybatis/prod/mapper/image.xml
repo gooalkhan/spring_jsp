@@ -19,12 +19,4 @@
     <update id="dropTable">
         drop table if exists imagetbl;
     </update>
-    
-    <insert id="imageUpload">
-    	insert
-    	into
-    	imagetbl (ORIGINIMAGENAME, IMAGENAME, IMAGEPATH, boardtbl_IDX)
-    	values
-    	(#{originImageName}, #{imageName}, #{imagePath}, #{boardtbl_idx})
-    </insert>
 </mapper>
