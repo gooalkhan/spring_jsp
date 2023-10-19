@@ -20,5 +20,11 @@
             <input type="submit" class="btn btn-primary" value="글 등록">
             </div>
         </form>
+        <form method="Post" action ="/imageUpload">
+            <div class="mb-3">
+                <label for="subject">이미지 첨부</label>
+                <input type="file" class="form-control" name="originImageName" required>
+            </div>
+        </form>
     </div>
 </t:layout>
