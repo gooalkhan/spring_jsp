@@ -211,30 +211,30 @@ public class MemberController {
 			if(isUpdateSuccess) {
 				String id = memberDTO.getId();
 				request.setAttribute("msg", "부관리자 박탈에 성공했습니다.");
-				request.setAttribute("url", "/memberUpdate?id="+id);
+				request.setAttribute("url", "/memberDetail?id="+id);
 				mav.setViewName("/alert");
 			} else {
 				String id = memberDTO.getId();
 				request.setAttribute("msg", "부관리자 박탈에 실패했습니다. 다시 시도해주세요.");
-				request.setAttribute("url", "/memberUpdate?id="+id);
+				request.setAttribute("url", "/memberDetail?id="+id);
 				mav.setViewName("/alert");
 			}
 		}else if(admin.equals("admin")) {
 			String id = memberDTO.getId();
 			request.setAttribute("msg", "잘못된 요청입니다.");
-			request.setAttribute("url", "/memberUpdate?id="+id);
+			request.setAttribute("url", "/memberDetail?id="+id);
 			mav.setViewName("/alert");
 		}else {
 			boolean isUpdateSuccess = this.memberService.subadminAppoint(memberDTO);
 			if(isUpdateSuccess) {
 				String id = memberDTO.getId();
 				request.setAttribute("msg", "부관리자 임명에 성공했습니다.");
-				request.setAttribute("url", "/memberUpdate?id="+id);
+				request.setAttribute("url", "/memberDetail?id="+id);
 				mav.setViewName("/alert");
 			} else {
 				String id = memberDTO.getId();
 				request.setAttribute("msg", "부관리자 임명에 실패했습니다. 다시 시도해주세요.");
-				request.setAttribute("url", "/memberUpdate?id="+id);
+				request.setAttribute("url", "/memberDetail?id="+id);
 				mav.setViewName("/alert");
 			}
 		}

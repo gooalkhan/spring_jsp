@@ -88,17 +88,31 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3 text-center">
-                    <a href="/memberUpdate?id=${data.id}">정보 수정</a>
+                    <a class="btn btn-primary" href="/memberUpdate?id=${data.id}">정보 수정</a>
 
                     <form method="Post" action="/memberDelete" style="display: inline">
                         <input type="hidden" name="id" value="${data.id}">
-                        <a href="#" onclick="this.parentNode.submit()">삭제</a>
+                        <a class="btn btn-danger" href="#" onclick="this.parentNode.submit()">회원 탈퇴</a>
                     </form>
-                    <a href="/">메인으로</a>
+                    <a class="btn btn-Secondary" href="/">메인으로</a>
                 </div>
             </div>
         </div>
     </c:if>
     </div>
+    <c:if test="${(sid != null && sadmin == 'admin' && data.admin != 'admin')}">
+    <div class="container d-flex justify-content-center">
+    	<form method="Post" action="/subadminAppoint">
+    		<input type="hidden" name="id" value="${data.id}">
+    		<input type="hidden" name="admin" value="${data.admin}">
+    		<c:if test="${data.admin != 'subadmin'}">
+    		<input type="submit" class="btn btn-success" value="이 유저에게 부관리자 권한 주기">
+    		</c:if>
+    		<c:if test="${data.admin == 'subadmin'}">
+    		<input type="submit" class="btn btn-warning" value="이 유저에게 부관리자 권한 박탈하기">
+    		</c:if>
+    	</form>
+    </div>
+    </c:if>
     
 </t:layout>
