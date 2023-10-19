@@ -79,8 +79,9 @@ public class NotificationQueue {
         LinkedBlockingQueue<String> queue = map.get(sid);
         if (queue != null) {
             queue.add(message);
+            logger.debug("message {} added to queue to session: {}", message, sid);
         } else {
-            logger.error("no queue for sid: " + sid);
+            logger.warn("no queue for sid: " + sid);
         }
     }
 

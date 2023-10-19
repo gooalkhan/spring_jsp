@@ -55,7 +55,6 @@ let sock = new SockJS('http://localhost:8080/message');
 
 sock.onopen = function () {
     console.log('open');
-    sock.send('test message from client');
     console.log("websocket start")
 };
 
@@ -70,6 +69,12 @@ sock.onmessage = function (e) {
 
     let toastText = myToast.querySelector('#toast-body')
     let toastTitle = myToast.querySelector('#toast-title')
+
+    myToast.addEventListener('shown.bs.toast', function () {
+        if (sock.readyState === 1) {
+            sock.send(data.id);
+        }
+    })
 
     toastTitle.innerText = datetime + "분 전";
     toastText.innerText = data.message;
