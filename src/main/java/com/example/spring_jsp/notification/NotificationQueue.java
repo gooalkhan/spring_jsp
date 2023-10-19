@@ -3,6 +3,7 @@ package com.example.spring_jsp.notification;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -10,14 +11,15 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @Component
-public class NotificationQueue {
+public class NotificationQueue implements DisposableBean {
 
 
-    private final Map<String, WebSocketSession> sessions = new HashMap<>();
-    private final Map<String, LinkedBlockingQueue<String>> map = new HashMap<>();
+    private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
+    private final Map<String, LinkedBlockingQueue<String>> map = new ConcurrentHashMap<>();
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -85,4 +87,10 @@ public class NotificationQueue {
         }
     }
 
+    @Override
+    public void destroy() throws Exception {
+        for (Map.Entry<String, WebSocketSession> entry : sessions.entrySet()) {
+            entry.getValue().close();
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.example.spring_jsp.book.keyword;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -31,4 +32,9 @@ public class KeywordServiceImpl {
         return keywordMapper.keywordCount(bookid);
     }
 
+    public ModelAndView getKeywordAnalysis() {
+        	ModelAndView mav = new ModelAndView();
+        	mav.setViewName("/book/analysis/keyword");
+        	return mav;
+    }
 }

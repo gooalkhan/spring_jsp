@@ -44,6 +44,8 @@ public class ShopController {
 
     @PostMapping("/purchase")
     public String purchase(BookkeepingDTO bookkeepingDTO, HttpSession httpSession) {
+
+        //TODO: 받는 객체가 bookeeping이 아니라 campaignDTO로 받아 처리할것
         logger.debug("start purchasing - bookkeepingDTO: {}", bookkeepingDTO);
         String nextPage = "redirect:/shop?success=false";
 
@@ -53,7 +55,7 @@ public class ShopController {
         //세션아이디와 폼에서 받은 아이디가 일치하는지 확인
         if (sid != null && sid.equals(bookkeepingDTO.getUserid())) {
             logger.debug("id matching success - session id: {}, form id: {}", sid, bookkeepingDTO.getUserid());
-            int[] result = bookkeepingServiceImpl.purchasePoint(bookkeepingDTO);
+            int[] result = campaignServiceImpl.purchasePoint(bookkeepingDTO);
 
             if (result[0] == 1 && result[1] != 0) {
                 logger.debug("purchase success");

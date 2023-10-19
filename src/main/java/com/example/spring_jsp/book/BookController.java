@@ -1,6 +1,10 @@
 package com.example.spring_jsp.book;
 
 import com.example.spring_jsp.book.keyword.KeywordServiceImpl;
+import com.example.spring_jsp.shop.bookkeeping.BookkeepingServiceImpl;
+import com.example.spring_jsp.shop.product.ProductDTO;
+import com.example.spring_jsp.shop.product.ProductServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import com.example.spring_jsp.shop.product.ProductBuilder;
 
 import java.util.List;
 
@@ -19,6 +25,8 @@ public class BookController {
 
     private final BookServiceImpl bookServiceImpl;
     private final KeywordServiceImpl keywordServiceImpl;
+    private final ProductServiceImpl productServiceImpl;
+    private final BookkeepingServiceImpl bookkeepingServiceImpl;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final int BOOK_PAGE_SIZE = 12;
@@ -32,6 +40,7 @@ public class BookController {
         int count; // 조건에 맞는 책의 개수 - 페이징 처리를 위해 사용
         if (id != 0) model.addAttribute("id", id);
 
+        //TODO: 데이터 넣는 부분 서비스로 이관
         List<BookDTO> data; // 책 정보
         if (!condition.isEmpty() && !searchword.isEmpty()) {
             switch (condition) {
@@ -73,15 +82,51 @@ public class BookController {
     }
 
     @GetMapping("/analysis/favorite")
-    public String anal_favorite(@RequestParam("bookid") long bookid, Model model) {
-        model.addAttribute("keyword_count", keywordServiceImpl.keywordCount(bookid));
-        return "book/analysis/favorite";
+    public String anal_favorite(HttpSession httpSession, @RequestParam("bookid") long bookid, Model model) {
+        model.addAttribute("analysis", "선호작품");
+        model.addAttribute("bookid", bookid);
+        if (httpSession.getAttribute("sid") == null) {
+            return "book/analysis/nosession";
+        }
+
+        return "book/analysis/withsession";
     }
 
     @GetMapping("/analysis/keyword")
-    public String anal_keyword(@RequestParam("bookid") long bookid, Model model) {
-        model.addAttribute("keyword_count", keywordServiceImpl.keywordCount(bookid));
-        return "book/analysis/keyword";
+    public ModelAndView anal_keyword(HttpSession httpSession, @RequestParam("bookid") long bookid, Model model) {
+        ModelAndView mav = new ModelAndView();
+        model.addAttribute("analysis", "키워드");
+        model.addAttribute("bookid", bookid);
+        if (httpSession.getAttribute("sid") == null) {
+            mav.setViewName("book/analysis/nosession");
+            return mav;
+        }
+
+        //이미 구매한 경우
+        String sid = httpSession.getAttribute("sid").toString();
+        List<String> unlockedList = bookkeepingServiceImpl.getUnlockedUID(sid);
+
+        ProductDTO purchased;
+        for (String unlockedUID : unlockedList) {
+            purchased = productServiceImpl.selectProduct(unlockedUID);
+            if (purchased.getBookid() == bookid && purchased.getProductid().equals("키워드")) {
+                return keywordServiceImpl.getKeywordAnalysis();
+            }
+        }
+
+        //구매 안한 경우
+        //TODO: 여기서 프로덕트 빌더로 제품 만들고 제품을 구매하도록 하기
+        List<ProductDTO> list = productServiceImpl.selectProductCountByBookUserProduct(bookid, "키워드", sid);
+
+        ProductDTO productDTO;
+        if (list.isEmpty()) {
+            productDTO = productServiceImpl.buildInsertProduct(bookid, "키워드", sid);
+        } else productDTO = list.get(0);
+        mav.addObject("productDTO", productDTO);
+
+        mav.setViewName("book/analysis/withsession");
+        return mav;
+
     }
 
     @GetMapping("/bookcard")

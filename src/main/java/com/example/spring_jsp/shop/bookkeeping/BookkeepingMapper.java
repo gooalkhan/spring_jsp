@@ -17,4 +17,6 @@ public interface BookkeepingMapper {
 
     List<BookkeepingDTO> bookkeepingSelect(String userid);
 
+    List<String> getUnlockedUID(String userid);
+
 }

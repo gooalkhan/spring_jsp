@@ -43,4 +43,15 @@
             userid = #{userid};
     </select>
 
+    <select id="getUnlockedUID" parameterType="String">
+        select
+            unlockeduid
+        from
+            bookkeepingtbl
+        where
+            userid = #{userid}
+        order by
+            adddate desc;
+    </select>
+
 </mapper>

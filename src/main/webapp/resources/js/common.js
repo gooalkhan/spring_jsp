@@ -35,22 +35,6 @@ function board_form_check() {
     }
 }
 
-function isSameMessage(message) {
-    let toastContainer = document.getElementById('toast-container');
-    let toastList = toastContainer.querySelectorAll('.toast');
-
-    for (let i = 0; i < toastList.length; i++) {
-        let toastText = toastList[i].querySelector('#toast-body').innerText;
-
-        if (toastText === message) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-
 let sock = new SockJS('http://localhost:8080/message');
 
 sock.onopen = function () {
@@ -61,14 +45,15 @@ sock.onopen = function () {
 sock.onmessage = function (e) {
     console.log('message', e.data);
 
-    let data = JSON.parse(e.data);
-    let datetime = Math.floor((Date.now() - Date.parse(data.messageDate)) / 60000);
+    var data = JSON.parse(e.data);
+    var datetime = Math.floor((Date.now() - Date.parse(data.messageDate)) / 60000);
 
-    let toastContainer = document.getElementById('toast-container');
-    let myToast = document.getElementById('myToast').cloneNode(true);
+    var toastContainer = document.getElementById('toast-container');
+    var myToast = document.getElementById('myToast').cloneNode(true);
+    myToast.id = data.id;
 
-    let toastText = myToast.querySelector('#toast-body')
-    let toastTitle = myToast.querySelector('#toast-title')
+    var toastText = myToast.querySelector('#toast-body')
+    var toastTitle = myToast.querySelector('#toast-title')
 
     myToast.addEventListener('shown.bs.toast', function () {
         if (sock.readyState === 1) {
@@ -79,14 +64,24 @@ sock.onmessage = function (e) {
     toastTitle.innerText = datetime + "분 전";
     toastText.innerText = data.message;
 
-    if (!isSameMessage(data.message)) {
-        toastContainer.appendChild(myToast);
-        let myToastInstance = new bootstrap.Toast(myToast);
-        myToastInstance.show();
-    }
+    toastContainer.appendChild(myToast);
+    var myToastInstance = new bootstrap.Toast(myToast);
+    myToastInstance.show();
 
 };
 
 sock.onclose = function () {
     console.log('websocket close');
 };
+
+function getKeywordAnalysis(querystring) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:8080/keyword?" + querystring, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = xhr.responseText;
+            document.getElementById("analysis").innerHTML = response;
+        }
+    };
+    xhr.send();
+}
