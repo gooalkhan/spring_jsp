@@ -36,7 +36,10 @@ public class BookkeepingServiceImpl implements BookkeepingService {
     }
 
     public List<String> getUnlockedUID(String userid) {
-        return bookkeepingMapper.getUnlockedUID(userid);
+        List<String> list =  bookkeepingMapper.getUnlockedUID(userid);
+        while (list.remove(null));
+
+        return list;
     }
 
 }

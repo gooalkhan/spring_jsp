@@ -115,13 +115,13 @@ public class BookController {
         }
 
         //구매 안한 경우
-        //TODO: 여기서 프로덕트 빌더로 제품 만들고 제품을 구매하도록 하기
         List<ProductDTO> list = productServiceImpl.selectProductCountByBookUserProduct(bookid, "키워드", sid);
 
         ProductDTO productDTO;
         if (list.isEmpty()) {
             productDTO = productServiceImpl.buildInsertProduct(bookid, "키워드", sid);
         } else productDTO = list.get(0);
+        logger.debug("productDTO inserted: {}", productDTO.toString());
         mav.addObject("productDTO", productDTO);
 
         mav.setViewName("book/analysis/withsession");

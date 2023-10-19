@@ -74,14 +74,34 @@ sock.onclose = function () {
     console.log('websocket close');
 };
 
-function getKeywordAnalysis(querystring) {
+function getKeywordAnalysis(bookid, productid) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:8080/keyword?" + querystring, true);
+    xhr.open("GET", "http://localhost:8080/keyword?bookid=" +bookid + "&productid=" + productid, true);
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var response = xhr.responseText;
-            document.getElementById("analysis").innerHTML = response;
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById("analysis").innerHTML = xhr.responseText;
         }
     };
     xhr.send();
+}
+
+function purchaseAnalysis() {
+    var xhr = new XMLHttpRequest();
+    var formData = document.forms["keyword-purchase"];
+    var body = new FormData(formData);
+
+    xhr.open("POST", "http://localhost:8080/keyword", true);
+    xhr.withCredentials = true;
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = xhr.responseText;
+            console.log(response)
+            var json = JSON.parse(response)
+            if (json.status === "success") {
+                getKeywordAnalysis(formData["bookid"].value, formData["productid"].value);
+            }
+        }
+    };
+    xhr.send(body);
+    return false;
 }

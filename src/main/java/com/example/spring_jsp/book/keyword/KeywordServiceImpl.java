@@ -34,7 +34,7 @@ public class KeywordServiceImpl {
 
     public ModelAndView getKeywordAnalysis() {
         	ModelAndView mav = new ModelAndView();
-        	mav.setViewName("/book/analysis/keyword");
+        	mav.setViewName("book/analysis/template/keyword");
         	return mav;
     }
 }
