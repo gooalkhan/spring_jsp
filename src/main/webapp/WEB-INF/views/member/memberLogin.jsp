@@ -26,5 +26,8 @@
                 <input type="submit" class="btn btn-primary" value="로그인">
             </div>
         </form>
+        <div class="container d-flex justify-content-center">
+        	<a class="btn btn-warning" href="/whereIsMyAccount">아이디/비밀번호를 까먹으셨나요?</a>
+        </div>
     </div>
 </t:layout>

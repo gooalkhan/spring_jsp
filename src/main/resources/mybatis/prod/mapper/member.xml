@@ -168,7 +168,7 @@
 	</update>
 	
 	<!-- 부관리자 박탈 -->
-		<update id="subadminAppointCancel" >
+	<update id="subadminAppointCancel" >
 		update
 		membertbl
 		set
@@ -176,4 +176,26 @@
 		where
 		ID = #{id}
 	</update>
+	
+	<!-- 아이디 찾기 -->
+	<select id="whereIsMyId" resultType="com.example.spring_jsp.member.MemberDTO">
+		select
+		*
+		from
+		membertbl
+		where
+		email = #{email}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="whereIsMyPw" resultType="com.example.spring_jsp.member.MemberDTO">
+		select
+		*
+		from
+		membertbl
+		where
+		id = #{id}
+		and
+		email = #{email}
+	</select>
 </mapper>
