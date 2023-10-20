@@ -241,4 +241,41 @@ public class MemberController {
 		return mav;
 	}
 	
+	// 아이디/비밀번호 찾기 페이지
+	@GetMapping("/whereIsMyAccount")
+	public String whereIsMyAccount() {
+		return "/member/whereIsMyAccount";
+	}
+	
+	// 아이디 찾기 페이지
+	@GetMapping("/whereIsMyId")
+	public String whereIsMyId() {
+		return "/member/whereIsMyId";
+	}
+	
+	// 아이디 찾기 처리
+	@PostMapping("/whereIsMyId")
+	public ModelAndView whereIsMyIdPost(MemberDTO memberDTO) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		MemberDTO DTO = memberService.whereIsMyId(memberDTO);
+		mav.addObject("data", DTO);
+		mav.setViewName("/member/memberId");
+		return mav;
+	}
+	
+	// 비밀번호 찾기 페이지
+	@GetMapping("/whereIsMyPw")
+	public String whereIsMyPw() {
+		return "/member/whereIsMyPw";
+	}
+	
+	// 비밀번호 찾기 처리
+	@PostMapping("/whereIsMyPw")
+	public ModelAndView whereIsMyPwPost(MemberDTO memberDTO) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		MemberDTO DTO = memberService.whereIsMyPw(memberDTO);
+		mav.addObject("data", DTO);
+		mav.setViewName("/member/memberPw");
+		return mav;
+	}
 }

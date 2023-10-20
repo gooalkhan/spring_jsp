@@ -32,6 +32,10 @@ public interface MemberService {
 
 	void memberLogout(HttpSession session);
 
+	MemberDTO whereIsMyId(MemberDTO memberDTO) throws Exception;
+
+	MemberDTO whereIsMyPw(MemberDTO memberDTO) throws Exception;
+
 
 
 
