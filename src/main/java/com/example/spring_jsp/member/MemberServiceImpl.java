@@ -98,4 +98,14 @@ public class MemberServiceImpl implements MemberService{
 		int affectRowCount = this.memberMapper.subadminAppointCancel(memberDTO);
 		return affectRowCount == 1;
 	}
+	
+	@Override
+	public MemberDTO whereIsMyId(MemberDTO memberDTO) throws Exception {
+		return memberMapper.whereIsMyId(memberDTO);
+	}
+	
+	@Override
+	public MemberDTO whereIsMyPw(MemberDTO memberDTO) throws Exception {
+		return memberMapper.whereIsMyPw(memberDTO);
+	}
 }
