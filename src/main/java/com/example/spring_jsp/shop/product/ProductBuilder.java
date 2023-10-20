@@ -25,7 +25,7 @@ public class ProductBuilder {
         this.productid = productid;
 
         switch (productid) {
-            case "키워드":
+            case "키워드", "선호작품":
                 this.usedPoint += 50;
                 break;
             case "댓글":

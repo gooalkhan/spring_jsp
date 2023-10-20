@@ -32,9 +32,4 @@ public class KeywordServiceImpl {
         return keywordMapper.keywordCount(bookid);
     }
 
-    public ModelAndView getKeywordAnalysis() {
-        	ModelAndView mav = new ModelAndView();
-        	mav.setViewName("book/analysis/template/keyword");
-        	return mav;
-    }
 }

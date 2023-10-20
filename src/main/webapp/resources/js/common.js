@@ -74,23 +74,29 @@ sock.onclose = function () {
     console.log('websocket close');
 };
 
-function getKeywordAnalysis(bookid, productid) {
+function getAnalysis(bookid, productid) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:8080/keyword?bookid=" +bookid + "&productid=" + productid, true);
+    xhr.open("GET", "http://localhost:8080/analysis?bookid=" +bookid + "&productid=" + productid, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            document.getElementById("analysis").innerHTML = xhr.responseText;
+            var parser = new DOMParser();
+            var newNode = parser.parseFromString(xhr.responseText, 'text/html').getElementById(productid)
+            var container = document.getElementById("analysis-container");
+            var oldNode = document.getElementById(productid);
+            container.replaceChild(newNode, oldNode);
+            // document.getElementById("analysis-"+productid).outerHTML = xhr.responseText;
         }
     };
     xhr.send();
 }
 
-function purchaseAnalysis() {
+function purchaseAnalysis(formuid) {
+
     var xhr = new XMLHttpRequest();
-    var formData = document.forms["keyword-purchase"];
+    var formData = document.forms[formuid];
     var body = new FormData(formData);
 
-    xhr.open("POST", "http://localhost:8080/keyword", true);
+    xhr.open("POST", "http://localhost:8080/analysis", true);
     xhr.withCredentials = true;
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -98,7 +104,15 @@ function purchaseAnalysis() {
             console.log(response)
             var json = JSON.parse(response)
             if (json.status === "success") {
-                getKeywordAnalysis(formData["bookid"].value, formData["productid"].value);
+
+                list = document.getElementsByClassName("current-point");
+                for (var i = 0; i < list.length; i++) {
+                    list[i].innerText = json.current_point;
+                }
+
+                getAnalysis(formData["bookid"].value, formData["productid"].value);
+
+                document.getElementById(formuid).remove();
             }
         }
     };

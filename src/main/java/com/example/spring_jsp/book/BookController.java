@@ -81,54 +81,6 @@ public class BookController {
         return "book/bookDetail";
     }
 
-    @GetMapping("/analysis/favorite")
-    public String anal_favorite(HttpSession httpSession, @RequestParam("bookid") long bookid, Model model) {
-        model.addAttribute("analysis", "선호작품");
-        model.addAttribute("bookid", bookid);
-        if (httpSession.getAttribute("sid") == null) {
-            return "book/analysis/nosession";
-        }
-
-        return "book/analysis/withsession";
-    }
-
-    @GetMapping("/analysis/keyword")
-    public ModelAndView anal_keyword(HttpSession httpSession, @RequestParam("bookid") long bookid, Model model) {
-        ModelAndView mav = new ModelAndView();
-        model.addAttribute("analysis", "키워드");
-        model.addAttribute("bookid", bookid);
-        if (httpSession.getAttribute("sid") == null) {
-            mav.setViewName("book/analysis/nosession");
-            return mav;
-        }
-
-        //이미 구매한 경우
-        String sid = httpSession.getAttribute("sid").toString();
-        List<String> unlockedList = bookkeepingServiceImpl.getUnlockedUID(sid);
-
-        ProductDTO purchased;
-        for (String unlockedUID : unlockedList) {
-            purchased = productServiceImpl.selectProduct(unlockedUID);
-            if (purchased.getBookid() == bookid && purchased.getProductid().equals("키워드")) {
-                return keywordServiceImpl.getKeywordAnalysis();
-            }
-        }
-
-        //구매 안한 경우
-        List<ProductDTO> list = productServiceImpl.selectProductCountByBookUserProduct(bookid, "키워드", sid);
-
-        ProductDTO productDTO;
-        if (list.isEmpty()) {
-            productDTO = productServiceImpl.buildInsertProduct(bookid, "키워드", sid);
-        } else productDTO = list.get(0);
-        logger.debug("productDTO inserted: {}", productDTO.toString());
-        mav.addObject("productDTO", productDTO);
-
-        mav.setViewName("book/analysis/withsession");
-        return mav;
-
-    }
-
     @GetMapping("/bookcard")
     public String bookcard(@RequestParam("bookid") long bookid, @RequestParam(value = "detail", defaultValue = "false") boolean isDetail, Model model) {
 
