@@ -12,9 +12,9 @@
             userid       VARCHAR(20)                           not null,
             addedpoint   INTEGER   default 0                   not null,
             usedpoint    INTEGER   default 0                   not null,
-            purchasemethoduid  varchar(30)                     not null,
-            campaignuid  varchar(30),
-            unlockeduid  varchar(30),
+            purchasemethoduid  varchar(36),
+            campaignuid  varchar(36),
+            unlockeduid  varchar(36),
             adddate      timestamp default CURRENT_TIMESTAMP() not null,
             constraint bookkeepingtbl_pk
                 primary key (uuid),
@@ -41,6 +41,17 @@
             bookkeepingtbl
         where
             userid = #{userid};
+    </select>
+
+    <select id="getUnlockedUID" parameterType="String">
+        select
+            unlockeduid
+        from
+            bookkeepingtbl
+        where
+            userid = #{userid}
+        order by
+            adddate desc;
     </select>
 
 </mapper>

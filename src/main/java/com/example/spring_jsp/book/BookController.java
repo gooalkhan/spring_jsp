@@ -1,6 +1,10 @@
 package com.example.spring_jsp.book;
 
 import com.example.spring_jsp.book.keyword.KeywordServiceImpl;
+import com.example.spring_jsp.shop.bookkeeping.BookkeepingServiceImpl;
+import com.example.spring_jsp.shop.product.ProductDTO;
+import com.example.spring_jsp.shop.product.ProductServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import com.example.spring_jsp.shop.product.ProductBuilder;
 
 import java.util.List;
 
@@ -19,6 +25,8 @@ public class BookController {
 
     private final BookServiceImpl bookServiceImpl;
     private final KeywordServiceImpl keywordServiceImpl;
+    private final ProductServiceImpl productServiceImpl;
+    private final BookkeepingServiceImpl bookkeepingServiceImpl;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final int BOOK_PAGE_SIZE = 12;
@@ -32,6 +40,7 @@ public class BookController {
         int count; // 조건에 맞는 책의 개수 - 페이징 처리를 위해 사용
         if (id != 0) model.addAttribute("id", id);
 
+        //TODO: 데이터 넣는 부분 서비스로 이관
         List<BookDTO> data; // 책 정보
         if (!condition.isEmpty() && !searchword.isEmpty()) {
             switch (condition) {
@@ -70,18 +79,6 @@ public class BookController {
         BookDTO bookDTO = bookServiceImpl.bookSelect(id);
         model.addAttribute("title", bookDTO.getTitle());
         return "book/bookDetail";
-    }
-
-    @GetMapping("/analysis/favorite")
-    public String anal_favorite(@RequestParam("bookid") long bookid, Model model) {
-        model.addAttribute("keyword_count", keywordServiceImpl.keywordCount(bookid));
-        return "book/analysis/favorite";
-    }
-
-    @GetMapping("/analysis/keyword")
-    public String anal_keyword(@RequestParam("bookid") long bookid, Model model) {
-        model.addAttribute("keyword_count", keywordServiceImpl.keywordCount(bookid));
-        return "book/analysis/keyword";
     }
 
     @GetMapping("/bookcard")

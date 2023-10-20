@@ -10,12 +10,12 @@
                 <h3>${title} 분석</h3>
             </div>
         </div>
-        <div class="container">
+        <div class="container" id="analysis-container">
             <c:import url="/books/bookcard?bookid=${id}&detail=true"/>
             <hr>
-            <c:import url="/books/analysis/keyword?bookid=${id}"/>
+            <c:import url="/analysis/keyword?bookid=${id}"/>
 
-            <c:import url="/books/analysis/favorite?bookid=${id}"/>
+            <c:import url="/analysis/favorite?bookid=${id}"/>
 
         </div>
     </div>
