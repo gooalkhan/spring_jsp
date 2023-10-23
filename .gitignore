@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 !**/src/main/resources/pyHandler/venv/bin
 !**/src/main/resources/pyHandler/venv/lib
+boardimages/
 
 ### STS ###
 .apt_generated
