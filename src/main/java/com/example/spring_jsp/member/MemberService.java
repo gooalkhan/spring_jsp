@@ -36,6 +36,8 @@ public interface MemberService {
 
 	MemberDTO whereIsMyPw(MemberDTO memberDTO) throws Exception;
 
+	boolean resetPw(MemberDTO memberDTO);
+
 
 
 

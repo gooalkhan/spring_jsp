@@ -157,8 +157,8 @@ public class BoardController {
 			// 게시글 수정 시, 이미지 폴더에 기존 이미지 삭제
 			List<BoardDTO> IDTO = boardService.imageSelect(boardDTO);
 			String aPath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\";
-		    String spath = "boardimages";
-		    String rPath = aPath + spath;
+		    String sPath = "boardimages";
+		    String rPath = aPath + sPath;
 			for(BoardDTO DTO: IDTO) {
 				String filePathStr = rPath + "\\" + DTO.getImageName();
 				File file = new File(filePathStr);
@@ -233,8 +233,8 @@ public class BoardController {
 		// 게시글 수정 시, 이미지 폴더에 기존 이미지 삭제
 		List<BoardDTO> IDTO = boardService.imageSelect(boardDTO);
 		String aPath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\";
-	    String spath = "boardimages";
-	    String rPath = aPath + spath;
+	    String sPath = "boardimages";
+	    String rPath = aPath + sPath;
 		for(BoardDTO DTO: IDTO) {
 			String filePathStr = rPath + "\\" + DTO.getImageName();
 			File file = new File(filePathStr);

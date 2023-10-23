@@ -108,4 +108,10 @@ public class MemberServiceImpl implements MemberService{
 	public MemberDTO whereIsMyPw(MemberDTO memberDTO) throws Exception {
 		return memberMapper.whereIsMyPw(memberDTO);
 	}
+	
+	@Override
+	public boolean resetPw(MemberDTO memberDTO) {
+		int affectRowCount = this.memberMapper.resetPw(memberDTO);
+		return affectRowCount == 1;
+	}
 }

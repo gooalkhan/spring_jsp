@@ -278,4 +278,21 @@ public class MemberController {
 		mav.setViewName("/member/memberPw");
 		return mav;
 	}
+	
+	// 비밀번호 재설정
+	@PostMapping("/resetPw")
+	public ModelAndView resetPw(MemberDTO memberDTO, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		boolean isUpdateSuccess = this.memberService.resetPw(memberDTO);
+		if(isUpdateSuccess) {
+			request.setAttribute("msg", "비밀번호 재설정이 완료되었습니다. 홈으로 돌아갑니다.");
+			request.setAttribute("url", "/");
+			mav.setViewName("/alert");
+		} else {
+			request.setAttribute("msg", "비밀번호 재설정에 실패했습니다. 다시 시도해주세요.");
+			request.setAttribute("url", "/");
+			mav.setViewName("/alert");
+		}
+		return mav;
+	}
 }
