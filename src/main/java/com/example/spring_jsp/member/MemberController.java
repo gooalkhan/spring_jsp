@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.spring_jsp.config.SHA256;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class MemberController {
 	private final MemberService memberService;
+	private final SHA256 sha256;
 	
 	//회원 목록
 	@GetMapping("/memberList")
@@ -69,6 +72,8 @@ public class MemberController {
 			String id = memberJoinDTO.getId();
 			String name = memberJoinDTO.getName();
 			String email = memberJoinDTO.getEmail();
+			String pw1 = memberJoinDTO.getPw(); // 비밀번호
+			String pw2 = memberJoinDTO.getPw2(); // 비밀번호 확인
 			MemberDTO eId = this.memberService.checkIdDuplication(id);
 			MemberDTO eName = this.memberService.checkNameDuplication(name);
 			MemberDTO eEmail = this.memberService.checkEmailDuplication(email);
@@ -87,9 +92,15 @@ public class MemberController {
 		    	request.setAttribute("msg", "중복된 이메일입니다. 다시 이메일을 입력해주세요.");
 		    	request.setAttribute("url", "/memberJoin");
 				mav.setViewName("/alert");
+			} else if(!pw1.equals(pw2)) {
+		    	request.setAttribute("msg", "비밀번호와 비밀번호 확인이 맞지 않습니다. 다시 비밀번호를 입력해주세요.");
+		    	request.setAttribute("url", "/memberJoin");
+				mav.setViewName("/alert");
 			}
 			/* 회원가입 성공 시 */
 			else {
+				String pw = memberJoinDTO.getPw();
+				memberJoinDTO.setPw(sha256.getSHA256(pw));
 				this.memberService.memberJoin(memberJoinDTO);
 		    	request.setAttribute("msg", "회원가입이 완료되었습니다.");
 		    	request.setAttribute("url", "/");
@@ -120,6 +131,8 @@ public class MemberController {
 	@PostMapping("/memberLogin")
 	public ModelAndView memberLoginPost(MemberDTO memberDTO, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		String pw = memberDTO.getPw();
+		memberDTO.setPw(sha256.getSHA256(pw));
 		MemberDTO DTO = memberService.memberLogin(memberDTO);
 		if(DTO == null) {
 			request.setAttribute("msg", "아이디와 비밀번호가 틀렸습니다. 다시 입력해주세요.");
@@ -129,12 +142,10 @@ public class MemberController {
 		else {
 		mav.addObject("data", DTO);
 		String id = DTO.getId();
-		String pw = DTO.getPw();
 		String name = DTO.getName();
 		String admin = DTO.getAdmin();
 		HttpSession session = request.getSession();
 		session.setAttribute("sid", id);
-		session.setAttribute("spw", pw);
 		session.setAttribute("sname", name);
 		session.setAttribute("sadmin", admin);
 		mav.setViewName("/index");
@@ -163,14 +174,28 @@ public class MemberController {
 	
 	//회원 정보 수정 처리
 	@PostMapping("/memberUpdate")
-	public ModelAndView memberUpdatePost(MemberDTO memberDTO) {
+	public ModelAndView memberUpdatePost(MemberDTO memberDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		boolean isUpdateSuccess = this.memberService.memberUpdate(memberDTO);
-		if(isUpdateSuccess) {
+		String pw1 = memberDTO.getPw();
+		String pw2 = memberDTO.getPw2();
+		if(!pw1.equals(pw2)) {
 			String id = memberDTO.getId();
-			mav.setViewName("redirect:/memberDetail?id="+id);
+		    request.setAttribute("msg", "비밀번호와 비밀번호 확인이 맞지 않습니다. 다시 비밀번호를 입력해주세요.");
+		    request.setAttribute("url", "/memberUpdate?id="+id);
+			mav.setViewName("/alert");
 		} else {
-			mav.setViewName("/error");
+			String pw = memberDTO.getPw();
+			memberDTO.setPw(sha256.getSHA256(pw));
+			boolean isUpdateSuccess = this.memberService.memberUpdate(memberDTO);
+			if(isUpdateSuccess) {
+				String id = memberDTO.getId();
+				mav.setViewName("redirect:/memberDetail?id="+id);
+			} else {
+				String id = memberDTO.getId();
+			    request.setAttribute("msg", "회원 정보 수정 중, 오류가 생겼습니다. 다시 시도해주세요.");
+			    request.setAttribute("url", "/memberUpdate?id="+id);
+				mav.setViewName("/alert");
+			}
 		}
 		return mav;
 	}
@@ -283,15 +308,25 @@ public class MemberController {
 	@PostMapping("/resetPw")
 	public ModelAndView resetPw(MemberDTO memberDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		boolean isUpdateSuccess = this.memberService.resetPw(memberDTO);
-		if(isUpdateSuccess) {
-			request.setAttribute("msg", "비밀번호 재설정이 완료되었습니다. 홈으로 돌아갑니다.");
-			request.setAttribute("url", "/");
+		String pw1 = memberDTO.getPw();
+		String pw2 = memberDTO.getPw2();
+		if(!pw1.equals(pw2)) {
+		    request.setAttribute("msg", "비밀번호와 비밀번호 확인이 맞지 않습니다. 홈으로 돌아갑니다.");
+		    request.setAttribute("url", "/");
 			mav.setViewName("/alert");
-		} else {
-			request.setAttribute("msg", "비밀번호 재설정에 실패했습니다. 다시 시도해주세요.");
-			request.setAttribute("url", "/");
-			mav.setViewName("/alert");
+		}else {
+			String pw = memberDTO.getPw();
+			memberDTO.setPw(sha256.getSHA256(pw));
+			boolean isUpdateSuccess = this.memberService.resetPw(memberDTO);
+			if(isUpdateSuccess) {
+				request.setAttribute("msg", "비밀번호 재설정이 완료되었습니다. 홈으로 돌아갑니다.");
+				request.setAttribute("url", "/");
+				mav.setViewName("/alert");
+			} else {
+				request.setAttribute("msg", "비밀번호 재설정에 실패했습니다. 다시 시도해주세요.");
+				request.setAttribute("url", "/");
+				mav.setViewName("/alert");
+			}
 		}
 		return mav;
 	}
