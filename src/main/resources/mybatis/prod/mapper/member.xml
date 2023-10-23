@@ -198,4 +198,14 @@
 		and
 		email = #{email}
 	</select>
+		
+	<!-- 비밀번호 재설정 -->
+	<update id="resetPw">
+		update
+		membertbl
+		set
+		pw = #{pw}
+		where
+		id = #{id};
+	</update>
 </mapper>

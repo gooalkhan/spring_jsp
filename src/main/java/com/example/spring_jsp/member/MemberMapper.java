@@ -29,4 +29,5 @@ public interface MemberMapper {
 	int subadminAppointCancel(MemberDTO memberDTO);
 	MemberDTO whereIsMyId(MemberDTO memberDTO);
 	MemberDTO whereIsMyPw(MemberDTO memberDTO);
+	int resetPw(MemberDTO memberDTO);
 }
