@@ -42,6 +42,24 @@ finally:
             conn.close()
             return result
 
+        def getBook(self, bookid):
+            result = []
+            conn = self.__get_connection()
+            with conn.cursor() as curs:
+                curs.execute("select * from booktbl where bookid = %s" % bookid)
+                data = curs.fetchall()
+                for row in data:
+                    result.append(row)
+            conn.close()
+            return result
+
+        def insert(self, jobuid, bookid, productid, template):
+            conn = self.__get_connection()
+            with conn.cursor() as curs:
+                curs.execute("insert into python (JOBUID, BOOKID, PRODUCTID, STRINGTEMPLATE) values ('%s', %s, '%s', '%s')" % (jobuid, bookid, productid, template))
+            conn.commit()
+            conn.close()
+
         @classmethod
         def __get_instance(cls):
             return cls.__instance

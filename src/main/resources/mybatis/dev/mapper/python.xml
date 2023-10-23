@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring_jsp.analysis.python.PythonMapper">
+
+    <update id="createTable">
+        create table PYTHON
+        (
+            JOBUID CHAR(36) NOT NULL,
+            BOOKID BIGINT NOT NULL,
+            PRODUCTID VARCHAR(20) NOT NULL,
+            STRINGTEMPLATE LONGTEXT NOT NULL,
+            CREATED TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (JOBUID),
+            CONSTRAINT PYTHON_BOOKID_FK
+                FOREIGN KEY (BOOKID) REFERENCES BOOKTBL (BOOKID)
+        )
+    </update>
+
+    <update id="dropTable">
+        drop table if exists PYTHON;
+    </update>
+
+    <insert id="insertPython">
+        insert into PYTHON (JOBUID, BOOKID, PRODUCTID, STRINGTEMPLATE)
+        values (#{jobUid}, #{bookId}, #{productId}, #{stringTemplate});
+    </insert>
+
+    <select id="selectPython">
+        select
+            *
+        from
+            PYTHON
+        where
+            BOOKID = #{bookId} AND PRODUCTID = #{productId}
+        order by CREATED desc
+        limit 1
+    </select>
+
+</mapper>
