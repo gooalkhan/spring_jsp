@@ -19,11 +19,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="pw" class="form-label">비밀번호</label>
-                        <input type="password" class="form-control" id="pw" name="pw" value="${data.pw}" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,20}$" required title="비밀번호는 8~20자리수여야 합니다. 영문 대소문자, 숫자, 특수문자를 1개 이상 포함해야 합니다.">
+                        <input type="password" class="form-control" id="pw" name="pw" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,20}$" required title="비밀번호는 8~20자리수여야 합니다. 영문 대소문자, 숫자, 특수문자를 1개 이상 포함해야 합니다.">
                     </div>
                     <div class="mb-3">
                         <label for="pw2" class="form-label">비밀번호(재입력)</label>
-                        <input type="password" class="form-control" id="pw2" name="pw2" value="${data.pw}" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,20}$" required title="비밀번호는 8~20자리수여야 합니다. 영문 대소문자, 숫자, 특수문자를 1개 이상 포함해야 합니다.">
+                        <input type="password" class="form-control" id="pw2" name="pw2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,20}$" required title="비밀번호는 8~20자리수여야 합니다. 영문 대소문자, 숫자, 특수문자를 1개 이상 포함해야 합니다.">
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">이름</label>

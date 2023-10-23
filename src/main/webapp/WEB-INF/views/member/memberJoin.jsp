@@ -26,7 +26,7 @@
                         <div class="mb-3">
                             <label for="pw2">비밀번호(재입력)</label>
                             <input type="password" id="pw2" class="form-control" name="pw2" placeholder="비밀번호 확인" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,20}$" required title="비밀번호는 8~20자리수여야 합니다. 영문 대소문자, 숫자, 특수문자를 1개 이상 포함해야 합니다.">
-                            <p>${errorMsg.pw}</p>
+                            <p>${errorMsg.pw2}</p>
                         </div>
                         <div class="mb-3">
                             <label for="email">이메일</label>
