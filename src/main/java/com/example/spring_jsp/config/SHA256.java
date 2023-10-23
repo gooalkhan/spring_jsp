@@ -2,9 +2,12 @@ package com.example.spring_jsp.config;
 
 import java.security.MessageDigest;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class SHA256 {
-	public String getSHA256(String input) {
-		// input(이메일 값)에 해쉬를 적용해주는 값을 반환 해서 이용하겠다는 함수
+	public String getSHA256(String str) {
+		// str에 해쉬를 적용해주는 값을 반환 해서 이용하겠다는 함수
 		// 악의적인 공격자에 대한 공격에 대해 방어해주는 역할
 		StringBuffer result = new StringBuffer();
 		try {
@@ -15,7 +18,7 @@ public class SHA256 {
 			// 내가 원하는 salt값 아무거나 입력해주면 됨
 			digest.reset();
 			digest.update(salt);
-			byte[] chars = digest.digest(input.getBytes("UTF-8"));
+			byte[] chars = digest.digest(str.getBytes("UTF-8"));
 			// 배열변수를 만들어서 실제로 해쉬로 적용한 값을 chars 변수에다가 담아줌
 			for(int i = 0; i < chars.length; i++) {
 				String hex = Integer.toHexString(0xff & chars[i]);

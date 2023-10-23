@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class MemberController {
 	private final MemberService memberService;
+	private final SHA256 sha256;
 	
 	//회원 목록
 	@GetMapping("/memberList")
@@ -99,7 +100,6 @@ public class MemberController {
 			/* 회원가입 성공 시 */
 			else {
 				String pw = memberJoinDTO.getPw();
-				SHA256 sha256 = new SHA256();
 				memberJoinDTO.setPw(sha256.getSHA256(pw));
 				this.memberService.memberJoin(memberJoinDTO);
 		    	request.setAttribute("msg", "회원가입이 완료되었습니다.");
@@ -132,7 +132,6 @@ public class MemberController {
 	public ModelAndView memberLoginPost(MemberDTO memberDTO, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String pw = memberDTO.getPw();
-		SHA256 sha256 = new SHA256();
 		memberDTO.setPw(sha256.getSHA256(pw));
 		MemberDTO DTO = memberService.memberLogin(memberDTO);
 		if(DTO == null) {
@@ -186,7 +185,6 @@ public class MemberController {
 			mav.setViewName("/alert");
 		} else {
 			String pw = memberDTO.getPw();
-			SHA256 sha256 = new SHA256();
 			memberDTO.setPw(sha256.getSHA256(pw));
 			boolean isUpdateSuccess = this.memberService.memberUpdate(memberDTO);
 			if(isUpdateSuccess) {
@@ -318,7 +316,6 @@ public class MemberController {
 			mav.setViewName("/alert");
 		}else {
 			String pw = memberDTO.getPw();
-			SHA256 sha256 = new SHA256();
 			memberDTO.setPw(sha256.getSHA256(pw));
 			boolean isUpdateSuccess = this.memberService.resetPw(memberDTO);
 			if(isUpdateSuccess) {
