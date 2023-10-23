@@ -21,6 +21,7 @@
                     ${data.id}
             </div>
         </div>
+        <!-- 비밀번호는 굳이 보여줄 필요가 없으나, 암호화가 잘 되었다라는 것을 손쉽게 볼 수 있도록 남김 -->
         <div class="row">
             <div class="col-5 text-end">
                 <p>비밀번호 : </p>

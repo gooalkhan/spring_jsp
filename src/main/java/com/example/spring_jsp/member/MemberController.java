@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.spring_jsp.config.SHA256;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -90,6 +92,9 @@ public class MemberController {
 			}
 			/* 회원가입 성공 시 */
 			else {
+				String pw = memberJoinDTO.getPw();
+				SHA256 sha256 = new SHA256();
+				memberJoinDTO.setPw(sha256.getSHA256(pw));
 				this.memberService.memberJoin(memberJoinDTO);
 		    	request.setAttribute("msg", "회원가입이 완료되었습니다.");
 		    	request.setAttribute("url", "/");
@@ -120,6 +125,9 @@ public class MemberController {
 	@PostMapping("/memberLogin")
 	public ModelAndView memberLoginPost(MemberDTO memberDTO, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		String pw = memberDTO.getPw();
+		SHA256 sha256 = new SHA256();
+		memberDTO.setPw(sha256.getSHA256(pw));
 		MemberDTO DTO = memberService.memberLogin(memberDTO);
 		if(DTO == null) {
 			request.setAttribute("msg", "아이디와 비밀번호가 틀렸습니다. 다시 입력해주세요.");
@@ -129,12 +137,10 @@ public class MemberController {
 		else {
 		mav.addObject("data", DTO);
 		String id = DTO.getId();
-		String pw = DTO.getPw();
 		String name = DTO.getName();
 		String admin = DTO.getAdmin();
 		HttpSession session = request.getSession();
 		session.setAttribute("sid", id);
-		session.setAttribute("spw", pw);
 		session.setAttribute("sname", name);
 		session.setAttribute("sadmin", admin);
 		mav.setViewName("/index");
@@ -165,6 +171,9 @@ public class MemberController {
 	@PostMapping("/memberUpdate")
 	public ModelAndView memberUpdatePost(MemberDTO memberDTO) {
 		ModelAndView mav = new ModelAndView();
+		String pw = memberDTO.getPw();
+		SHA256 sha256 = new SHA256();
+		memberDTO.setPw(sha256.getSHA256(pw));
 		boolean isUpdateSuccess = this.memberService.memberUpdate(memberDTO);
 		if(isUpdateSuccess) {
 			String id = memberDTO.getId();
@@ -283,6 +292,9 @@ public class MemberController {
 	@PostMapping("/resetPw")
 	public ModelAndView resetPw(MemberDTO memberDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
+		String pw = memberDTO.getPw();
+		SHA256 sha256 = new SHA256();
+		memberDTO.setPw(sha256.getSHA256(pw));
 		boolean isUpdateSuccess = this.memberService.resetPw(memberDTO);
 		if(isUpdateSuccess) {
 			request.setAttribute("msg", "비밀번호 재설정이 완료되었습니다. 홈으로 돌아갑니다.");
