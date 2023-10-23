@@ -32,4 +32,6 @@ public interface BoardService {
 
 	List<BoardDTO> imageSelect(BoardDTO boardDTO);
 
+	boolean imageDelete(BoardDTO boardDTO);
+
 }

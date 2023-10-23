@@ -106,4 +106,10 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardDTO> imageSelect(BoardDTO boardDTO){
 		return boardMapper.imageSelect(boardDTO);
 	}
+	
+	@Override
+	public boolean imageDelete(BoardDTO boardDTO) {
+		int affectRowCount = this.boardMapper.imageDelete(boardDTO);
+		return affectRowCount == 1;
+	}
 }

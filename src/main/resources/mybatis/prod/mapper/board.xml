@@ -172,4 +172,13 @@
     	where
     	boardtbl_idx = #{boardtbl_idx}
     </select>
+    
+    <!-- 수정 시 이미지 DB 삭제 -->
+    <delete id="imageDelete">
+    	delete
+		from
+		imagetbl
+		where
+		boardtbl_idx = #{boardtbl_idx}
+    </delete>
 </mapper>
