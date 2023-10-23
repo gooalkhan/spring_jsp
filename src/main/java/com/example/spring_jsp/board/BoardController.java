@@ -68,7 +68,7 @@ public class BoardController {
 			    int millis = now.get(ChronoField.MILLI_OF_SECOND);
 			    String imageName = files.getOriginalFilename();
 			    boardDTO.setOriginImageName(imageName);
-			    String absolutePath = new File("./src/main/webapp/resources").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
+			    String absolutePath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\"; // 파일이 저장될 절대 경로
 			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
 			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
 			    String path = "boardimages"; // 저장될 폴더 경로
@@ -82,7 +82,7 @@ public class BoardController {
 			                // mkdir() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가
 			                // mkdirs() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
 			            }
-			            file = new File(absolutePath + path + "/" + newFileName + fileExtension);
+			            file = new File(absolutePath + path + "\\" + newFileName + fileExtension);
 			            files.transferTo(file);
 
 
@@ -146,12 +146,72 @@ public class BoardController {
 	
 	//게시글 수정 처리
 	@PostMapping("/boardUpdate")
-	public ModelAndView boardUpdatePost(BoardDTO boardDTO, HttpServletRequest request) {
+	public ModelAndView boardUpdatePost(BoardDTO boardDTO, HttpServletRequest request, MultipartFile[] uploadfile) {
 		ModelAndView mav = new ModelAndView();
 		
 		boolean isUpdateSuccess = this.boardService.boardUpdate(boardDTO);
+		
 		if(isUpdateSuccess) {
 			int idx = boardDTO.getIdx();
+			boardDTO.setBoardtbl_idx(idx);
+			// 게시글 수정 시, 이미지 폴더에 기존 이미지 삭제
+			List<BoardDTO> IDTO = boardService.imageSelect(boardDTO);
+			String aPath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\";
+		    String spath = "boardimages";
+		    String rPath = aPath + spath;
+			for(BoardDTO DTO: IDTO) {
+				String filePathStr = rPath + "\\" + DTO.getImageName();
+				File file = new File(filePathStr);
+				file.delete();
+			}
+			this.boardService.imageDelete(boardDTO);
+			
+			// 여긴 굳이 알림창을 띄울 필요가 없어서 안 띄움
+			boardDTO.setBoardtbl_idx(idx);
+			for(MultipartFile files : uploadfile) {
+				// 폴더 생성과 파일명 새로 부여를 위한 현재 시간 알아내기
+			    LocalDateTime now = LocalDateTime.now();
+			    int year = now.getYear();
+			    int month = now.getMonthValue();
+			    int day = now.getDayOfMonth();
+			    int hour = now.getHour();
+			    int minute = now.getMinute();
+			    int second = now.getSecond();
+			    int millis = now.get(ChronoField.MILLI_OF_SECOND);
+			    String imageName = files.getOriginalFilename();
+			    boardDTO.setOriginImageName(imageName);
+			    String absolutePath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\"; // 파일이 저장될 절대 경로
+			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
+			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
+			    String path = "boardimages"; // 저장될 폴더 경로
+			    String realPath = absolutePath + path;
+			    String realName = newFileName + fileExtension;
+			    
+
+			    
+			    try {
+			    	if(!files.isEmpty()) {
+			    		File file = new File(absolutePath + path);
+			            if(!file.exists()){
+			                file.mkdirs();
+			                // mkdir() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가
+			                // mkdirs() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
+			            }
+			            file = new File(absolutePath + path + "\\" + newFileName + fileExtension);
+			            files.transferTo(file);
+
+
+			            boardDTO.setImageName(realName);
+			            boardDTO.setImagePath(realPath);
+
+			            this.boardService.imageUpload(boardDTO);
+			    	}
+			    	
+			    } catch (Exception e) {
+			    	e.printStackTrace();
+			    }
+			}
+		    
 	    	request.setAttribute("msg", "수정이 완료되었습니다.");
 	    	request.setAttribute("url", "/boardDetail?idx="+idx);
 			mav.setViewName("/alert");
@@ -168,6 +228,21 @@ public class BoardController {
 	public ModelAndView boardDeletePost(BoardDTO boardDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		
+		int idx = boardDTO.getIdx();
+		boardDTO.setBoardtbl_idx(idx);
+		// 게시글 수정 시, 이미지 폴더에 기존 이미지 삭제
+		List<BoardDTO> IDTO = boardService.imageSelect(boardDTO);
+		String aPath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\";
+	    String spath = "boardimages";
+	    String rPath = aPath + spath;
+		for(BoardDTO DTO: IDTO) {
+			String filePathStr = rPath + "\\" + DTO.getImageName();
+			File file = new File(filePathStr);
+			file.delete();
+		}
+		
+		this.boardService.imageDelete(boardDTO);
+		
 		boolean isDeleteSuccess = this.boardService.boardDelete(boardDTO);
 		//TODO: 댓글이 달려있으면 게시물이 지워지지 않으므로 cascasde로 처리하던 해야함
 		if(isDeleteSuccess) {
@@ -175,7 +250,6 @@ public class BoardController {
 	    	request.setAttribute("url", "/boardList");
 			mav.setViewName("/alert");
 		} else {
-			int idx = boardDTO.getIdx();
 	    	request.setAttribute("msg", "올바르지 않은 삭제입니다.");
 	    	request.setAttribute("url", "/boardDetail?idx="+idx);
 	        mav.setViewName("/alert");
