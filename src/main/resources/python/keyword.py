@@ -37,7 +37,6 @@ def get_keyword_analysis(bookid: int) -> None:
         time.sleep(5)
         db.insert(myUUID, bookid, "키워드", string_template)
         print("status:complete")
-        return
 
 if __name__ == "__main__":
     get_keyword_analysis(bookid)
