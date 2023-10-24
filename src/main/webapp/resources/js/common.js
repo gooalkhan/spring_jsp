@@ -132,3 +132,15 @@ function purchaseAnalysis(formuid) {
     xhr.send(body);
     return false;
 }
+
+document.getElementById('uploadfile').addEventListener('change', function() {
+    const imagePreview = document.getElementById('imagePreview');
+    imagePreview.innerHTML = '';
+
+    for (let i = 0; i < this.files.length; i++) {
+        const image = document.createElement('img');
+        image.src = URL.createObjectURL(this.files[i]);
+        image.classList.add('image-preview');
+        imagePreview.appendChild(image);
+    }
+});
