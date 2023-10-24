@@ -52,6 +52,10 @@ public class BoardController {
 	    	request.setAttribute("url", "/memberLogin");
 	        mav.setViewName("/alert");
 		}else {
+			// 엔터 입력 시 , 줄 바꿈
+			String content = boardDTO.getContent();
+			content = content.replace("\r\n", "<br>");
+			boardDTO.setContent(content);
 			// 여긴 굳이 알림창을 띄울 필요가 없어서 안 띄움
 			this.boardService.boardInsert(boardDTO);
 			int idx = boardDTO.getIdx();
@@ -148,6 +152,10 @@ public class BoardController {
 	@PostMapping("/boardUpdate")
 	public ModelAndView boardUpdatePost(BoardDTO boardDTO, HttpServletRequest request, MultipartFile[] uploadfile) {
 		ModelAndView mav = new ModelAndView();
+		// 엔터 입력 시 , 줄 바꿈
+		String content = boardDTO.getContent();
+		content = content.replace("\r\n", "<br>");
+		boardDTO.setContent(content);
 		
 		boolean isUpdateSuccess = this.boardService.boardUpdate(boardDTO);
 		
