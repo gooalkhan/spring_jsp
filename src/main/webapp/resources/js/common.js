@@ -35,6 +35,19 @@ function board_form_check() {
     }
 }
 
+function worldcup_form_check() {
+    var subject = document.forms["worldcup_form"]["subject"].value;
+    var content = document.forms["worldcup_form"]["content"].value;
+
+    if (subject === "") {
+        alert("제목을 입력해주세요.");
+        return false;
+    } else if (content === "") {
+        alert("내용을 입력해주세요.");
+        return false;
+    }
+}
+
 let sock = new SockJS('http://localhost:8080/message');
 
 sock.onopen = function () {

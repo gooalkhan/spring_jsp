@@ -8,6 +8,10 @@
                 <a class="nav-link" href="/memberList">회원 목록 보러 가기</a>
             </li>
             </c:if>
+            <!-- TODO: 임시로 이상형 월드컵 만들기로 이동하는 버튼을 만듬 -->
+            <li class="nav-item">
+                <a class="nav-link" href="/worldCupCreate">이상형 월드컵 만들러 가기</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="/memberDetail?id=${sid}">안녕하세요 ${sname} 님 </a>
             </li>

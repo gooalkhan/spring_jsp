@@ -16,4 +16,41 @@
     <update id="dropTable">
         drop table if exists worldcuptbl;
     </update>
+    
+    
+    
+    
+    
+    
+    
+    <!-- 월드컵 인서트 -->
+    <insert id="worldCupInsert">
+    	insert
+    	into
+    	worldcuptbl
+    	(SUBJECT, CONTENT, membertbl_ID)
+    	values
+    	(#{subject}, #{content}, #{membertbl_id})
+    </insert>
+    
+    <!-- 월드컵 이미지 인서트 -->
+    <insert id="worldCupImageInsert">
+    	insert
+    	into
+    	worldcupimagetbl
+    	(ORIGINIMAGENAME, IMAGENAME, IMAGEPATH, CONTENT, worldcuptbl_IDX)
+    	values
+    	(#{originImageName}, #{imageName}, #{imagePath}, #{content}, #{worldcuptbl_idx})
+    </insert>
+    
+    <!-- 월드컵 삭제 -->
+    <delete id="worldCupDelete">
+		delete
+		from
+		worldcuptbl
+		where
+		IDX = #{idx}
+	</delete>
+	
+	
 </mapper>
