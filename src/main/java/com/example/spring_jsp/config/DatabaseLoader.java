@@ -14,6 +14,8 @@ import com.example.spring_jsp.member.MemberMapper;
 import com.example.spring_jsp.like.LikeMapper;
 import com.example.spring_jsp.image.ImageMapper;
 import com.example.spring_jsp.shop.bookkeeping.BookkeepingMapper;
+import com.example.spring_jsp.worldcup.WorldCupMapper;
+import com.example.spring_jsp.worldcupimage.WorldCupImageMapper;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
@@ -54,12 +56,16 @@ public class DatabaseLoader implements CommandLineRunner {
     private final PythonMapper pythonMapper;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+    private final WorldCupMapper worldCupMapper;
+    private final WorldCupImageMapper worldCupImageMapper;
+    
     @Override
     public void run(String... args) {
 
         // 초기 테이블 생성
         if (activeProfile.equals("prod")) {
+        	worldCupImageMapper.dropTable();
+        	worldCupMapper.dropTable();
             pythonMapper.dropTable();
         	imageMapper.dropTable();
             bookkeepingMapper.dropTable();
@@ -80,6 +86,8 @@ public class DatabaseLoader implements CommandLineRunner {
         bookkeepingMapper.createTable();
         imageMapper.createTable();
         pythonMapper.createTable();
+        worldCupMapper.createTable();
+        worldCupImageMapper.createTable();
 
         // 초기 데이터 추가
         MemberDTO entity = new MemberDTO();
