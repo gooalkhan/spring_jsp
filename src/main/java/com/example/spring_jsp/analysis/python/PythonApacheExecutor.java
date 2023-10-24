@@ -1,5 +1,6 @@
 package com.example.spring_jsp.analysis.python;
 
+import com.example.spring_jsp.notification.NotificationTopicService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.exec.*;
 import org.slf4j.Logger;
@@ -16,9 +17,8 @@ public class PythonApacheExecutor implements Runnable {
             Map.entry("선호작품", "favorite.py")
     );
 
+    private final NotificationTopicService notificationTopicService;
     private final String pythonExecutablePath;
-    private final PythonResultHandler pythonResultHandler;
-
     private final String profilePath;
     private final String profile;
     private final long bookid;
@@ -40,7 +40,17 @@ public class PythonApacheExecutor implements Runnable {
             cmdLine.addArgument(String.valueOf(bookid));
 
             Executor executor = getExecutor();
-            executor.execute(cmdLine, pythonResultHandler);
+            executor.execute(cmdLine, new ExecuteResultHandler() {
+                @Override
+                public void onProcessComplete(int exitValue) {
+                    notificationTopicService.removeTopicWhenComplete(bookid, productId);
+                }
+
+                @Override
+                public void onProcessFailed(ExecuteException e) {
+                    logger.error(e.getMessage());
+                }
+            });
             logger.info("java - python process spawned");
             
         } catch (Exception e) {

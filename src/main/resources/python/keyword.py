@@ -1,7 +1,6 @@
 import sys
 from jinja2 import Template
 import uuid
-import json
 import time
 
 if sys.argv[2] == "dev":
@@ -35,8 +34,10 @@ def get_keyword_analysis(bookid: int) -> None:
         myUUID = str(uuid.uuid4())
         string_template = render_template(book[1])
 
+        time.sleep(5)
         db.insert(myUUID, bookid, "키워드", string_template)
         print("status:complete")
+        return
 
 if __name__ == "__main__":
     get_keyword_analysis(bookid)

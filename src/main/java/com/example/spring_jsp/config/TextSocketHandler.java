@@ -33,7 +33,7 @@ public class TextSocketHandler extends TextWebSocketHandler {
             LinkedBlockingQueue<String> queue = notificationQueue.getQueue(sid);
 
             String messageToSend;
-            while ((messageToSend = queue.poll()) != null) {
+            if ((messageToSend = queue.poll()) != null) {
                 if (!messageToSend.contains(uuid)) {
                     try {
                         webSocketSession.sendMessage(new TextMessage(messageToSend));
@@ -41,7 +41,6 @@ public class TextSocketHandler extends TextWebSocketHandler {
                     } catch (Exception e) {
                         logger.error(e.getMessage());
                     }
-                    break;
                 }
                 logger.debug("same message {} received, skipping", uuid);
             }
