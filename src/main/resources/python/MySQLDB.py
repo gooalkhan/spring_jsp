@@ -34,21 +34,10 @@ finally:
         __instance = None
 
         def __init__(self):
-            self.__db_pool = mysql.connector.pooling.MySQLConnectionPool(pool_size=TOTAL_MAX_CONNECTIONS, **DB_CONFIG)
-
-        def getAll(self):
-            result = []
-            conn = self.__db_pool.get_connection()
-            with conn.cursor() as curs:
-                curs.execute("select * from membertbl")
-                data = curs.fetchall()
-                for row in data:
-                    result.append(row)
-            conn.close()
-            return result
+            self.db_pool = mysql.connector.pooling.MySQLConnectionPool(pool_size=TOTAL_MAX_CONNECTIONS, **DB_CONFIG)
 
         def insert(self, jobuid, bookid, productid, template):
-            conn = self.__db_pool.get_connection()
+            conn = self.db_pool.get_connection()
             with conn.cursor() as curs:
                 curs.execute("insert into python (JOBUID, BOOKID, PRODUCTID, STRINGTEMPLATE) values (%s, %s, %s, %s)", (jobuid, bookid, productid, template))
             conn.commit()
@@ -56,7 +45,7 @@ finally:
 
         def getBook(self, bookid):
             result = []
-            conn = self.__db_pool.get_connection()
+            conn = self.db_pool.get_connection()
             with conn.cursor() as curs:
                 curs.execute("select * from booktbl where bookid = %s", (bookid,))
                 data = curs.fetchall()

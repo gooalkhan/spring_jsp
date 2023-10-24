@@ -1,6 +1,5 @@
 import subprocess
 import sys
-import os
 import platform
 from config import DEV_CONFIG, LIB_PATH
 
@@ -30,17 +29,6 @@ finally:
 
         def __get_connection(self):
             return jaydebeapi.connect('org.h2.Driver', URI, [ID, PW], LIB_PATH)
-
-        def getAll(self):
-            result = []
-            conn = self.__get_connection()
-            with conn.cursor() as curs:
-                curs.execute("select * from MEMBERTBL")
-                data = curs.fetchall()
-                for row in data:
-                    result.append(row)
-            conn.close()
-            return result
 
         def getBook(self, bookid):
             result = []

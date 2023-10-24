@@ -41,6 +41,6 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 <script src="${pageContext.request.contextPath}/resources/js/sockjs.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 </html>
