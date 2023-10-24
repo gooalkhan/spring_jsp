@@ -94,6 +94,7 @@ public class BoardController {
 			            boardDTO.setImagePath(realPath);
 
 			            this.boardService.imageUpload(boardDTO);
+			            Thread.sleep(10); // 너무 빠르면, 이미지 이름이 같아지면서 덮어 씌워져 버림
 			    	}
 			    	
 			    } catch (Exception e) {
@@ -213,6 +214,7 @@ public class BoardController {
 			            boardDTO.setImagePath(realPath);
 
 			            this.boardService.imageUpload(boardDTO);
+			            Thread.sleep(10); // 너무 빠르면, 이미지 이름이 같아지면서 덮어 씌워져 버림
 			    	}
 			    	
 			    } catch (Exception e) {

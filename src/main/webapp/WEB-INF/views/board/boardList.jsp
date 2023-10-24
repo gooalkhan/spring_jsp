@@ -30,8 +30,12 @@
             </tbody>
         </table>
         <div class="container d-flex justify-content-around">
-            <a href="/boardInsert">글쓰기</a>
-            <a href="/">메인으로</a>
+        	<div class="col-auto">
+            	<a href="/boardInsert" class="btn btn-primary">글쓰기</a>
+            </div>
+            <div class="col-auto">
+            <a href="/" class="btn btn-primary">메인으로</a>
+            </div>
             <form action="/boardSearch">
                 <div class="row">
                     <div class="col-auto">
