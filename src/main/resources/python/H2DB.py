@@ -2,10 +2,10 @@ import subprocess
 import sys
 import os
 import platform
-from config import DEV_CONFIG
+from config import DEV_CONFIG, LIB_PATH
 
-WIN_LIB_PATH = os.getcwd() + "\\build\\resources\\main\\python\\lib\\h2-2.2.224.jar"
-LINUX_LIB_PATH = os.getcwd() + "/build/resources/main/python/lib/h2-2.2.224.jar"
+WIN_LIB_PATH = LIB_PATH + "\\python\\lib\\h2-2.2.224.jar"
+LINUX_LIB_PATH = LIB_PATH + "/python/lib/h2-2.2.224.jar"
 LIB_PATH = WIN_LIB_PATH if platform.system().lower() == 'windows' else LINUX_LIB_PATH
 
 URI = "jdbc:h2:tcp://localhost:9092/" + DEV_CONFIG["spring.datasource.url"].replace("jdbc:h2:", "")
@@ -41,6 +41,24 @@ finally:
                     result.append(row)
             conn.close()
             return result
+
+        def getBook(self, bookid):
+            result = []
+            conn = self.__get_connection()
+            with conn.cursor() as curs:
+                curs.execute("select * from booktbl where bookid = %s" % bookid)
+                data = curs.fetchall()
+                for row in data:
+                    result.append(row)
+            conn.close()
+            return result
+
+        def insert(self, jobuid, bookid, productid, template):
+            conn = self.__get_connection()
+            with conn.cursor() as curs:
+                curs.execute("insert into python (JOBUID, BOOKID, PRODUCTID, STRINGTEMPLATE) values ('%s', %s, '%s', '%s')" % (jobuid, bookid, productid, template))
+            conn.commit()
+            conn.close()
 
         @classmethod
         def __get_instance(cls):

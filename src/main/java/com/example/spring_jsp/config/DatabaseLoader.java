@@ -1,5 +1,6 @@
 package com.example.spring_jsp.config;
 
+import com.example.spring_jsp.analysis.python.PythonMapper;
 import com.example.spring_jsp.board.BoardDTO;
 import com.example.spring_jsp.board.BoardMapper;
 import com.example.spring_jsp.book.BookDTO;
@@ -50,6 +51,7 @@ public class DatabaseLoader implements CommandLineRunner {
     private final LikeMapper likeMapper;
     private final BookkeepingMapper bookkeepingMapper;
     private final ImageMapper imageMapper;
+    private final PythonMapper pythonMapper;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -58,6 +60,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
         // 초기 테이블 생성
         if (activeProfile.equals("prod")) {
+            pythonMapper.dropTable();
         	imageMapper.dropTable();
             bookkeepingMapper.dropTable();
         	likeMapper.dropTable();
@@ -76,6 +79,7 @@ public class DatabaseLoader implements CommandLineRunner {
         likeMapper.createTable();
         bookkeepingMapper.createTable();
         imageMapper.createTable();
+        pythonMapper.createTable();
 
         // 초기 데이터 추가
         MemberDTO entity = new MemberDTO();

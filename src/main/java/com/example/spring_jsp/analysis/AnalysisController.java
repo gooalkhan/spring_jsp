@@ -1,6 +1,5 @@
 package com.example.spring_jsp.analysis;
 
-import com.example.spring_jsp.book.keyword.KeywordServiceImpl;
 import com.example.spring_jsp.notification.NotificationService;
 import com.example.spring_jsp.shop.bookkeeping.BookkeepingServiceImpl;
 import com.example.spring_jsp.shop.product.ProductDTO;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +33,7 @@ public class AnalysisController {
             entry("keyword", "키워드"),
             entry("favorite", "선호작품")
     );
-
+    //TODO: 구매 체크 부분 서비스로 빼기
     @GetMapping("")
     public ModelAndView getAnalysisAjax(HttpSession session,
                                         @RequestParam(value = "bookid", defaultValue = "0") long bookid,
@@ -63,7 +61,7 @@ public class AnalysisController {
                     if (purchased.getBookid() ==bookid) {
                         switch (purchased.getProductid()) {
                             case "키워드":
-                                return analysisServiceImpl.getKeywordAnalysis();
+                                return analysisServiceImpl.getKeywordAnalysis(sid, purchased.getBookid(), purchased.getProductid());
                             case "선호작품":
                                 return analysisServiceImpl.getFavoriteAnalysis();
                         }
@@ -130,7 +128,7 @@ public class AnalysisController {
             if (purchased.getBookid() == bookid && purchased.getProductid().equals(analysisMap.get(analysis))) {
                 switch (purchased.getProductid()) {
                     case "키워드":
-                        return analysisServiceImpl.getKeywordAnalysis();
+                        return analysisServiceImpl.getKeywordAnalysis(sid, purchased.getBookid(), purchased.getProductid());
                     case "선호작품":
                         return analysisServiceImpl.getFavoriteAnalysis();
                 }
