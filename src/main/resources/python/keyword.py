@@ -4,13 +4,13 @@ import uuid
 import json
 import time
 
-if sys.argv[1] == "dev":
+if sys.argv[2] == "dev":
     from H2DB import MyDB
 else:
     from MySQLDB import MyDB
 
 db = MyDB.get_instance()
-bookid = sys.argv[2]
+bookid = sys.argv[3]
 
 def render_template(bookid):
     # Jinja2 템플릿을 정의합니다.

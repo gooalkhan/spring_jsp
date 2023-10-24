@@ -19,6 +19,7 @@ public class PythonApacheExecutor implements Runnable {
     private final String pythonExecutablePath;
     private final PythonResultHandler pythonResultHandler;
 
+    private final String profilePath;
     private final String profile;
     private final long bookid;
     private final String productId;
@@ -34,6 +35,7 @@ public class PythonApacheExecutor implements Runnable {
 
             cmdLine.addArgument("-u");
             cmdLine.addArgument(file.getAbsolutePath());
+            cmdLine.addArgument(profilePath);
             cmdLine.addArgument(profile);
             cmdLine.addArgument(String.valueOf(bookid));
 

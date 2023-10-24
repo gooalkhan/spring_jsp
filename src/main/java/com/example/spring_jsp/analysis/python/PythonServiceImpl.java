@@ -3,13 +3,17 @@ package com.example.spring_jsp.analysis.python;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.net.URL;
 
 
 @RequiredArgsConstructor
 @Service
-public class PythonServiceImpl implements PythonService {
+public class PythonServiceImpl implements PythonService, InitializingBean {
 
     @Value("${python.executable.path.windows}")
     private String pythonExecutablePathWindows;
@@ -19,6 +23,8 @@ public class PythonServiceImpl implements PythonService {
 
     @Value("${spring.profiles.active}")
     private String profile;
+
+    private String profilePath;
 
     private final PythonMapper pythonMapper;
     private final PythonResultHandler pythonResultHandler;
@@ -32,6 +38,7 @@ public class PythonServiceImpl implements PythonService {
             pythonApacheExecutor = new PythonApacheExecutor(
                     pythonExecutablePathWindows.formatted(System.getProperty("user.name")),
                     pythonResultHandler,
+                    profilePath,
                     profile,
                     bookid,
                     productId);
@@ -39,6 +46,7 @@ public class PythonServiceImpl implements PythonService {
             pythonApacheExecutor = new PythonApacheExecutor(
                     pythonExecutablePathLinux.formatted(System.getProperty("user.name")),
                     pythonResultHandler,
+                    profilePath,
                     profile,
                     bookid,
                     productId);
@@ -55,5 +63,12 @@ public class PythonServiceImpl implements PythonService {
 
     public PythonDTO selectPython(long bookId, String productId) {
         return pythonMapper.selectPython(bookId, productId);
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+            URL url = this.getClass().getResource("/application.properties");
+            File file = new File(url.toURI());
+            profilePath = file.getParent();
     }
 }
