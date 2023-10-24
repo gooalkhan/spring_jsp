@@ -6,7 +6,7 @@ from config import DEV_CONFIG, LIB_PATH
 
 WIN_LIB_PATH = LIB_PATH + "\\python\\lib\\h2-2.2.224.jar"
 LINUX_LIB_PATH = LIB_PATH + "/python/lib/h2-2.2.224.jar"
-# LIB_PATH = WIN_LIB_PATH if platform.system().lower() == 'windows' else LINUX_LIB_PATH
+LIB_PATH = WIN_LIB_PATH if platform.system().lower() == 'windows' else LINUX_LIB_PATH
 
 URI = "jdbc:h2:tcp://localhost:9092/" + DEV_CONFIG["spring.datasource.url"].replace("jdbc:h2:", "")
 ID = DEV_CONFIG["spring.datasource.username"]
