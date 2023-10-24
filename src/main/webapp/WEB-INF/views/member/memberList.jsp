@@ -42,14 +42,11 @@
             <div class="container d-flex justify-content-center">
                 <form method="get" action="/memberDetail">
                     <div class="row">
-                        <div class="col-auto">
-                            <label for="id" class="form-label">찾고자 하는 회원의 id를 입력해주세요 :</label></div>
-                        <div class="col-auto"><input class="form-control" type="text" name="id" id="id"></div>
+                        <div class="col-auto"><input class="form-control" type="text" name="id" id="id" placeholder="아이디로 검색"></div>
                         <div class="col-auto"><input class="btn btn-primary" type="submit" value="찾기"></div>
                     </div>
                 </form>
             </div>
-            <p><a href="/">메인으로</a></p>
         </div>
     </t:layout>
 
