@@ -1,5 +1,6 @@
 package com.example.spring_jsp.analysis.python;
 
+import com.example.spring_jsp.notification.NotificationTopicService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +28,8 @@ public class PythonServiceImpl implements PythonService, InitializingBean {
     private String profilePath;
 
     private final PythonMapper pythonMapper;
-    private final PythonResultHandler pythonResultHandler;
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private final NotificationTopicService notificationTopicService;
 
     public void start_process(long bookid, String productId) {
 
@@ -36,16 +37,16 @@ public class PythonServiceImpl implements PythonService, InitializingBean {
 
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
             pythonApacheExecutor = new PythonApacheExecutor(
+                    notificationTopicService,
                     pythonExecutablePathWindows.formatted(System.getProperty("user.name")),
-                    pythonResultHandler,
                     profilePath,
                     profile,
                     bookid,
                     productId);
         } else {
             pythonApacheExecutor = new PythonApacheExecutor(
+                    notificationTopicService,
                     pythonExecutablePathLinux.formatted(System.getProperty("user.name")),
-                    pythonResultHandler,
                     profilePath,
                     profile,
                     bookid,
