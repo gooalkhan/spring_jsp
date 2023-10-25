@@ -11,6 +11,7 @@ else:
 db = MyDB.get_instance()
 bookid = sys.argv[3]
 
+
 def render_template(bookid):
     # Jinja2 템플릿을 정의합니다.
     template_string = "<h1> {{ bookid }} keyword analysis called</h1> <img src=/images/peb.jpg>"
@@ -24,6 +25,7 @@ def render_template(bookid):
     # 렌더링된 템플릿을 문자열로 반환합니다.
     return rendered_template
 
+
 def get_keyword_analysis(bookid: int) -> None:
     books = db.getBook(bookid)
     if len(books) == 0:
@@ -36,7 +38,8 @@ def get_keyword_analysis(bookid: int) -> None:
 
         time.sleep(5)
         db.insert(myUUID, bookid, "키워드", string_template)
-        print("status:complete")
+        # print("status:complete")
+
 
 if __name__ == "__main__":
     get_keyword_analysis(bookid)

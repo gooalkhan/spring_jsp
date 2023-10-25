@@ -6,6 +6,7 @@ import org.apache.commons.exec.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
@@ -41,6 +42,7 @@ public class PythonApacheExecutor implements Runnable {
 
             Executor executor = getExecutor();
             executor.execute(cmdLine, new ExecuteResultHandler() {
+                int counter = 0;
                 @Override
                 public void onProcessComplete(int exitValue) {
                     notificationTopicService.removeTopicWhenComplete(bookid, productId);
@@ -49,6 +51,18 @@ public class PythonApacheExecutor implements Runnable {
                 @Override
                 public void onProcessFailed(ExecuteException e) {
                     logger.error(e.getMessage());
+
+                    counter++;
+                    if (counter < 4) {
+                        try {
+                            notificationTopicService.sendMessageToTopicAllSubscribers(bookid, productId, " 분석이 실패했습니다. 재시도합니다 시도회수:%d".formatted(counter));
+                            executor.execute(cmdLine, this);
+                        } catch (IOException ex) {
+                            logger.error(ex.getMessage());
+                        }
+                    } else {
+                        notificationTopicService.removeTopicWhenFailure(bookid, productId);
+                    }
                 }
             });
             logger.info("java - python process spawned");

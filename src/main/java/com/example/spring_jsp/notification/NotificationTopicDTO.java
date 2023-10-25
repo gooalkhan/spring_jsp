@@ -17,8 +17,7 @@ public class NotificationTopicDTO {
         }
     }
 
-    public String getCompleteMessage() {
-        return bookName + " " + productId + " 분석이 완료되었습니다";
+    public String getTopicString() {
+        return bookName + " " + productId;
     }
-
 }
