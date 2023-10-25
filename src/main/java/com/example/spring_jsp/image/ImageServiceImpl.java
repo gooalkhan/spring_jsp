@@ -10,12 +10,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 @RequiredArgsConstructor
 @Service
@@ -50,21 +46,5 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        //샘플 사진(박은빈) 생성
-        if (!Files.exists(Paths.get(imagePath + "peb.jpg"))) {
-            URL url = this.getClass().getResource("/sample_data/peb.jpg");
-            try {
-                File file = new File(url.toURI());
-
-                Path copied = Paths.get(imagePath + "peb.jpg");
-                Path originalPath = file.toPath();
-
-                Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException | URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
     }
 }

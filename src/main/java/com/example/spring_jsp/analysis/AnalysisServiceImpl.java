@@ -40,6 +40,7 @@ public class AnalysisServiceImpl {
             String templateString = pythonDTO.getStringTemplate();
             templateString = templateString.replaceAll("&lt;", "<");
             templateString = templateString.replaceAll("&gt;", ">");
+            templateString = templateString.replaceAll("&apos;", "'");
 
             mav.addObject("python", templateString);
         }
@@ -72,6 +73,7 @@ public class AnalysisServiceImpl {
             String templateString = pythonDTO.getStringTemplate();
             templateString = templateString.replaceAll("&lt;", "<");
             templateString = templateString.replaceAll("&gt;", ">");
+            templateString = templateString.replaceAll("&apos;", "'");
 
             mav.addObject("python", templateString);
         }

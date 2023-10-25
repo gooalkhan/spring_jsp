@@ -16,9 +16,9 @@
             preference_count INT        DEFAULT NULL,
             series_count     SMALLINT        DEFAULT NULL,
             description      VARCHAR(3000) DEFAULT NULL,
-            is_complete      BOOLEAN DEFAULT NULL,
-            is_gidamu        BOOLEAN DEFAULT NULL,
-            is_adult_only    BOOLEAN DEFAULT NULL,
+            is_complete      TINYINT DEFAULT NULL,
+            is_gidamu        TINYINT DEFAULT NULL,
+            is_adult_only    TINYINT DEFAULT NULL,
             last_update      TIMESTAMP     NOT NULL,
             PRIMARY KEY (bookid)
         );

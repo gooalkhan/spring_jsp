@@ -46,6 +46,7 @@ public class PythonApacheExecutor implements Runnable {
                 @Override
                 public void onProcessComplete(int exitValue) {
                     notificationTopicService.removeTopicWhenComplete(bookid, productId);
+                    logger.debug("python process completed for topic {} {}", bookid, productId);
                 }
 
                 @Override
@@ -55,12 +56,14 @@ public class PythonApacheExecutor implements Runnable {
                     counter++;
                     if (counter < 4) {
                         try {
+                            logger.debug("python process failed for topic {} {} - retry - {}", bookid, productId, counter);
                             notificationTopicService.sendMessageToTopicAllSubscribers(bookid, productId, " 분석이 실패했습니다. 재시도합니다 시도회수:%d".formatted(counter));
                             executor.execute(cmdLine, this);
                         } catch (IOException ex) {
                             logger.error(ex.getMessage());
                         }
                     } else {
+                        logger.debug("python process failed for topic {} {} - retry failed", bookid, productId);
                         notificationTopicService.removeTopicWhenFailure(bookid, productId);
                     }
                 }

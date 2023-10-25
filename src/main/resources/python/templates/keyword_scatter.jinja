@@ -1,0 +1,69 @@
+<div>
+    <canvas id="chartJSContainer" width="600" height="400"></canvas>
+{#    TODO: cdn이 아니라 다운받아 사용하기 - 인터넷 안되는 환경에서 시연할수있으므로!#}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <script>
+
+        var data = {
+            datasets: [{
+                label: '키워드별 평균 리뷰 수 대비 장르 평균 리뷰 수({{ data.genre_avg.review_count }})',
+                data: [
+                    {% for row in data.data_list %}
+                        {
+                            x: {{loop.index}},
+                            y: {{row.review_count}},
+                            label: "{{row.keyword}}"
+                        },
+                    {% endfor %}
+                ],
+                pointStyle: 'rectRounded', // 데이터 포인트 스타일을 선택합니다.
+                radius: 10 // 데이터 포인트의 크기를 조절합니다.
+            }]
+        };
+
+        var options = {
+            scales: {
+                y: {
+                    type: 'linear',
+                    position: 'left'
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.data[context.dataIndex].label;
+                        }
+                    }
+                },
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            yMin: {{ data.genre_avg.review_count }},
+                            yMax: {{ data.genre_avg.review_count }},
+                            borderColor: 'rgb(255, 99, 132)',
+                            borderWidth: 2,
+                            label: {
+                                enabled: true,
+                                content: '{{data.genre_avg.keyword}}'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // 차트 생성
+        var ctx = document.getElementById("chartJSContainer").getContext("2d");
+        new new Chart(ctx, {
+            type: 'scatter',
+            data: data,
+            options: options
+        });
+    </script>
+</div>
