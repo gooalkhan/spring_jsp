@@ -1,8 +1,8 @@
 package com.example.spring_jsp.worldcup;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.example.spring_jsp.member.MemberJoinDTO;
+import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +27,16 @@ public class WorldCupServiceImpl implements WorldCupService {
 		return String.valueOf(worldCupDTO.getIdx());
 		}
 		return null;
+	}
+	
+	@Override
+	public List<WorldCupDTO> worldCupSelect(WorldCupDTO worldCupDTO) throws Exception {
+		return worldCupMapper.worldCupSelect(worldCupDTO);
+	}
+	
+	@Override
+	public List<WorldCupDTO> worldCupImageSelect(WorldCupDTO worldCupDTO) throws Exception {
+		return worldCupMapper.worldCupImageSelect(worldCupDTO);
 	}
     
 }
