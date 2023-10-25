@@ -63,7 +63,7 @@ public class AnalysisController {
                             case "키워드":
                                 return analysisServiceImpl.getKeywordAnalysis(sid, purchased.getBookid(), purchased.getProductid());
                             case "선호작품":
-                                return analysisServiceImpl.getFavoriteAnalysis();
+                                return analysisServiceImpl.getFavoriteAnalysis(sid, purchased.getBookid(), purchased.getProductid());
                         }
                     }
                 }
@@ -130,7 +130,7 @@ public class AnalysisController {
                     case "키워드":
                         return analysisServiceImpl.getKeywordAnalysis(sid, purchased.getBookid(), purchased.getProductid());
                     case "선호작품":
-                        return analysisServiceImpl.getFavoriteAnalysis();
+                        return analysisServiceImpl.getFavoriteAnalysis(sid, purchased.getBookid(), purchased.getProductid());
                 }
             }
         }

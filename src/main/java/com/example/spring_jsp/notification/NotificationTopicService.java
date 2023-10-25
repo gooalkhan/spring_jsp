@@ -14,6 +14,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NotificationTopicService {
 
     private final Map<String, NotificationTopicDTO> topics = new ConcurrentHashMap<>();
+
+    private final Map<String, NotificationTopicDTO> failedTopics = new ConcurrentHashMap<>();
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final BookServiceImpl bookService;
     private final NotificationQueue notificationQueue;
@@ -32,22 +35,63 @@ public class NotificationTopicService {
         }
     }
 
-    public void removeTopicWhenComplete(long bookId, String productId) {
+    private void sendTopicToFailure(long bookId, String productId) {
+        if (getTopic(bookId, productId) != null) {
+
+            NotificationTopicDTO topic = getTopic(bookId, productId);
+            failedTopics.put(bookId + ":" + productId, topic);
+
+            removeTopic(bookId, productId);
+
+            logger.debug("topic {} : {} moved to failed topic", bookId, productId);
+        }
+    }
+
+    public void removeTopic(long bookId, String productId) {
+        if (getTopic(bookId, productId) != null) {
+            topics.remove(bookId + ":" + productId);
+            logger.debug("topic {} : {} removed", bookId, productId);
+        }
+    }
+
+    public void sendMessageToTopicAllSubscribers(long bookId, String productId, String message) {
         NotificationTopicDTO topic = getTopic(bookId, productId);
 
         if (topic != null) {
-            String message = topic.getCompleteMessage();
+            String messageToSend = topic.getTopicString() + " " + message;
 
-            logger.debug("sending {} to {} subscribers", message, topic.getSubscribers().size());
+            logger.debug("sending {} to {} subscribers", messageToSend, topic.getSubscribers().size());
             for (String sid : topic.getSubscribers()) {
                 NotificationDTO notificationDTO = new NotificationDTO();
                 notificationDTO.setSessionId(sid);
                 notificationDTO.setType("message");
-                notificationDTO.setMessage(message);
+                notificationDTO.setMessage(messageToSend);
 
                 notificationQueue.sendMessage(notificationDTO);
             }
-            topics.remove(bookId + ":" + productId);
+        } else {
+            logger.error("topic {} : {} not found", bookId, productId);
+        }
+    }
+
+    public void removeTopicWhenComplete(long bookId, String productId) {
+        NotificationTopicDTO topic = getTopic(bookId, productId);
+
+        if (topic != null) {
+            sendMessageToTopicAllSubscribers(bookId, productId, " 분석이 완료되었습니다");
+            removeTopic(bookId, productId);
+            logger.debug("topic {} : {} removed", bookId, productId);
+        } else {
+            logger.error("topic {} : {} not found", bookId, productId);
+        }
+    }
+
+    public void removeTopicWhenFailure(long bookId, String productId) {
+        NotificationTopicDTO topic = getTopic(bookId, productId);
+
+        if (topic != null) {
+            sendMessageToTopicAllSubscribers(bookId, productId, " 분석이 실패했습니다. 재시도 횟수를 초과했습니다.");
+            sendTopicToFailure(bookId, productId);
             logger.debug("topic {} : {} removed", bookId, productId);
         } else {
             logger.error("topic {} : {} not found", bookId, productId);
@@ -56,6 +100,10 @@ public class NotificationTopicService {
 
     public NotificationTopicDTO getTopic(long bookId, String productId) {
         return topics.get(bookId + ":" + productId);
+    }
+
+    public boolean isTopicFailed(long bookId, String productId) {
+        return failedTopics.containsKey(bookId + ":" + productId);
     }
 
     public void addSubscriber(String sid, long bookId, String productId) {
