@@ -52,4 +52,23 @@
 		where
 		IDX = #{idx}
 	</delete>
+	
+	<!-- 월드컵 select -->
+	<select id="worldCupSelect" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+		select
+		*
+		from
+		worldcuptbl
+	</select>
+	
+	<!-- 월드컵 이미지 select -->
+	<select id="worldCupImageSelect" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+		SELECT
+		worldcuptbl_IDX, MAX(IMAGENAME) AS IMAGENAME
+		FROM
+		worldcupimagetbl
+		WHERE
+		worldcuptbl_IDX BETWEEN 1 AND (select count(*) from worldcuptbl)
+		GROUP BY worldcuptbl_IDX;
+	</select>
 </mapper>

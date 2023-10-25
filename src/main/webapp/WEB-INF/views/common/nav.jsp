@@ -7,7 +7,7 @@
         <a class="nav-link" href="#">웹소설 장르별 분석</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">메뉴 3</a>
+        <a class="nav-link" href="/worldCupList">이상형 월드컵 목록</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">메뉴 4</a>

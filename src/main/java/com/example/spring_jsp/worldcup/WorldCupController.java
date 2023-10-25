@@ -3,6 +3,7 @@ package com.example.spring_jsp.worldcup;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class WorldCupController {
 		return "/worldcup/worldCupCreate";
 	}
 	
+	// 이상형 월드컵 만들기 처리
 	@PostMapping("/worldCupCreate")
 	public ModelAndView worldCupCreatePost(WorldCupDTO worldCupDTO, HttpServletRequest request, MultipartFile[] uploadfile) {
 		ModelAndView mav = new ModelAndView();
@@ -85,5 +87,17 @@ public class WorldCupController {
 			mav.setViewName("redirect:/");
 		}
 	    return mav;
+	}
+	
+	// 이상형 월드컵 리스트 페이지
+	@GetMapping("/worldCupList")
+	public ModelAndView worldCupList(WorldCupDTO worldCupDTO, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		List<WorldCupDTO> DTO = worldCupService.worldCupSelect(worldCupDTO);
+		List<WorldCupDTO> IDTO = worldCupService.worldCupImageSelect(worldCupDTO);
+		mav.addObject("data", DTO);
+		mav.addObject("image", IDTO);
+		mav.setViewName("/worldcup/worldCupList");
+		return mav;
 	}
 }
