@@ -24,7 +24,7 @@
     
     
     <!-- 월드컵 인서트 -->
-    <insert id="worldCupInsert">
+    <insert id="worldCupInsert" useGeneratedKeys="true" keyProperty="idx">
     	insert
     	into
     	worldcuptbl
@@ -38,9 +38,9 @@
     	insert
     	into
     	worldcupimagetbl
-    	(ORIGINIMAGENAME, IMAGENAME, IMAGEPATH, CONTENT, worldcuptbl_IDX)
+    	(ORIGINIMAGENAME, IMAGENAME, IMAGEPATH, worldcuptbl_IDX)
     	values
-    	(#{originImageName}, #{imageName}, #{imagePath}, #{content}, #{worldcuptbl_idx})
+    	(#{originImageName}, #{imageName}, #{imagePath}, #{worldcuptbl_idx})
     </insert>
     
     <!-- 월드컵 삭제 -->

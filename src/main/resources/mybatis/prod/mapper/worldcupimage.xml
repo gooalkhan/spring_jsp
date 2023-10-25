@@ -9,7 +9,6 @@
 		  IMAGENAME text NOT NULL,
 		  IMAGEPATH text NOT NULL,
 		  IMAGEDATE timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		  CONTENT varchar(200) DEFAULT NULL,
 		  worldcuptbl_IDX int NOT NULL,
 		  PRIMARY KEY (IDX),
 		  KEY fk_worldcupimagetbl_worldcuptbl1_idx (worldcuptbl_IDX),
