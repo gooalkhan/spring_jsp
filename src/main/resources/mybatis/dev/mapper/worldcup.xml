@@ -70,4 +70,24 @@
 		worldcuptbl_IDX BETWEEN 1 AND (select count(*) from worldcuptbl)
 		GROUP BY worldcuptbl_IDX;
 	</select>
+	
+	<!-- 월드컵 진행 select -->
+	<select id="worldCupProcSelect" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+		select
+		*
+		from
+		worldcuptbl
+		where
+		idx = 1
+	</select>
+	
+	<!-- 월드컵 진행 이미지 select -->
+	<select id="worldCupProcImageSelect" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+		select
+		*
+		from
+		worldcupimagetbl
+		where
+		worldcuptbl_idx = 1
+	</select>
 </mapper>

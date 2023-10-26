@@ -82,9 +82,7 @@ public class WorldCupController {
 			    	e.printStackTrace();
 			    }
 			}
-		    
-			// TODO: 나중에 이상형 월드컵 목록으로 이동하도록 바꾸기
-			mav.setViewName("redirect:/");
+			mav.setViewName("redirect:/worldCupList");
 		}
 	    return mav;
 	}
@@ -98,6 +96,18 @@ public class WorldCupController {
 		mav.addObject("data", DTO);
 		mav.addObject("image", IDTO);
 		mav.setViewName("/worldcup/worldCupList");
+		return mav;
+	}
+	
+	// 이상형 월드컵 진행 페이지(임시 작동 안함)
+	@GetMapping("/worldCupProc")
+	public ModelAndView worldCupProc(WorldCupDTO worldCupDTO, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		WorldCupDTO DTO = worldCupService.worldCupProcSelect(worldCupDTO);
+		List<WorldCupDTO> IDTO = worldCupService.worldCupProcImageSelect(worldCupDTO);
+		mav.addObject("data", DTO);
+		mav.addObject("image", IDTO);
+		mav.setViewName("/worldcup/worldCupProc");
 		return mav;
 	}
 }
