@@ -1,22 +1,17 @@
 package com.example.spring_jsp.shop.bookkeeping;
 
-import com.example.spring_jsp.notification.NotificationService;
-import com.example.spring_jsp.shop.campaign.CampaignDTO;
-import com.example.spring_jsp.shop.campaign.CampaignServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class BookkeepingServiceImpl implements BookkeepingService {
 
     private final BookkeepingMapper bookkeepingMapper;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //구매 처리
     public int bookkeepingInsert(BookkeepingDTO bookkeepingDTO) {
