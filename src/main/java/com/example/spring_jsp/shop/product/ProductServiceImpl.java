@@ -35,11 +35,26 @@ public class ProductServiceImpl implements ProductService {
         return productDTO;
     }
 
+    //구매된 제품이 아닌 판매 가능한 제품만 조회한다는 점에 주의할것
     public List<ProductDTO> selectProductCountByBookUserProduct(long bookid, String productid, String userid) {
         List<ProductDTO> result = new ArrayList<>();
         for (Map.Entry<String, ProductDTO> entry : productDTOMap.entrySet()) {
             ProductDTO productDTO = entry.getValue();
             if (productDTO.getBookid() == bookid && productDTO.getUserid().equals(userid) && productDTO.getProductid().equals(productid)) {
+                result.add(productDTO);
+            }
+        }
+        return result;
+    }
+
+    //분석을 구매했는지 확인
+    public List<ProductDTO> productsUnlockedByCondition(long bookid, String productid, String userid) {
+        List<ProductDTO> result = new ArrayList<>();
+
+        List<String> unlockedUID = bookkeepingServiceImpl.getUnlockedUID(userid);
+        for (String uid : unlockedUID) {
+            ProductDTO productDTO = productDTOMap.get(uid);
+            if (productDTO.getBookid() == bookid && productDTO.getProductid().equals(productid)) {
                 result.add(productDTO);
             }
         }

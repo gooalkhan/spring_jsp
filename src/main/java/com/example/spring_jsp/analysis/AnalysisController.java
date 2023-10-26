@@ -6,6 +6,7 @@ import com.example.spring_jsp.shop.product.ProductDTO;
 import com.example.spring_jsp.shop.product.ProductServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/analysis")
@@ -33,6 +35,7 @@ public class AnalysisController {
             entry("keyword", "키워드"),
             entry("favorite", "선호작품")
     );
+
     //TODO: 구매 체크 부분 서비스로 빼기
     @GetMapping("")
     public ModelAndView getAnalysisAjax(HttpSession session,
@@ -52,19 +55,17 @@ public class AnalysisController {
                 String sid = (String) session.getAttribute("sid");
 
                 //구매여부 체크
-                List<String> unlockedList = bookkeepingServiceImpl.getUnlockedUID(sid);
-
-                ProductDTO purchased;
-                for (String unlockedUID : unlockedList) {
-                    purchased = productServiceImpl.selectProduct(unlockedUID);
-//                    if (purchased.getBookid() == bookid && purchased.getProductid().equals("키워드")) {
-                    if (purchased.getBookid() ==bookid) {
-                        switch (purchased.getProductid()) {
-                            case "키워드":
-                                return analysisServiceImpl.getKeywordAnalysis(sid, purchased.getBookid(), purchased.getProductid());
-                            case "선호작품":
-                                return analysisServiceImpl.getFavoriteAnalysis(sid, purchased.getBookid(), purchased.getProductid());
-                        }
+                List<ProductDTO> unlockedProducts = productServiceImpl.productsUnlockedByCondition(bookid, productid, sid);
+                if (!unlockedProducts.isEmpty()) {
+                    if (unlockedProducts.size() > 1) {
+                        log.error("구입한 제품이 2개 이상입니다. sid: {}, bookid: {}, analysis: {}", sid, bookid, productid);
+                    }
+                    ProductDTO purchased = unlockedProducts.get(0);
+                    switch (purchased.getProductid()) {
+                        case "키워드":
+                            return analysisServiceImpl.getKeywordAnalysis(sid, purchased.getBookid(), purchased.getProductid());
+                        case "선호작품":
+                            return analysisServiceImpl.getFavoriteAnalysis(sid, purchased.getBookid(), purchased.getProductid());
                     }
                 }
                 notificationService.send(sid, "구매하지 않은 상품입니다.");
@@ -113,6 +114,8 @@ public class AnalysisController {
         model.addAttribute("analysis", analysisMap.get(analysis));
 
         model.addAttribute("bookid", bookid);
+
+        //세션 체크
         if (httpSession.getAttribute("sid") == null) {
             mav.setViewName("book/analysis/nosession");
             return mav;
@@ -120,22 +123,22 @@ public class AnalysisController {
 
         //이미 구매한 경우
         String sid = httpSession.getAttribute("sid").toString();
-        List<String> unlockedList = bookkeepingServiceImpl.getUnlockedUID(sid);
 
-        ProductDTO purchased;
-        for (String unlockedUID : unlockedList) {
-            purchased = productServiceImpl.selectProduct(unlockedUID);
-            if (purchased.getBookid() == bookid && purchased.getProductid().equals(analysisMap.get(analysis))) {
+        List<ProductDTO> unlockedProducts = productServiceImpl.productsUnlockedByCondition(bookid, analysisMap.get(analysis), sid);
+        if (!unlockedProducts.isEmpty()) {
+            if (unlockedProducts.size() > 1) {
+                log.error("구입한 제품이 2개 이상입니다. sid: {}, bookid: {}, analysis: {}", sid, bookid, analysis);
+            }
+                ProductDTO purchased = unlockedProducts.get(0);
                 switch (purchased.getProductid()) {
                     case "키워드":
                         return analysisServiceImpl.getKeywordAnalysis(sid, purchased.getBookid(), purchased.getProductid());
                     case "선호작품":
                         return analysisServiceImpl.getFavoriteAnalysis(sid, purchased.getBookid(), purchased.getProductid());
                 }
-            }
         }
 
-        //구매 안한 경우
+        //구매 안한 경우 판매 가능한 제품이 이미 있는지 확인하고 없으면 새로 생성
         List<ProductDTO> list = productServiceImpl.selectProductCountByBookUserProduct(bookid, analysisMap.get(analysis), sid);
 
         ProductDTO productDTO;

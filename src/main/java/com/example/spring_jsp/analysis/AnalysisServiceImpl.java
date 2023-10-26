@@ -4,9 +4,11 @@ import com.example.spring_jsp.analysis.python.PythonDTO;
 import com.example.spring_jsp.analysis.python.PythonServiceImpl;
 import com.example.spring_jsp.notification.NotificationTopicService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AnalysisServiceImpl {

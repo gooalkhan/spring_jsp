@@ -1,8 +1,7 @@
 <div>
     <canvas id="chartJSContainer" width="600" height="400"></canvas>
-{#    TODO: cdn이 아니라 다운받아 사용하기 - 인터넷 안되는 환경에서 시연할수있으므로!#}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <script src="/resources/js/chart.js"></script>
+    <script src="/resources/js/chartjs-plugin-annotation.js"></script>
     <script>
 
         var data = {
@@ -60,7 +59,7 @@
 
         // 차트 생성
         var ctx = document.getElementById("chartJSContainer").getContext("2d");
-        new new Chart(ctx, {
+        new Chart(ctx, {
             type: 'scatter',
             data: data,
             options: options
