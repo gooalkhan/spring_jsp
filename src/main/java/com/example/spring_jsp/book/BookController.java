@@ -1,23 +1,17 @@
 package com.example.spring_jsp.book;
 
 import com.example.spring_jsp.book.keyword.KeywordServiceImpl;
-import com.example.spring_jsp.shop.bookkeeping.BookkeepingServiceImpl;
-import com.example.spring_jsp.shop.product.ProductDTO;
-import com.example.spring_jsp.shop.product.ProductServiceImpl;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import com.example.spring_jsp.shop.product.ProductBuilder;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/books")
@@ -25,9 +19,6 @@ public class BookController {
 
     private final BookServiceImpl bookServiceImpl;
     private final KeywordServiceImpl keywordServiceImpl;
-    private final ProductServiceImpl productServiceImpl;
-    private final BookkeepingServiceImpl bookkeepingServiceImpl;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final int BOOK_PAGE_SIZE = 12;
 

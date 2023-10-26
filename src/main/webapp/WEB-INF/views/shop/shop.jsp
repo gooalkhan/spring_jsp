@@ -57,9 +57,9 @@
                             <div class="card card-body mb-3 p-3">
                                 <p class="card-text">구매 방법</p>
                                 <form class="form-control p-5" action="/shop/purchase" method="post">
-                                    <input type="hidden" name="campaignUID" value="${offer.uid}">
+                                    <input type="hidden" name="uid" value="${offer.uid}">
                                     <input type="hidden" name="userid" value="${sid}">
-                                    <input type="hidden" name="addedPoint" value="${offer.point}">
+                                    <input type="hidden" name="point" value="${offer.point}">
                                     <div class="row justify-content-center mb-3">
                                         <jsp:include page="include/paymethod.jsp"/>
                                     </div>

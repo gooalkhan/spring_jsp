@@ -1,15 +1,13 @@
 package com.example.spring_jsp.notification;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class NotificationService {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final NotificationQueue notificationQueue;
 
@@ -19,7 +17,7 @@ public class NotificationService {
 
     public void destroySession(String sid) {
         notificationQueue.removeQueue(sid);
-        notificationQueue.removeSession(sid);
+        notificationQueue.removeSessionFromMap(sid);
     }
 
     public void send(String sessionid, String message) {

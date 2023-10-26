@@ -3,8 +3,7 @@ package com.example.spring_jsp.config;
 import com.example.spring_jsp.notification.NotificationQueue;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -13,17 +12,17 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class TextSocketHandler extends TextWebSocketHandler {
 
     private final NotificationQueue notificationQueue;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void handleTextMessage(WebSocketSession webSocketSession, TextMessage message) {
         String uuid = message.getPayload();
-        logger.debug("id: " + message.getPayload() + " received");
+        log.debug("id: " + message.getPayload() + " received");
 
         Object session =  webSocketSession.getAttributes().get("session");
         if (session != null && ((HttpSession)session).getAttribute("sid") != null) {
@@ -37,27 +36,27 @@ public class TextSocketHandler extends TextWebSocketHandler {
                 if (!messageToSend.contains(uuid)) {
                     try {
                         webSocketSession.sendMessage(new TextMessage(messageToSend));
-                        logger.debug("message: " + messageToSend + "sent");
+                        log.debug("message: " + messageToSend + "sent");
                     } catch (Exception e) {
-                        logger.error(e.getMessage());
+                        log.error(e.getMessage());
                     }
                 }
-                logger.debug("same message {} received, skipping", uuid);
+                log.debug("same message {} received, skipping", uuid);
             }
-            logger.debug("{} messages are left in queue:",queue.size());
+            log.debug("{} messages are left in queue:",queue.size());
         }
 
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) {
-        logger.debug("session: " + webSocketSession + " connected");
+        log.debug("session: " + webSocketSession + " connected");
         Object session =  webSocketSession.getAttributes().get("session");
         if (session != null && ((HttpSession)session).getAttribute("sid") != null) {
             HttpSession httpSession = (HttpSession) session;
             String sid = httpSession.getAttribute("sid").toString();
 
-            notificationQueue.addSession(sid, webSocketSession);
+            notificationQueue.addSessionToMap(sid, webSocketSession);
 
             LinkedBlockingQueue<String> queue = notificationQueue.getQueue(sid);
 
@@ -66,9 +65,9 @@ public class TextSocketHandler extends TextWebSocketHandler {
             if (message != null) {
                 try {
                     webSocketSession.sendMessage(new TextMessage(message));
-                    logger.debug("message: " + message + "sent");
+                    log.debug("message: " + message + "sent");
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
+                    log.error(e.getMessage());
                 }
             }
 
@@ -81,11 +80,12 @@ public class TextSocketHandler extends TextWebSocketHandler {
         try {
             if (session != null && session.getAttribute("sid") != null) {
                 String sid = session.getAttribute("sid").toString();
-                notificationQueue.removeSession(sid);
+                notificationQueue.removeSessionFromMap(sid);
+                log.debug("sid {} removed from sessionMap", sid);
             }
-            logger.debug("session: " + webSocketSession + " closed");
+            log.debug("session: " + webSocketSession + " closed");
         } catch (IllegalStateException e) {
-            logger.error("session is already invalidated");
+            log.error("session is already invalidated");
         }
     }
 }

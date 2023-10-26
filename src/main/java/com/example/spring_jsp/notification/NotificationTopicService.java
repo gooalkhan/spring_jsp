@@ -2,13 +2,13 @@ package com.example.spring_jsp.notification;
 
 import com.example.spring_jsp.book.BookServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NotificationTopicService {
@@ -17,7 +17,6 @@ public class NotificationTopicService {
 
     private final Map<String, NotificationTopicDTO> failedTopics = new ConcurrentHashMap<>();
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final BookServiceImpl bookService;
     private final NotificationQueue notificationQueue;
 
@@ -31,7 +30,7 @@ public class NotificationTopicService {
             topic.setBookName(bookName);
             topic.setProductId(productId);
             topics.put(bookId + ":" + productId, topic);
-            logger.debug("topic {} : {} added", bookId, productId);
+            log.debug("topic {} : {} added", bookId, productId);
         }
     }
 
@@ -43,14 +42,14 @@ public class NotificationTopicService {
 
             removeTopic(bookId, productId);
 
-            logger.debug("topic {} : {} moved to failed topic", bookId, productId);
+            log.debug("topic {} : {} moved to failed topic", bookId, productId);
         }
     }
 
     public void removeTopic(long bookId, String productId) {
         if (getTopic(bookId, productId) != null) {
             topics.remove(bookId + ":" + productId);
-            logger.debug("topic {} : {} removed", bookId, productId);
+            log.debug("topic {} : {} removed", bookId, productId);
         }
     }
 
@@ -60,7 +59,7 @@ public class NotificationTopicService {
         if (topic != null) {
             String messageToSend = topic.getTopicString() + " " + message;
 
-            logger.debug("sending {} to {} subscribers", messageToSend, topic.getSubscribers().size());
+            log.debug("sending {} to {} subscribers", messageToSend, topic.getSubscribers().size());
             for (String sid : topic.getSubscribers()) {
                 NotificationDTO notificationDTO = new NotificationDTO();
                 notificationDTO.setSessionId(sid);
@@ -70,7 +69,7 @@ public class NotificationTopicService {
                 notificationQueue.sendMessage(notificationDTO);
             }
         } else {
-            logger.error("topic {} : {} not found", bookId, productId);
+            log.error("topic {} : {} not found", bookId, productId);
         }
     }
 
@@ -80,9 +79,9 @@ public class NotificationTopicService {
         if (topic != null) {
             sendMessageToTopicAllSubscribers(bookId, productId, " 분석이 완료되었습니다");
             removeTopic(bookId, productId);
-            logger.debug("topic {} : {} removed", bookId, productId);
+            log.debug("topic {} : {} removed", bookId, productId);
         } else {
-            logger.error("topic {} : {} not found", bookId, productId);
+            log.error("topic {} : {} not found", bookId, productId);
         }
     }
 
@@ -92,9 +91,9 @@ public class NotificationTopicService {
         if (topic != null) {
             sendMessageToTopicAllSubscribers(bookId, productId, " 분석이 실패했습니다. 재시도 횟수를 초과했습니다.");
             sendTopicToFailure(bookId, productId);
-            logger.debug("topic {} : {} removed", bookId, productId);
+            log.debug("topic {} : {} removed", bookId, productId);
         } else {
-            logger.error("topic {} : {} not found", bookId, productId);
+            log.error("topic {} : {} not found", bookId, productId);
         }
     }
 
@@ -120,6 +119,6 @@ public class NotificationTopicService {
         notificationDTO.setMessage("%s %s분석이 진행중입니다. 완료되면 알려 드리겠습니다".formatted(bookName, productId));
 
         notificationQueue.sendMessage(notificationDTO);
-        logger.debug("subscriber {} added to topic {} : {} ", sid, bookId, productId);
+        log.debug("subscriber {} added to topic {} : {} ", sid, bookId, productId);
     }
 }
