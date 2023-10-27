@@ -110,4 +110,10 @@ public class WorldCupController {
 		mav.setViewName("/worldcup/worldCupProc");
 		return mav;
 	}
+	
+	// 이상형 월드컵 결과 페이지
+	@GetMapping("/worldCupResult")
+	public String worldCupResult() {
+		return "/worldcup/worldCupResult";
+	}
 }
