@@ -99,7 +99,7 @@ public class WorldCupController {
 		return mav;
 	}
 	
-	// 이상형 월드컵 진행 페이지(임시 작동 안함)
+	// 이상형 월드컵 진행 페이지
 	@GetMapping("/worldCupProc")
 	public ModelAndView worldCupProc(WorldCupDTO worldCupDTO, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
