@@ -9,7 +9,7 @@ try:
 
 except ImportError:
     print("Error importing dbutils")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", 'jaydebeapi'])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", 'dbutils'])
     from dbutils.pooled_db import PooledDB
 
 finally:
