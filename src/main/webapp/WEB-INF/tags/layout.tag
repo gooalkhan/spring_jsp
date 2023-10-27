@@ -42,6 +42,5 @@
 </body>
 <script src="${pageContext.request.contextPath}/resources/js/sockjs.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/imageLimit.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 </html>
