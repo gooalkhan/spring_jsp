@@ -79,7 +79,7 @@
 		from
 		worldcuptbl
 		where
-		idx = 1
+		idx = #{idx}
 	</select>
 	
 	<!-- 월드컵 진행 이미지 select -->
@@ -89,6 +89,6 @@
 		from
 		worldcupimagetbl
 		where
-		worldcuptbl_idx = 1
+		worldcuptbl_idx = #{idx}
 	</select>
 </mapper>
