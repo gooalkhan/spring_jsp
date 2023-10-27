@@ -47,6 +47,11 @@ var remainNum;
 // 몇 강인지 표시할 변수
 var remainNumGang;
 
+// 승리한 이미지 저장
+var winImg;
+
+// 승리한 이미지 이름 저장
+var winImgName;
 
 /*
 	함수 선언 구역
@@ -116,6 +121,7 @@ function startGame() {
 
 // 게임 진행 함수
 function displayNextMatchup() {
+	// 부전승 처리
 	if (imageName.length == 1){
 		alert("자료가 하나 남았습니다. 하나남은 자료는 부전승으로 올라갑니다.")
 		randNum();
@@ -132,9 +138,12 @@ function displayNextMatchup() {
             // winImageName에 데이터가 1개만 있을 경우에(최종 승자가 결정됬을 경우에) 끝났다는 창 출력
             // TODO: 여기 월드컵이 끝났습니다. 가 아니라 worldCupResult를 만들어서 결과를 볼 수 있도록 해줘야됨
             alert("월드컵이 끝났습니다.");
-            location.href = "/";
-//          document.getElementById("winnerImg").src = "/resources/worldcupimages/" + winImageName[0];
-//			document.getElementById("winnerImgName").innerText = winOriginImageName[0];
+           	location.href = "/worldCupResult";
+           	// 결과 페이지에서 결과가 보여지도록 처리하기 위한 코드
+            winImg = winImageName[0];
+            winImgName = winOriginImageName[0];
+            sessionStorage.setItem('sWCimg', winImg);
+            sessionStorage.setItem('sWCimgName', winImgName);
         } else {
             // 그렇지 않다면, 다음 라운드로 이동
             alert("다음 라운드가 실행됩니다.");
@@ -251,6 +260,12 @@ function randNum() {
 	tempoINR = originImageName[randR];
 }
 
-
+// 마지막에 결과값을 보기 위한 함수
+function endGame() {
+	var endImg = sessionStorage.getItem('sWCimg');
+    var endImgName = sessionStorage.getItem('sWCimgName');
+	document.getElementById("winnerImg").src = "/resources/worldcupimages/" + endImg;
+	document.getElementById("winnerImgName").innerText = endImgName;
+}
 
 
