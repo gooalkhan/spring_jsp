@@ -13,6 +13,8 @@ public class HomeController {
 
     private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
+    //TODO: 첫 화면에서 보여줄 게시글, 새로 업데이트된 웹소설 보여주기
+
     @GetMapping("/")
     public String index() {
         logger.info("welcome home");

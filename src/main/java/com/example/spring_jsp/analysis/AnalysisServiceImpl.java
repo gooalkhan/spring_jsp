@@ -1,7 +1,7 @@
 package com.example.spring_jsp.analysis;
 
 import com.example.spring_jsp.analysis.python.PythonDTO;
-import com.example.spring_jsp.analysis.python.PythonServiceImpl;
+import com.example.spring_jsp.analysis.python.PythonService;
 import com.example.spring_jsp.notification.NotificationTopicService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,13 +11,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AnalysisServiceImpl {
+public class AnalysisServiceImpl implements AnalysisService {
 
-    private final PythonServiceImpl pythonServiceImpl;
+    private final PythonService pythonService;
     private final NotificationTopicService notificationTopicService;
 
     public ModelAndView getKeywordAnalysis(String sid, long bookId, String productId) {
-        PythonDTO pythonDTO = pythonServiceImpl.selectPython(bookId, productId);
+        PythonDTO pythonDTO = pythonService.selectPython(bookId, productId);
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("book/analysis/template/keyword");
@@ -29,7 +29,7 @@ public class AnalysisServiceImpl {
 
                 //분석중인 작업 여부 체크해서 없으면 작업 요청
                 if (notificationTopicService.getTopic(bookId, productId) == null) {
-                    pythonServiceImpl.start_process(bookId, productId);
+                    pythonService.start_analysis_thread(bookId, productId);
                 }
                 //구독 리스트에 추가
                 notificationTopicService.addSubscriber(sid, bookId, productId);
@@ -50,7 +50,7 @@ public class AnalysisServiceImpl {
     }
 
     public ModelAndView getFavoriteAnalysis(String sid, long bookId, String productId) {
-        PythonDTO pythonDTO = pythonServiceImpl.selectPython(bookId, productId);
+        PythonDTO pythonDTO = pythonService.selectPython(bookId, productId);
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("book/analysis/template/favorite");
@@ -62,7 +62,7 @@ public class AnalysisServiceImpl {
 
                 //분석중인 작업 여부 체크해서 없으면 작업 요청
                 if (notificationTopicService.getTopic(bookId, productId) == null) {
-                    pythonServiceImpl.start_process(bookId, productId);
+                    pythonService.start_analysis_thread(bookId, productId);
                 }
                 //구독 리스트에 추가
                 notificationTopicService.addSubscriber(sid, bookId, productId);

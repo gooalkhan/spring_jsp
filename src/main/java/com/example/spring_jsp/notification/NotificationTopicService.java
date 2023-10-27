@@ -1,10 +1,9 @@
 package com.example.spring_jsp.notification;
 
-import com.example.spring_jsp.book.BookServiceImpl;
+import com.example.spring_jsp.book.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,7 +16,7 @@ public class NotificationTopicService {
 
     private final Map<String, NotificationTopicDTO> failedTopics = new ConcurrentHashMap<>();
 
-    private final BookServiceImpl bookService;
+    private final BookService bookService;
     private final NotificationQueue notificationQueue;
 
     private void addTopic(long bookId, String productId) {

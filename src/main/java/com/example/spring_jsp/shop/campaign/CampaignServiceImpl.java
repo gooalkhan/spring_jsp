@@ -2,7 +2,7 @@ package com.example.spring_jsp.shop.campaign;
 
 import com.example.spring_jsp.notification.NotificationService;
 import com.example.spring_jsp.shop.bookkeeping.BookkeepingDTO;
-import com.example.spring_jsp.shop.bookkeeping.BookkeepingServiceImpl;
+import com.example.spring_jsp.shop.bookkeeping.BookkeepingService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +16,10 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CampaignServiceImpl {
+public class CampaignServiceImpl implements CampaignService {
     List<CampaignDTO> campaignList = new ArrayList<>();
     private final NotificationService notificationService;
-    private final BookkeepingServiceImpl bookkeepingServiceImpl;
+    private final BookkeepingService bookkeepingService;
 
     //uid로 행사 가져오기, 폼과 비교용
     public CampaignDTO selectCampaign(String uid) {
@@ -54,7 +54,7 @@ public class CampaignServiceImpl {
             String uuid = UUID.randomUUID().toString();
             bookkeepingDTO.setUUID(uuid);
             bookkeepingDTO.setReferenceUUID(uuid);
-            result[0] = bookkeepingServiceImpl.bookkeepingInsert(bookkeepingDTO);
+            result[0] = bookkeepingService.bookkeepingInsert(bookkeepingDTO);
 
             //포인트 증정 이벤트가 있을 경우 처리, 구매가 성공했을때만!
             if (selectedCampaignDTO.getAdditionalPoint() > 0 && result[0] == 1) {
@@ -67,7 +67,7 @@ public class CampaignServiceImpl {
                 String uuid2 = UUID.randomUUID().toString();
                 additionalPointBookkeepingDTO.setUUID(uuid2);
                 additionalPointBookkeepingDTO.setReferenceUUID(uuid);
-                result[1] = bookkeepingServiceImpl.bookkeepingInsert(additionalPointBookkeepingDTO);
+                result[1] = bookkeepingService.bookkeepingInsert(additionalPointBookkeepingDTO);
             }
         } else {
             log.error("{} 상품이 없습니다", campaignDTO.getUid());

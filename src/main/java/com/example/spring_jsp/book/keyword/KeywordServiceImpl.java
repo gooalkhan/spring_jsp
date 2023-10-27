@@ -2,13 +2,12 @@ package com.example.spring_jsp.book.keyword;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class KeywordServiceImpl {
+public class KeywordServiceImpl implements KeywordService {
 
     private final KeywordMapper keywordMapper;
 

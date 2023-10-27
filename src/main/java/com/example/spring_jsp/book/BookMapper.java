@@ -30,4 +30,6 @@ public interface BookMapper {
     int bookCountByPublisher(@Param("searchword") String searchword);
 
     BookDTO bookSelect(@Param("bookid") long bookid);
+
+    int bookUpdate(BookDTO bookDTO);
 }

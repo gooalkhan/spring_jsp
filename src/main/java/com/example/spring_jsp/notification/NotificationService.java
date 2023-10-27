@@ -1,31 +1,11 @@
 package com.example.spring_jsp.notification;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+public interface NotificationService {
 
-@Slf4j
-@RequiredArgsConstructor
-@Service
-public class NotificationService {
+    void initSession(String sid);
 
-    private final NotificationQueue notificationQueue;
+    void destroySession(String sid);
 
-    public void initSession(String sid) {
-        notificationQueue.addQueue(sid);
-    }
+    void send(String sessionid, String message);
 
-    public void destroySession(String sid) {
-        notificationQueue.removeQueue(sid);
-        notificationQueue.removeSessionFromMap(sid);
-    }
-
-    public void send(String sessionid, String message) {
-
-        NotificationDTO notificationDTO = new NotificationDTO();
-        notificationDTO.setType("message");
-        notificationDTO.setSessionId(sessionid);
-        notificationDTO.setMessage(message);
-        notificationQueue.sendMessage(notificationDTO);
-    }
 }

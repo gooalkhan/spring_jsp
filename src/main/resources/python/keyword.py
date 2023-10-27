@@ -7,7 +7,7 @@ import pandas as pd
 from config import IMG_PATH, JINJA_ENV
 
 if sys.argv[2] == "dev":
-    from H2DB import MyDB
+    from H2DBPool import MyDB
 else:
     from MySQLDB import MyDB
 

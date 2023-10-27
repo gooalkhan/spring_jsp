@@ -34,7 +34,7 @@
                     : ${not empty selectedBook.preference_count ? selectedBook.preference_count : ""}</p>
                 <p class="card-text">총 편 수 : ${not empty selectedBook.series_count ? selectedBook.series_count : ""}</p>
                 <p class="card-text">마지막 업로드 : <fmt:formatDate pattern="yyyy년 MM월 dd일"
-                                                               value="${selectedBook.last_update}"/></p>
+                                                               value="${selectedBook.series_last_update}"/></p>
 
 
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#description-modal">
