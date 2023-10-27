@@ -4,14 +4,14 @@ import java.util.List;
 
 public interface KeywordService {
 
-    public void createTable();
+    void createTable();
 
-    public void dropTable();
+    void dropTable();
 
-    public List<KeywordDTO> keywordSelect(long bookid);
+    List<KeywordDTO> keywordSelect(long bookid);
 
-    public int keywordInsert(KeywordDTO keywordDTO);
+    int keywordInsert(KeywordDTO keywordDTO);
 
-    public int keywordCount(long bookid);
+    int keywordCount(long bookid);
 
 }

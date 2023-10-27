@@ -4,25 +4,25 @@ import java.util.List;
 
 public interface BookService {
 
-    public void createTable();
+    void createTable();
 
-    public void dropTable();
+    void dropTable();
 
-    public List<BookDTO> bookSelectAll();
+    List<BookDTO> bookSelectAll();
 
-    public List<BookDTO> bookPagination(int limit, int offset);
+    List<BookDTO> bookPagination(int limit, int offset);
 
-    public List<BookDTO> bookPaginationByTitle(int limit, int offset, String searchword);
-    public List<BookDTO> bookPaginationByAuthor(int limit, int offset, String searchword);
-    public List<BookDTO> bookPaginationByPublisher(int limit, int offset, String searchword);
+    List<BookDTO> bookPaginationByTitle(int limit, int offset, String searchword);
+    List<BookDTO> bookPaginationByAuthor(int limit, int offset, String searchword);
+    List<BookDTO> bookPaginationByPublisher(int limit, int offset, String searchword);
 
-    public int bookInsert(BookDTO bookDTO);
+    int bookInsert(BookDTO bookDTO);
 
-    public int bookCount();
+    int bookCount();
 
-    public int bookCountByTitle(String searchword);
+    int bookCountByTitle(String searchword);
 
-    public int bookCountByAuthor(String searchword);
-    public int bookCountByPublisher(String searchword);
-    public BookDTO bookSelect(long bookid);
+    int bookCountByAuthor(String searchword);
+    int bookCountByPublisher(String searchword);
+    BookDTO bookSelect(long bookid);
 }

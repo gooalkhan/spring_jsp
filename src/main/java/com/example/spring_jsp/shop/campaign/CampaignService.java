@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface CampaignService {
 
-    public CampaignDTO selectCampaign(String uid);
+    CampaignDTO selectCampaign(String uid);
 
-    public List<CampaignDTO> getCurrentCampaign();
+    List<CampaignDTO> getCurrentCampaign();
 
-    public int[] purchasePoint(String sid, String purchaseMethod, CampaignDTO campaignDTO);
+    int[] purchasePoint(String sid, String purchaseMethod, CampaignDTO campaignDTO);
 }

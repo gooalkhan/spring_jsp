@@ -2,7 +2,6 @@ package com.example.spring_jsp.book.keyword;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
