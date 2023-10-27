@@ -29,7 +29,7 @@ public class AnalysisServiceImpl implements AnalysisService {
 
                 //분석중인 작업 여부 체크해서 없으면 작업 요청
                 if (notificationTopicService.getTopic(bookId, productId) == null) {
-                    pythonService.start_analysis_thread(bookId, productId);
+                    pythonService.startAnalysis(bookId, productId);
                 }
                 //구독 리스트에 추가
                 notificationTopicService.addSubscriber(sid, bookId, productId);
@@ -62,7 +62,7 @@ public class AnalysisServiceImpl implements AnalysisService {
 
                 //분석중인 작업 여부 체크해서 없으면 작업 요청
                 if (notificationTopicService.getTopic(bookId, productId) == null) {
-                    pythonService.start_analysis_thread(bookId, productId);
+                    pythonService.startAnalysis(bookId, productId);
                 }
                 //구독 리스트에 추가
                 notificationTopicService.addSubscriber(sid, bookId, productId);
