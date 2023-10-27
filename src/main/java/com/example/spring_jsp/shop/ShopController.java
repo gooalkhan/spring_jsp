@@ -1,9 +1,9 @@
 package com.example.spring_jsp.shop;
 
 import com.example.spring_jsp.notification.NotificationService;
-import com.example.spring_jsp.shop.bookkeeping.BookkeepingServiceImpl;
+import com.example.spring_jsp.shop.bookkeeping.BookkeepingService;
 import com.example.spring_jsp.shop.campaign.CampaignDTO;
-import com.example.spring_jsp.shop.campaign.CampaignServiceImpl;
+import com.example.spring_jsp.shop.campaign.CampaignService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +19,8 @@ import java.util.List;
 @Slf4j
 public class ShopController {
 
-    private final CampaignServiceImpl campaignServiceImpl;
-    private final BookkeepingServiceImpl bookkeepingServiceImpl;
+    private final CampaignService campaignService;
+    private final BookkeepingService bookkeepingService;
     private final NotificationService notificationService;
 
     @GetMapping("")
@@ -29,9 +29,9 @@ public class ShopController {
 
         //TODO:handlerintercepter로 처리
         if (sid != null) {
-            List<CampaignDTO> currentCampaigns = campaignServiceImpl.getCurrentCampaign();
+            List<CampaignDTO> currentCampaigns = campaignService.getCurrentCampaign();
             model.addAttribute("currentCampaigns", currentCampaigns);
-            model.addAttribute("point", bookkeepingServiceImpl.getPoint(sid));
+            model.addAttribute("point", bookkeepingService.getPoint(sid));
             if (!isSuccess.isEmpty()) {
                 //포인트 구매후 리디렉션
                 model.addAttribute("success", isSuccess);
@@ -55,7 +55,7 @@ public class ShopController {
         //세션아이디와 폼에서 받은 아이디가 일치하는지 확인, 구매상품이 맞는지는 서비스에서 체크
         if (sid != null && sid.equals(submittedSid)) {
             log.debug("id matching success - session id: {}, form id: {}", sid, submittedSid);
-            int[] result = campaignServiceImpl.purchasePoint(sid, purchaseMethodUID, campaignDTO);
+            int[] result = campaignService.purchasePoint(sid, purchaseMethodUID, campaignDTO);
 
             if (result[0] == 1 && result[1] != 0) {
                 log.debug("purchase success");

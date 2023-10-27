@@ -2,7 +2,7 @@ package com.example.spring_jsp.shop.product;
 
 import com.example.spring_jsp.notification.NotificationService;
 import com.example.spring_jsp.shop.bookkeeping.BookkeepingDTO;
-import com.example.spring_jsp.shop.bookkeeping.BookkeepingServiceImpl;
+import com.example.spring_jsp.shop.bookkeeping.BookkeepingService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ public class ProductServiceImpl implements ProductService {
 
     Map<String, ProductDTO> productDTOMap = new HashMap<>();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final BookkeepingServiceImpl bookkeepingServiceImpl;
+    private final BookkeepingService bookkeepingService;
     private final NotificationService notificationService;
 
     public List<ProductDTO> selectProductAll() {
@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> productsUnlockedByCondition(long bookid, String productid, String userid) {
         List<ProductDTO> result = new ArrayList<>();
 
-        List<String> unlockedUID = bookkeepingServiceImpl.getUnlockedUID(userid);
+        List<String> unlockedUID = bookkeepingService.getUnlockedUID(userid);
         for (String uid : unlockedUID) {
             ProductDTO productDTO = productDTOMap.get(uid);
             if (productDTO.getBookid() == bookid && productDTO.getProductid().equals(productid)) {
@@ -75,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
         if (toBePurchaseProductDTO != null) {
 
             //포인트가 충분한지 확인
-            if (bookkeepingServiceImpl.getPoint(sid) >= toBePurchaseProductDTO.getUsedPoint()) {
+            if (bookkeepingService.getPoint(sid) >= toBePurchaseProductDTO.getUsedPoint()) {
 
                 //구매
                 String uuid = UUID.randomUUID().toString();
@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
                 bookkeepingDTO.setUsedPoint(toBePurchaseProductDTO.getUsedPoint());
                 bookkeepingDTO.setUnlockedUID(toBePurchaseProductDTO.getUid());
 
-                int subResult = bookkeepingServiceImpl.bookkeepingInsert(bookkeepingDTO);
+                int subResult = bookkeepingService.bookkeepingInsert(bookkeepingDTO);
 
                 if (subResult == 1) {
                     //구매 성공

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class KeywordServiceImpl {
+public class KeywordServiceImpl implements KeywordService {
 
     private final KeywordMapper keywordMapper;
 

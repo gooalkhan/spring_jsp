@@ -2,6 +2,7 @@ package com.example.spring_jsp.analysis.python;
 
 import com.example.spring_jsp.notification.NotificationTopicService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.net.URL;
 
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PythonServiceImpl implements PythonService, InitializingBean {
@@ -28,7 +30,6 @@ public class PythonServiceImpl implements PythonService, InitializingBean {
     private String profilePath;
 
     private final PythonMapper pythonMapper;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
     private final NotificationTopicService notificationTopicService;
 
     public void start_process(long bookid, String productId) {
@@ -52,7 +53,7 @@ public class PythonServiceImpl implements PythonService, InitializingBean {
                     bookid,
                     productId);
         }
-        logger.info("python executor thread start");
+        log.info("python executor thread start");
         Thread thread = new Thread(pythonApacheExecutor);
         thread.start();
     }

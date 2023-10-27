@@ -1,6 +1,6 @@
 package com.example.spring_jsp.book;
 
-import com.example.spring_jsp.book.keyword.KeywordServiceImpl;
+import com.example.spring_jsp.book.keyword.KeywordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,8 +17,8 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    private final BookServiceImpl bookServiceImpl;
-    private final KeywordServiceImpl keywordServiceImpl;
+    private final BookService bookService;
+    private final KeywordService keywordService;
 
     private final int BOOK_PAGE_SIZE = 12;
 
@@ -36,25 +36,25 @@ public class BookController {
         if (!condition.isEmpty() && !searchword.isEmpty()) {
             switch (condition) {
                 case "title":
-                    count = bookServiceImpl.bookCountByTitle(searchword);
-                    data = bookServiceImpl.bookPaginationByTitle(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
+                    count = bookService.bookCountByTitle(searchword);
+                    data = bookService.bookPaginationByTitle(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
                     break;
                 case "author":
-                    count = bookServiceImpl.bookCountByAuthor(searchword);
-                    data = bookServiceImpl.bookPaginationByAuthor(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
+                    count = bookService.bookCountByAuthor(searchword);
+                    data = bookService.bookPaginationByAuthor(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
                     break;
                 case "publisher":
-                    count = bookServiceImpl.bookCountByPublisher(searchword);
-                    data = bookServiceImpl.bookPaginationByPublisher(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
+                    count = bookService.bookCountByPublisher(searchword);
+                    data = bookService.bookPaginationByPublisher(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
                     break;
                 default:
-                    count = bookServiceImpl.bookCount();
-                    data = bookServiceImpl.bookPagination(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE);
+                    count = bookService.bookCount();
+                    data = bookService.bookPagination(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE);
                     break;
             }
         } else {
-            count = bookServiceImpl.bookCount();
-            data = bookServiceImpl.bookPagination(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE);
+            count = bookService.bookCount();
+            data = bookService.bookPagination(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE);
         }
 
         model.addAttribute("data", data); // 책 정보 추가
@@ -67,7 +67,7 @@ public class BookController {
     @GetMapping("/bookDetail")
     public String bookDetail(@RequestParam(name = "id") long id, Model model) {
         model.addAttribute("id", id);
-        BookDTO bookDTO = bookServiceImpl.bookSelect(id);
+        BookDTO bookDTO = bookService.bookSelect(id);
         model.addAttribute("title", bookDTO.getTitle());
         return "book/bookDetail";
     }
@@ -77,9 +77,9 @@ public class BookController {
 
         model.addAttribute("detail", isDetail);
 
-        model.addAttribute("keywords", keywordServiceImpl.keywordSelect(bookid));
+        model.addAttribute("keywords", keywordService.keywordSelect(bookid));
         model.addAttribute("id", bookid);
-        model.addAttribute("selectedBook", bookServiceImpl.bookSelect(bookid));
+        model.addAttribute("selectedBook", bookService.bookSelect(bookid));
 
         return "book/bookcard";
     }
