@@ -72,26 +72,60 @@ function startGame() {
 	*/
 	matchupNum = 0;
 	matchupNumAll = imageName.length / 2;
-	remainNum = imageName.length;
-	
-	// 몇 강인지 표시해주는 과정 처리
-	// 남은 매치업이 2개라면,(즉, 준결승전이라면)
-	if(matchupNumAll == 2){
-		remainNumGang = "준결승전";
-	// 남은 매치업이 1개라면,(즉, 결승전이라면)
-	} else if(matchupNumAll == 1){
-		remainNumGang = "결승전";
-	// 그렇지 않은 경우라면
-	} else {
-		remainNum = remainNum/2;
-		remainNumGang = remainNum + "강";
+	// 소수점 이라면
+	if(matchupNumAll%2 != 0 && matchupNumAll%2 != 1){
+		matchupNumAll =  matchupNumAll + 0.5;
 	}
 	
+	// 몇 강인지 표시해주는 과정 처리
+	if(matchupNumAll <= 0.5 && matchupNumAll > 0){
+		remainNumGang = "결승전";
+	} else if(matchupNumAll <= 1 && matchupNumAll > 0.5){
+		remainNumGang = "준결승전";
+	} else if(matchupNumAll <= 2 && matchupNumAll > 1){
+		remainNum = 4;
+		remainNumGang = remainNum + "강";
+	} else if(matchupNumAll <= 4 && matchupNumAll > 2){
+		remainNum = 8;
+		remainNumGang = remainNum + "강";
+	} else if(matchupNumAll <= 8 && matchupNumAll > 4){
+		remainNum = 16;
+		remainNumGang = remainNum + "강";
+	} else if(matchupNumAll <= 16 && matchupNumAll > 8){
+		remainNum = 32;
+		remainNumGang = remainNum + "강";
+	} else if(matchupNumAll <= 32 && matchupNumAll > 16){
+		remainNum = 64;
+		remainNumGang = remainNum + "강";
+	} else if(matchupNumAll <= 64 && matchupNumAll > 32){
+		remainNum = 128;
+		remainNumGang = remainNum + "강";
+	} else if(matchupNumAll <= 126 && matchupNumAll > 65){
+		remainNum = 256;
+		remainNumGang = remainNum + "강";
+	} else if(matchupNumAll <= 256 && matchupNumAll > 128){
+		remainNum = 512;
+		remainNumGang = remainNum + "강";
+	} else if(matchupNumAll <= 512 && matchupNumAll > 256){
+		remainNum = 1024;
+		remainNumGang = remainNum + "강";
+	}
+
     displayNextMatchup();
 }
 
 // 게임 진행 함수
 function displayNextMatchup() {
+	if (imageName.length == 1){
+		alert("자료가 하나 남았습니다. 하나남은 자료는 부전승으로 올라갑니다.")
+		randNum();
+		document.getElementById("leftImage").src = "/resources/worldcupimages/" + tempiNL;
+		document.getElementById("leftImageName").innerText = tempoINL;
+		document.getElementById("rightImage").src = "/resources/worldcupimages/" + tempiNL;
+		document.getElementById("rightImageName").innerText = tempoINL;
+		winImageL();
+		count--;
+	}
     if (imageName.length == 0) {
         // 현재 라운드의 매치업이 모두 종료된 경우
         if (winImageName.length == 1) {
@@ -110,6 +144,10 @@ function displayNextMatchup() {
 	        
 	        // 총 매치업 나누기 2
 	        matchupNumAll = matchupNumAll/2;
+	        // 소수점 이라면
+			if(matchupNumAll%2 != 0 && matchupNumAll%2 != 1){
+				matchupNumAll =  matchupNumAll + 0.5;
+			}
 	        
 	        // 몇 강인지 표시해주는 과정 처리
 	        // 남은 매치업이 2개라면,(즉, 준결승전이라면)
@@ -206,7 +244,7 @@ function randNum() {
 	// 0 ~ 배열의 길이-1 만큼의 무작위 값 생성 후, 그 자리에 있는 배열 값을 꺼내옴(오른쪽 이미지)
 	var randR = Math.floor(Math.random() * originImageName.length);
 	// 이때, randL가 randR의 값이 같으면 안됨으로, 다를 때 까지 randR을 돌려줌
-	while (randL == randR){
+	while (randL == randR && imageName.length != 1){
 		randR = Math.floor(Math.random() * originImageName.length);
 	}
 	tempiNR = imageName[randR];

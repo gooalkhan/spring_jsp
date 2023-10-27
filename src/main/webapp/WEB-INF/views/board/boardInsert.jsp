@@ -27,4 +27,5 @@
             </div>
         </form>
     </div>
+    <script src="${pageContext.request.contextPath}/resources/js/imageLimit.js"></script>
 </t:layout>

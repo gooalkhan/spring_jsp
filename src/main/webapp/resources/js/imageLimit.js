@@ -18,8 +18,6 @@ inputElement.addEventListener('change', function () {
 	gif 더라도 비 정상적인 gif면 accept='.jpg,.jpeg,.bmp,.png,.gif' 여기 부분에서 자동으로 걸러짐.
 	따라서 비정상적인 gif 1장, 정상적인 gif 3장을 첨부해서 등록했을 때,
 	정상적인 3장의 파일만 DB에 등록되고 지정된 폴더에 만들어짐.
-	
-	이미지 월드컵 같은 경우에는 부전승을 구현하면 신경 안써도 되는 문제이긴 함.
 	*/
   	for (let i = 0; i < files.length; i++) {
    	 	const fileName = files[i].name;
