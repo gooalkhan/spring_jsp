@@ -21,6 +21,7 @@
                 <input type='file' class='form-control' name='uploadfile' id='uploadfile' accept='.jpg,.jpeg,.bmp,.png,.gif' multiple>
             </div>
             <div class="mb-3" id="imagePreview"></div>
+            <p id="message"></p>
             <div class="container d-flex justify-content-center">
           		<input type="submit" class="btn btn-primary" value="글 등록">
             </div>

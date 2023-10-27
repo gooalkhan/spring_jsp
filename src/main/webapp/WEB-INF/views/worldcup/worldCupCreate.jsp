@@ -20,10 +20,12 @@
             </div>
             <div class="mb-3">
                 <label for="subject">이미지 첨부(제한 용량 : 100MB)</label>
-                <input type='file' class='form-control' name='uploadfile' accept='.jpg,.jpeg,.bmp,.png,.gif' multiple>
+                <input type='file' class='form-control' name='uploadfile' id='uploadfile' accept='.jpg,.jpeg,.bmp,.png,.gif' multiple>
             </div>
+            <div class="mb-3" id="imagePreview"></div>
+            <p id="message"></p>
             <div class="container d-flex justify-content-center">
-          		<input type="submit" class="btn btn-primary" value="글 등록">
+          		<input type="submit" class="btn btn-primary" value="월드컵 등록">
             </div>
         </form>
     </div>
