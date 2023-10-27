@@ -3,7 +3,7 @@ package com.example.spring_jsp.analysis.python;
 
 public interface PythonService {
 
-    void start_analysis_thread(long bookid, String productId);
+    void startAnalysis(long bookid, String productId);
 
     int insertPython(PythonDTO pythonDTO);
 

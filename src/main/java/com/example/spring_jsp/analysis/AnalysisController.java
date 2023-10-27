@@ -36,7 +36,6 @@ public class AnalysisController {
             entry("favorite", "선호작품")
     );
 
-    //TODO: 구매 체크 부분 서비스로 빼기
     @GetMapping("")
     public ModelAndView getAnalysisAjax(HttpSession session,
                                         @RequestParam(value = "bookid", defaultValue = "0") long bookid,
@@ -105,7 +104,7 @@ public class AnalysisController {
     }
 
     @GetMapping("/{analysis}")
-    public ModelAndView anal_keyword(HttpSession httpSession,
+    public ModelAndView getAnalysis(HttpSession httpSession,
                                      @PathVariable String analysis,
                                      @RequestParam("bookid") long bookid,
                                      Model model) {
@@ -144,8 +143,11 @@ public class AnalysisController {
         ProductDTO productDTO;
         if (list.isEmpty()) {
             productDTO = productService.buildInsertProduct(bookid, analysisMap.get(analysis), sid);
-        } else productDTO = list.get(0);
-        logger.debug("productDTO inserted: {}", productDTO.toString());
+            logger.debug("productDTO inserted: {}", productDTO.toString());
+        } else {
+            productDTO = list.get(0);
+            logger.debug("productDTO available: {}", productDTO.toString());
+        }
         mav.addObject("currentPoint", bookkeepingService.getPoint(sid));
         mav.addObject("productDTO", productDTO);
 
