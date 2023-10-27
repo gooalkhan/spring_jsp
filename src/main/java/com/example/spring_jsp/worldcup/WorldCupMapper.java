@@ -14,4 +14,6 @@ public interface WorldCupMapper {
     int worldCupImageInsert(WorldCupDTO worldCupDTO);
     List<WorldCupDTO> worldCupSelect(WorldCupDTO worldCupDTO);
     List<WorldCupDTO> worldCupImageSelect(WorldCupDTO worldCupDTO);
+    WorldCupDTO worldCupProcSelect(WorldCupDTO worldCupDTO);
+    List<WorldCupDTO> worldCupProcImageSelect(WorldCupDTO worldCupDTO);
 }
