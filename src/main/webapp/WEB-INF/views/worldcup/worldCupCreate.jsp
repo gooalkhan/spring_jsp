@@ -40,4 +40,5 @@
             </div>
         </div>
     </c:if>
+    <script src="${pageContext.request.contextPath}/resources/js/imageLimit.js"></script>
 </t:layout>
