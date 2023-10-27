@@ -11,5 +11,11 @@ public interface WorldCupService {
 	List<WorldCupDTO> worldCupSelect(WorldCupDTO worldCupDTO) throws Exception;
 
 	List<WorldCupDTO> worldCupImageSelect(WorldCupDTO worldCupDTO) throws Exception;
+	
+	WorldCupDTO worldCupProcSelect(WorldCupDTO worldCupDTO) throws Exception;
+
+	List<WorldCupDTO> worldCupProcImageSelect(WorldCupDTO worldCupDTO) throws Exception;
+
+	
 
 }

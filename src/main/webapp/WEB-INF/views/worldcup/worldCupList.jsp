@@ -8,7 +8,7 @@
 			<div class="col-sm-3" style="padding:20px">
 				<div>
 					<img src="${pageContext.request.contextPath}/resources/worldcupimages/${image[status.index].imageName}" alt="이미지" style="width: 100%; height: auto;">
-					<a href="#" class="h4" style="text-decoration: none; color: #000000; font-weight: bold;">${data.subject}</a>
+					<a href="/worldCupProc?idx=${data.idx}" class="h4" style="text-decoration: none; color: #000000; font-weight: bold;">${data.subject}</a>
 					<div class="small">${data.content}</div>
 				</div>
 			</div>
