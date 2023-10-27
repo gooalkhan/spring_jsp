@@ -42,6 +42,7 @@ TEMPLATE_DIR = LIB_PATH + '\\python\\templates' if platform.system().lower() == 
 
 # Jinja2 환경을 설정합니다.
 JINJA_ENV = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
+TOTAL_MAX_CONNECTIONS = 5
 
 CURRENT_CONFIG = SPRING_CONFIG[str(sys.argv[2])]
 

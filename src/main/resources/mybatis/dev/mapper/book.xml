@@ -19,7 +19,8 @@
             is_complete      TINYINT DEFAULT NULL,
             is_gidamu        TINYINT DEFAULT NULL,
             is_adult_only    TINYINT DEFAULT NULL,
-            last_update      TIMESTAMP     NOT NULL,
+            series_last_update      TIMESTAMP     NOT NULL,
+            book_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
             PRIMARY KEY (bookid)
         );
     </update>
@@ -80,9 +81,9 @@
         insert
         into
         booktbl
-        (bookid, title, author, publisher, publish_date, reg_date, category, review_count, preference_count, series_count, description, is_complete, is_gidamu, is_adult_only, last_update)
+        (bookid, title, author, publisher, publish_date, reg_date, category, review_count, preference_count, series_count, description, is_complete, is_gidamu, is_adult_only, series_last_update)
         values
-        (#{bookid}, #{title}, #{author}, #{publisher}, #{publish_date}, #{reg_date}, #{category}, #{review_count}, #{preference_count}, #{series_count}, #{description}, #{is_complete}, #{is_gidamu}, #{is_adult_only}, #{last_update})
+        (#{bookid}, #{title}, #{author}, #{publisher}, #{publish_date}, #{reg_date}, #{category}, #{review_count}, #{preference_count}, #{series_count}, #{description}, #{is_complete}, #{is_gidamu}, #{is_adult_only}, #{series_last_update})
     </insert>
 
     <select id="bookCount">
@@ -103,5 +104,9 @@
 
     <select id="bookSelect">
         select * from booktbl where bookid = #{bookid};
+    </select>
+
+    <select id="bookUpdate">
+        update BOOKTBL set review_count = #{review_count} , preference_count = #{preference_count}, series_count=#{series_count}, is_complete=#{is_complete}, series_last_update=#{series_last_update}, book_last_update=CURRENT_TIMESTAMP() where bookid = #{bookid};
     </select>
 </mapper>

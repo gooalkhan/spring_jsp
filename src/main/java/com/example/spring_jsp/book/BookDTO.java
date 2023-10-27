@@ -20,5 +20,6 @@ public class BookDTO {
     private Boolean is_complete;
     private Boolean is_gidamu;
     private Boolean is_adult_only;
-    private Date last_update;
+    private Date series_last_update;
+    private Date book_last_update;
 }
