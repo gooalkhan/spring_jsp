@@ -150,7 +150,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 bookDTO.setIs_complete(arr[11].equals("NULL")?null:arr[11].equals("1")); // 1이면 true, 0이면 false
                 bookDTO.setIs_gidamu(arr[12].equals("NULL")?null:arr[12].equals("1"));
                 bookDTO.setIs_adult_only(arr[13].equals("NULL")?null:arr[13].equals("1"));
-                bookDTO.setLast_update(dateFormat.parse(arr[14]));
+                bookDTO.setSeries_last_update(dateFormat.parse(arr[14]));
 
                 bookMapper.bookInsert(bookDTO);
             }

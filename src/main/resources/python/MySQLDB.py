@@ -1,6 +1,6 @@
 from mysql.connector.pooling import PooledMySQLConnection
 
-from config import PROD_CONFIG
+from config import PROD_CONFIG, TOTAL_MAX_CONNECTIONS
 import re
 import subprocess
 import sys
@@ -20,8 +20,6 @@ DB_CONFIG = {
     "user": ID,
     "password": PW
 }
-
-TOTAL_MAX_CONNECTIONS = 5
 
 try:
     import mysql.connector.pooling

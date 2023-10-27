@@ -2,16 +2,16 @@ package com.example.spring_jsp.analysis.python;
 
 import com.example.spring_jsp.notification.NotificationTopicService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.exec.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
+@Slf4j
 @RequiredArgsConstructor
-public class PythonApacheExecutor implements Runnable {
+public class PythonTopicExecutor implements Runnable {
 
     private final Map<String, String> requestMap = Map.ofEntries(
             Map.entry("키워드", "keyword.py"),
@@ -25,7 +25,6 @@ public class PythonApacheExecutor implements Runnable {
     private final long bookid;
     private final String productId;
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     public void run() {
         try {
@@ -46,32 +45,32 @@ public class PythonApacheExecutor implements Runnable {
                 @Override
                 public void onProcessComplete(int exitValue) {
                     notificationTopicService.removeTopicWhenComplete(bookid, productId);
-                    logger.debug("python process completed for topic {} {}", bookid, productId);
+                    log.debug("python process completed for topic {} {}", bookid, productId);
                 }
 
                 @Override
                 public void onProcessFailed(ExecuteException e) {
-                    logger.error(e.getMessage());
+                    log.error(e.getMessage());
 
                     counter++;
                     if (counter < 4) {
                         try {
-                            logger.debug("python process failed for topic {} {} - retry - {}", bookid, productId, counter);
+                            log.debug("python process failed for topic {} {} - retry - {}", bookid, productId, counter);
                             notificationTopicService.sendMessageToTopicAllSubscribers(bookid, productId, " 분석이 실패했습니다. 재시도합니다 시도회수:%d".formatted(counter));
                             executor.execute(cmdLine, this);
                         } catch (IOException ex) {
-                            logger.error(ex.getMessage());
+                            log.error(ex.getMessage());
                         }
                     } else {
-                        logger.debug("python process failed for topic {} {} - retry failed", bookid, productId);
+                        log.debug("python process failed for topic {} {} - retry failed", bookid, productId);
                         notificationTopicService.removeTopicWhenFailure(bookid, productId);
                     }
                 }
             });
-            logger.info("java - python process spawned");
+            log.info("java - python process spawned");
             
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         }
     }
 
@@ -80,7 +79,7 @@ public class PythonApacheExecutor implements Runnable {
         LogOutputStream outputStream = new LogOutputStream() {
             @Override
             protected void processLine(String line, int level) {
-                logger.info("python: " + line);
+                log.info("python: " + line);
             }
         };
 
