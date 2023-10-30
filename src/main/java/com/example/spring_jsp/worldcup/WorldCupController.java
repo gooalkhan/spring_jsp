@@ -53,7 +53,7 @@ public class WorldCupController {
 			    int millis = now.get(ChronoField.MILLI_OF_SECOND);
 			    String imageName = files.getOriginalFilename();
 			    worldCupDTO.setOriginImageName(imageName);
-			    String absolutePath = new File("/FileIO/images").getAbsolutePath() + "\\"; // 파일이 저장될 절대 경로
+			    String absolutePath = "C:\\FileIO\\images\\"; // 파일이 저장될 절대 경로
 			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
 			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
 			    String path = "worldcupimages"; // 저장될 폴더 경로
@@ -116,4 +116,11 @@ public class WorldCupController {
 	public String worldCupResult() {
 		return "/worldcup/worldCupResult";
 	}
+	
+//	// 이상형 월드컵 삭제
+//	@PostMapping("/worldCupDelete")
+//	public ModelAndView worldCupDelete(WorldCupDTO worldCupDTO, HttpServletRequest request) {
+//		ModelAndView mav = new ModelAndView();
+//		
+//	}
 }
