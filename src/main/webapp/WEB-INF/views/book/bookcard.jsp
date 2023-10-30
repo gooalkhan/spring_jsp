@@ -6,8 +6,11 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4 ps-3 py-3">
-            <img src="/images/${id}.webp" onerror="this.src='https://img.ridicdn.net/cover/${id}/xxlarge'" class="img-fluid rounded-start"
-                 alt="${id}">
+            <svg class="img-fluid rounded-start" width="480" height="685">
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20px"
+                      fill="black">${selectedBook.title} 표지</text>
+                <rect width="470" height="675" fill="green" fill-opacity="0.3"/>
+            </svg>
         </div>
         <div class="col-md-8">
             <div class="card-body">

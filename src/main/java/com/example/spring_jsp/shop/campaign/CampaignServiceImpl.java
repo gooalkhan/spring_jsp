@@ -17,7 +17,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class CampaignServiceImpl implements CampaignService {
-    List<CampaignDTO> campaignList = new ArrayList<>();
+    private final List<CampaignDTO> campaignList = new ArrayList<>();
     private final NotificationService notificationService;
     private final BookkeepingService bookkeepingService;
 

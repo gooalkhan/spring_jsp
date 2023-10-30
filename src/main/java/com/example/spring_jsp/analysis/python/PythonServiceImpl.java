@@ -17,7 +17,7 @@ public class PythonServiceImpl implements PythonService {
     }
 
     public void startUpdateBooks() {
-
+        //TODO: 책정보 업데이트 하는 기능
     }
 
     //인서트는 파이썬에서만 할거라 사실상 안쓰는 부분
