@@ -7,7 +7,7 @@
         <div class="row mb-3">
             <c:forEach var="data" items="${data}" varStatus="status">
                 <div class="card col-4 p-3">
-                    <img src="/worldcupimages/${image[status.index].imageName}" alt="이미지">
+                    <img src="/worldcupimages/${image[status.index].imageName}" alt="이미지" class="img-fluid mx-auto d-block" style="max-height: 300px;">
                     <div class="card-body px-0">
                         <a href="/worldCupProc?idx=${data.idx}" class="card-text h4"
                            style="text-decoration: none; color: #000000; font-weight: bold;">${data.subject}</a>
