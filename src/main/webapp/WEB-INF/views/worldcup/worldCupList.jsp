@@ -18,6 +18,9 @@
         </div>
         <hr>
         <div class="container d-flex justify-content-around">
+            <div class="col-auto">
+                <a href="/myWorldCupList" class="btn btn-success">내 월드컵 보러가기</a>
+            </div>
         	<div class="col-auto">
                 <a href="/worldCupCreate" class="btn btn-primary">이상형 월드컵 만들러 가기</a>
             </div>
