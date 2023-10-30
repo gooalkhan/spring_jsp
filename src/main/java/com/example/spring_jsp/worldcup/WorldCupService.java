@@ -18,6 +18,10 @@ public interface WorldCupService {
 
 	boolean worldCupDelete(WorldCupDTO worldCupDTO);
 
+	List<WorldCupDTO> myWorldCupSelect(WorldCupDTO worldCupDTO) throws Exception;
+
+	List<WorldCupDTO> myWorldCupImageSelect(WorldCupDTO worldCupDTO) throws Exception;
+
 	
 
 }

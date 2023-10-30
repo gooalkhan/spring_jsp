@@ -54,4 +54,14 @@ public class WorldCupServiceImpl implements WorldCupService {
 		int affectRowCount = this.worldCupMapper.worldCupDelete(worldCupDTO);
 		return affectRowCount == 1;
 	}
+	
+	@Override
+	public List<WorldCupDTO> myWorldCupSelect(WorldCupDTO worldCupDTO) throws Exception {
+		return worldCupMapper.myWorldCupSelect(worldCupDTO);
+	}
+	
+	@Override
+	public List<WorldCupDTO> myWorldCupImageSelect(WorldCupDTO worldCupDTO) throws Exception {
+		return worldCupMapper.myWorldCupImageSelect(worldCupDTO);
+	}
 }

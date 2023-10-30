@@ -152,4 +152,19 @@ public class WorldCupController {
 		}
 		return mav;
 	}
+	
+	// 이상형 월드컵 리스트 페이지
+	@GetMapping("/myWorldCupList")
+	public ModelAndView myWorldCupList(WorldCupDTO worldCupDTO, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		String sid = session.getAttribute("sid").toString();
+		worldCupDTO.setMembertbl_id(sid);
+		List<WorldCupDTO> DTO = worldCupService.myWorldCupSelect(worldCupDTO);
+		List<WorldCupDTO> IDTO = worldCupService.myWorldCupImageSelect(worldCupDTO);
+		mav.addObject("data", DTO);
+		mav.addObject("image", IDTO);
+		mav.setViewName("/worldcup/myWorldCupList");
+		return mav;
+	}
 }
