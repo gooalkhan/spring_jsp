@@ -68,7 +68,7 @@
 		FROM
 		worldcupimagetbl
 		WHERE
-		worldcuptbl_IDX BETWEEN 1 AND (select count(*) from worldcuptbl)
+		worldcuptbl_IDX BETWEEN (select MIN(idx) from worldcuptbl) AND (select MAX(idx) from worldcuptbl)
 		GROUP BY worldcuptbl_IDX;
 	</select>
 	
@@ -90,5 +90,28 @@
 		worldcupimagetbl
 		where
 		worldcuptbl_idx = #{idx}
+	</select>
+	
+	<!-- 내 월드컵 보기를 위한 select -->
+	<select id="myWorldCupSelect" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+		select
+		*
+		from
+		worldcuptbl
+		where
+		membertbl_id = #{membertbl_id}
+	</select>
+	
+	<!-- 내 월드컵 보기를 위한 image select -->
+	<select id="myWorldCupImageSelect" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+		select
+		worldcuptbl_IDX, MAX(worldcupimagetbl.idx) AS idx, MAX(IMAGENAME) AS IMAGENAME
+		from
+		worldcuptbl
+		join worldcupimagetbl
+		on worldcuptbl.idx = worldcupimagetbl.worldcuptbl_IDX
+		where
+		membertbl_id = 'hong'
+		GROUP BY worldcuptbl_IDX;
 	</select>
 </mapper>

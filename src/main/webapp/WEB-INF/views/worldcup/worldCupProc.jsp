@@ -23,11 +23,11 @@
     <h3 class="text-center" id="worldCupSubject" style="background: rgb(128,128,128);">${data.subject}</h3>
         <div class="row align-items-center">
             <div class="col-6" onclick="winImageL()" id="leftImageContainer">
-                <img src="" class="img-fluid mx-auto d-block" id="leftImage" alt="이미지에 오류나서 안 보이는 거임">
+                <img src="" class="img-fluid mx-auto d-block" id="leftImage" alt="이미지에 오류나서 안 보이는 거임" style="max-height: 800px;">
                 <p class="text-center" id="leftImageName" style="color: white"></p>
             </div>
             <div class="col-6" onclick="winImageR()" id="rightImageContainer">
-                <img src="" class="img-fluid mx-auto d-block" id="rightImage" alt="이미지에 오류나서 안 보이는 거임">
+                <img src="" class="img-fluid mx-auto d-block" id="rightImage" alt="이미지에 오류나서 안 보이는 거임" style="max-height: 800px;">
                 <p class="text-center" id="rightImageName" style="color: white"></p>
             </div>
         </div>

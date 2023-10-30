@@ -140,15 +140,35 @@ public class WorldCupController {
 		}
 		
 		boolean isDeleteSuccess = this.worldCupService.worldCupDelete(worldCupDTO);
-		// TODO: 일단 홈으로 이동
 		if(isDeleteSuccess) {
 	    	request.setAttribute("msg", "삭제가 완료되었습니다.");
-	    	request.setAttribute("url", "/");
+	    	request.setAttribute("url", "/myWorldCupList");
 			mav.setViewName("/alert");
 		} else {
 	    	request.setAttribute("msg", "올바르지 않은 삭제입니다.");
-	    	request.setAttribute("url", "/");
+	    	request.setAttribute("url", "/myWorldCupList");
 	        mav.setViewName("/alert");
+		}
+		return mav;
+	}
+	
+	// 이상형 월드컵 리스트 페이지
+	@GetMapping("/myWorldCupList")
+	public ModelAndView myWorldCupList(WorldCupDTO worldCupDTO, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+	    if (session.getAttribute("sid") == null) {
+	    	request.setAttribute("msg", "로그인 시 작성 가능합니다. 로그인 해주세요.");
+	    	request.setAttribute("url", "/memberLogin");
+	        mav.setViewName("/alert");
+		}else {
+		String sid = session.getAttribute("sid").toString();
+		worldCupDTO.setMembertbl_id(sid);
+		List<WorldCupDTO> DTO = worldCupService.myWorldCupSelect(worldCupDTO);
+		List<WorldCupDTO> IDTO = worldCupService.myWorldCupImageSelect(worldCupDTO);
+		mav.addObject("data", DTO);
+		mav.addObject("image", IDTO);
+		mav.setViewName("/worldcup/myWorldCupList");
 		}
 		return mav;
 	}
