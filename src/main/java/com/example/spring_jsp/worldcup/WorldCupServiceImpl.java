@@ -48,4 +48,10 @@ public class WorldCupServiceImpl implements WorldCupService {
 	public List<WorldCupDTO> worldCupProcImageSelect(WorldCupDTO worldCupDTO) throws Exception {
 		return worldCupMapper.worldCupProcImageSelect(worldCupDTO);
 	}
+	
+	@Override
+	public boolean worldCupDelete(WorldCupDTO worldCupDTO) {
+		int affectRowCount = this.worldCupMapper.worldCupDelete(worldCupDTO);
+		return affectRowCount == 1;
+	}
 }

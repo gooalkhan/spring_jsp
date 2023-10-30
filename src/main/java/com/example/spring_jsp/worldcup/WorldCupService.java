@@ -16,6 +16,8 @@ public interface WorldCupService {
 
 	List<WorldCupDTO> worldCupProcImageSelect(WorldCupDTO worldCupDTO) throws Exception;
 
+	boolean worldCupDelete(WorldCupDTO worldCupDTO);
+
 	
 
 }

@@ -125,9 +125,9 @@ function displayNextMatchup() {
 	if (imageName.length == 1){
 		alert("자료가 하나 남았습니다. 하나남은 자료는 부전승으로 올라갑니다.")
 		randNum();
-		document.getElementById("leftImage").src = "/resources/worldcupimages/" + tempiNL;
+		document.getElementById("leftImage").src = "/worldcupimages/" + tempiNL;
 		document.getElementById("leftImageName").innerText = tempoINL;
-		document.getElementById("rightImage").src = "/resources/worldcupimages/" + tempiNL;
+		document.getElementById("rightImage").src = "/worldcupimages/" + tempiNL;
 		document.getElementById("rightImageName").innerText = tempoINL;
 		winImageL();
 		count--;
@@ -189,11 +189,11 @@ function displayNextMatchup() {
         randNum();
         
 //      alert(tempiNL);
-		document.getElementById("leftImage").src = "/resources/worldcupimages/" + tempiNL;
+		document.getElementById("leftImage").src = "/worldcupimages/" + tempiNL;
 		document.getElementById("leftImageName").innerText = tempoINL;
 		
 //		alert(tempiNR);
-		document.getElementById("rightImage").src = "/resources/worldcupimages/" + tempiNR;
+		document.getElementById("rightImage").src = "/worldcupimages/" + tempiNR;
 		document.getElementById("rightImageName").innerText = tempoINR;
 		
 		//매치업 수를 증가
@@ -264,7 +264,7 @@ function randNum() {
 function endGame() {
 	var endImg = sessionStorage.getItem('sWCimg');
     var endImgName = sessionStorage.getItem('sWCimgName');
-	document.getElementById("winnerImg").src = "/resources/worldcupimages/" + endImg;
+	document.getElementById("winnerImg").src = "/worldcupimages/" + endImg;
 	document.getElementById("winnerImgName").innerText = endImgName;
 }
 
