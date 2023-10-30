@@ -29,7 +29,7 @@
                     <img src="/boardimages/${image.imageName}" alt="이미지" style="width: 20%; height: auto;">
                 </c:forEach>
                 <article>
-                    <p class="border p-3">${data.content}</p>
+                    <p class="border p-3 mt-3">${data.content}</p>
                 </article>
             </div>
             <div class="container d-flex justify-content-center">

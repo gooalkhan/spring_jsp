@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:layout>
     <div class="container py-3">
@@ -27,7 +28,7 @@
                 <p>비밀번호 : </p>
             </div>
             <div class="col-5 text-start">
-                <p>${data.pw}</p>
+                <p>${fn:substring(data.pw,0,5)}...</p>
             </div>
         </div>
         <div class="row">

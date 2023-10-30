@@ -27,6 +27,10 @@ public class BookServiceImpl implements BookService {
         return bookMapper.bookPagination(limit, offset);
     }
 
+    public List<BookDTO> bookPagninationByConditionAndFilter(int limit, int offset, String searchword, String condition, String filter) {
+    	return bookMapper.bookPagninationByConditionAndFilter(limit, offset, searchword, condition, filter);
+    }
+
     public List<BookDTO> bookPaginationByTitle(int limit, int offset, String searchword) {
         return bookMapper.bookPaginationByTitle(limit, offset, searchword);
     }
