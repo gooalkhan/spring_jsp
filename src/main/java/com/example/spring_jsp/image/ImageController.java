@@ -28,7 +28,7 @@ public class ImageController {
 		try {
 			imageBytes = Files.readAllBytes(resource.getFile().toPath());
 		} catch (IOException e) {
-			log.error("file {} not found!", e.getMessage());
+			log.warn("file {} not found!", e.getMessage());
 		}
 
 		// TODO: 이미지 파일 종류에 맞추어 컨텐트 타입 변경
