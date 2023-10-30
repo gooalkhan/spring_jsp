@@ -148,7 +148,7 @@ public class MemberController {
 		session.setAttribute("sid", id);
 		session.setAttribute("sname", name);
 		session.setAttribute("sadmin", admin);
-		mav.setViewName("/index");
+		mav.setViewName("redirect:/");
 		}
 		return mav;
 	}
@@ -159,7 +159,7 @@ public class MemberController {
 	public String logout(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		memberService.memberLogout(session);
-		return "/index";
+		return "redirect:/";
 	}
 	
 	//회원 정보 수정 페이지

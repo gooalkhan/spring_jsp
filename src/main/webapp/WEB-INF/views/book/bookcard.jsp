@@ -6,7 +6,7 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4 ps-3 py-3">
-            <img src="https://img.ridicdn.net/cover/${id}/xxlarge" class="img-fluid rounded-start"
+            <img src="/images/${id}.webp" onerror="this.src='https://img.ridicdn.net/cover/${id}/xxlarge'" class="img-fluid rounded-start"
                  alt="${id}">
         </div>
         <div class="col-md-8">

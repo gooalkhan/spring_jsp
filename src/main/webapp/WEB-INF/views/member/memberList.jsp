@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:if test="${sadmin == 'admin' || sadmin == 'subadmin'}">
     <t:layout>
         <div class="container py-3">
@@ -27,7 +28,7 @@
                 <c:forEach var="data" items="${data}">
                     <tr>
                         <td><a href="/memberDetail?id=${data.id}">${data.id}</a></td>
-                        <td>${data.pw}</td>
+                        <td>${fn:substring(data.pw,0,5)}...</td>
                         <td>${data.email}</td>
                         <td>${data.hasEmailAuthed}</td>
                         <td>${data.name}</td>
