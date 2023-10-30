@@ -72,7 +72,7 @@ public class BoardController {
 			    int millis = now.get(ChronoField.MILLI_OF_SECOND);
 			    String imageName = files.getOriginalFilename();
 			    boardDTO.setOriginImageName(imageName);
-			    String absolutePath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\"; // 파일이 저장될 절대 경로
+			    String absolutePath = new File("/FileIO/images").getAbsolutePath() + "\\"; // 파일이 저장될 절대 경로
 			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
 			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
 			    String path = "boardimages"; // 저장될 폴더 경로
@@ -165,7 +165,7 @@ public class BoardController {
 			boardDTO.setBoardtbl_idx(idx);
 			// 게시글 수정 시, 이미지 폴더에 기존 이미지 삭제
 			List<BoardDTO> IDTO = boardService.imageSelect(boardDTO);
-			String aPath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\";
+			String aPath = new File("/FileIO/images").getAbsolutePath() + "\\"; // 파일이 저장될 절대 경로
 		    String sPath = "boardimages";
 		    String rPath = aPath + sPath;
 			for(BoardDTO DTO: IDTO) {
@@ -189,7 +189,7 @@ public class BoardController {
 			    int millis = now.get(ChronoField.MILLI_OF_SECOND);
 			    String imageName = files.getOriginalFilename();
 			    boardDTO.setOriginImageName(imageName);
-			    String absolutePath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\"; // 파일이 저장될 절대 경로
+			    String absolutePath = new File("/FileIO/images").getAbsolutePath() + "\\"; // 파일이 저장될 절대 경로
 			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
 			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
 			    String path = "boardimages"; // 저장될 폴더 경로
@@ -242,7 +242,7 @@ public class BoardController {
 		boardDTO.setBoardtbl_idx(idx);
 		// 게시글 수정 시, 이미지 폴더에 기존 이미지 삭제
 		List<BoardDTO> IDTO = boardService.imageSelect(boardDTO);
-		String aPath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\";
+		String aPath = new File("/FileIO/images").getAbsolutePath() + "\\"; 
 	    String sPath = "boardimages";
 	    String rPath = aPath + sPath;
 		for(BoardDTO DTO: IDTO) {
