@@ -110,4 +110,7 @@
         update BOOKTBL set review_count = #{review_count} , preference_count = #{preference_count}, series_count=#{series_count}, is_complete=#{is_complete}, series_last_update=#{series_last_update}, book_last_update=CURRENT_TIMESTAMP() where bookid = #{bookid};
     </select>
 
+    <select id="bookPagninationByConditionAndFilter" resultType="com.example.spring_jsp.book.BookDTO">
+        select * from booktbl where ${condition} like '%'||#{searchword}||'%' order by ${filter} desc limit #{limit} offset #{offset};
+    </select>
 </mapper>

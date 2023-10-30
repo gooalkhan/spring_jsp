@@ -3,14 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:layout>
+	<div class="container pb-3">
 	<div class="row mb-3">
 		<c:forEach var="data" items="${data}" varStatus="status">
-			<div class="col-sm-3" style="padding:20px">
-				<div>
+			<div class="card col-sm-3 m-3 p-3">
 					<img src="${pageContext.request.contextPath}/resources/worldcupimages/${image[status.index].imageName}" alt="이미지" style="width: 100%; height: auto;">
-					<a href="/worldCupProc?idx=${data.idx}" class="h4" style="text-decoration: none; color: #000000; font-weight: bold;">${data.subject}</a>
-					<div class="small">${data.content}</div>
-				</div>
+					<div class="card-body py-3 px-0">
+					<a href="/worldCupProc?idx=${data.idx}" class="h4 card-text" style="text-decoration: none; color: #000000; font-weight: bold;">${data.subject}</a>
+					<p class="small card-text mt-2">${data.content}</p>
+					</div>
 			</div>
 		</c:forEach>
 	</div>
@@ -34,4 +35,5 @@
             </form>
             -->
         </div>
+	</div>
 </t:layout>

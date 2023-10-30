@@ -16,6 +16,8 @@ public interface BookService {
     List<BookDTO> bookPaginationByAuthor(int limit, int offset, String searchword);
     List<BookDTO> bookPaginationByPublisher(int limit, int offset, String searchword);
 
+    List<BookDTO> bookPagninationByConditionAndFilter(int limit, int offset, String searchword, String condition, String filter);
+
     int bookInsert(BookDTO bookDTO);
 
     int bookCount();

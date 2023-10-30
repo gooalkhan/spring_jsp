@@ -32,4 +32,6 @@ public interface BookMapper {
     BookDTO bookSelect(@Param("bookid") long bookid);
 
     int bookUpdate(BookDTO bookDTO);
+
+    List<BookDTO> bookPagninationByConditionAndFilter(@Param("limit") int limit, @Param("offset") int offset, @Param("searchword") String searchword, @Param("condition") String condition, @Param("filter") String filter);
 }

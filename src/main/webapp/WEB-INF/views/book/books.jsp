@@ -26,7 +26,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-2 mb-4">
                     <div class="card" style="width: 10rem">
                         <a href="?page=${page}&id=${book.bookid}&condition=${param.condition}&searchword=${param.searchword}">
-                            <img src="https://img.ridicdn.net/cover/${book.bookid}/xlarge" class="card-img-top book-pic"
+                            <img src="/images/${book.bookid}.webp" onerror="this.src='https://img.ridicdn.net/cover/${book.bookid}/xlarge'" class="card-img-top book-pic"
                                  alt="${book.title}"></a>
                         <div class="card-body book-card">
                             <div class="row">
