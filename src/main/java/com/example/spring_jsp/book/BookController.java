@@ -34,24 +34,24 @@ public class BookController {
         //TODO: 데이터 넣는 부분 서비스로 이관
         List<BookDTO> data; // 책 정보
         if (!condition.isEmpty() && !searchword.isEmpty()) {
-            switch (condition) {
-                case "title":
+            data = switch (condition) {
+                case "title" -> {
                     count = bookService.bookCountByTitle(searchword);
-                    data = bookService.bookPaginationByTitle(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
-                    break;
-                case "author":
+                    yield bookService.bookPaginationByTitle(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
+                }
+                case "author" -> {
                     count = bookService.bookCountByAuthor(searchword);
-                    data = bookService.bookPaginationByAuthor(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
-                    break;
-                case "publisher":
+                    yield bookService.bookPaginationByAuthor(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
+                }
+                case "publisher" -> {
                     count = bookService.bookCountByPublisher(searchword);
-                    data = bookService.bookPaginationByPublisher(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
-                    break;
-                default:
+                    yield bookService.bookPaginationByPublisher(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE, searchword);
+                }
+                default -> {
                     count = bookService.bookCount();
-                    data = bookService.bookPagination(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE);
-                    break;
-            }
+                    yield bookService.bookPagination(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE);
+                }
+            };
         } else {
             count = bookService.bookCount();
             data = bookService.bookPagination(BOOK_PAGE_SIZE, (page - 1) * BOOK_PAGE_SIZE);

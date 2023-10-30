@@ -7,8 +7,6 @@ import com.example.spring_jsp.shop.product.ProductService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +27,6 @@ public class AnalysisController {
     private final NotificationService notificationService;
     private final AnalysisService analysisService;
     private final BookkeepingService bookkeepingService;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final Map<String, String> analysisMap = Map.ofEntries(
             entry("keyword", "키워드"),
@@ -44,7 +41,7 @@ public class AnalysisController {
         ModelAndView result = new ModelAndView();
         result.setViewName("book/analysis/blank");
 
-        logger.debug("keywordAnalysis - bookid: {}, productid: {}", bookid, productid);
+        log.debug("keywordAnalysis - bookid: {}, productid: {}", bookid, productid);
 
         //param check
         if (bookid != 0 && !productid.isEmpty()) {
@@ -68,12 +65,12 @@ public class AnalysisController {
                     }
                 }
                 notificationService.send(sid, "구매하지 않은 상품입니다.");
-                logger.debug("not purchased");
+                log.debug("not purchased");
             } else {
-                logger.debug("session error");
+                log.debug("session error");
             }
         } else {
-            logger.debug("param error");
+            log.debug("param error");
         }
         return result;
     }
@@ -81,7 +78,7 @@ public class AnalysisController {
     @PostMapping(value = {"", "/"})
     @ResponseBody
     public String purchaseAnalysis(HttpSession session, ProductDTO productDTO) {
-        logger.debug("purchaseAnalysis - productDTO: {}", productDTO.toString());
+        log.debug("purchaseAnalysis - productDTO: {}", productDTO.toString());
         //세션 체크
         if (session.getAttribute("sid") != null) {
             String sid = (String) session.getAttribute("sid");
@@ -91,15 +88,15 @@ public class AnalysisController {
                 //제품 구매
                 int result = productService.purchaseProduct(sid, productDTO);
                 if (result == 1) {
-                    logger.debug("purchase success");
+                    log.debug("purchase success");
                     return "{\"status\": \"success\", \"current_point\":" + bookkeepingService.getPoint(sid) + "}";
                 } else {
-                    logger.debug("purchase failed");
+                    log.debug("purchase failed");
                     return "{\"status\": \"fail\"}";
                 }
             }
         }
-        logger.debug("purchase failed - session error");
+        log.debug("purchase failed - session error");
         return "{\"status\": \"fail\"}";
     }
 
@@ -143,10 +140,10 @@ public class AnalysisController {
         ProductDTO productDTO;
         if (list.isEmpty()) {
             productDTO = productService.buildInsertProduct(bookid, analysisMap.get(analysis), sid);
-            logger.debug("productDTO inserted: {}", productDTO.toString());
+            log.debug("productDTO inserted: {}", productDTO.toString());
         } else {
             productDTO = list.get(0);
-            logger.debug("productDTO available: {}", productDTO.toString());
+            log.debug("productDTO available: {}", productDTO.toString());
         }
         mav.addObject("currentPoint", bookkeepingService.getPoint(sid));
         mav.addObject("productDTO", productDTO);

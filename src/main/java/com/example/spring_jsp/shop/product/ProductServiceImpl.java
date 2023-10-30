@@ -4,18 +4,17 @@ import com.example.spring_jsp.notification.NotificationService;
 import com.example.spring_jsp.shop.bookkeeping.BookkeepingDTO;
 import com.example.spring_jsp.shop.bookkeeping.BookkeepingService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    Map<String, ProductDTO> productDTOMap = new HashMap<>();
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Map<String, ProductDTO> productDTOMap = new HashMap<>();
     private final BookkeepingService bookkeepingService;
     private final NotificationService notificationService;
 
@@ -63,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
 
     public int insertProduct(ProductDTO productDTO) {
         productDTOMap.put(productDTO.getUid(), productDTO);
-        logger.debug("insertProduct: " + productDTO);
+        log.debug("insertProduct: " + productDTO);
         return 1;
     }
 
@@ -93,17 +92,17 @@ public class ProductServiceImpl implements ProductService {
                     //구매 성공
                     result = 1;
                     notificationService.send(sid, "구매에 성공했습니다.");
-                    logger.debug("purchase success for sid: {} bookid: {} productid: {}", sid, productDTO.getBookid(), productDTO.getProductid());
+                    log.debug("purchase success for sid: {} bookid: {} productid: {}", sid, productDTO.getBookid(), productDTO.getProductid());
                 } else {
                     //구매 실패
                     notificationService.send(sid, "구매에 실패했습니다.");
-                    logger.debug("purchase failed for sid: {} bookid: {} productid: {}", sid, productDTO.getBookid(), productDTO.getProductid());
+                    log.debug("purchase failed for sid: {} bookid: {} productid: {}", sid, productDTO.getBookid(), productDTO.getProductid());
                 }
 
             } else {
                 //포인트 부족
                 notificationService.send(sid, "포인트가 부족합니다.");
-                logger.debug("not enough point purchase failed for sid: {} bookid: {} productid: {}", sid, productDTO.getBookid(), productDTO.getProductid());
+                log.debug("not enough point purchase failed for sid: {} bookid: {} productid: {}", sid, productDTO.getBookid(), productDTO.getProductid());
             }
         }
         return result;

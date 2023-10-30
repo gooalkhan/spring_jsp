@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ProductBuilder {
-    private String uid;
-    private long bookid;
-    private String userid;
+    private final String uid;
+    private final long bookid;
+    private final String userid;
     private String productid;
     private int usedPoint = 0;
-    private LocalDateTime productEndDate;
+    private final LocalDateTime productEndDate;
 
     public ProductBuilder(long bookid, String userid) {
         this.bookid = bookid;

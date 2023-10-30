@@ -31,7 +31,7 @@ def get_genre_data(bookid) -> pandas.DataFrame:
     try:
         keywordDf = pd.read_pickle(PICKLE_PATH)
         return keywordDf
-    except:
+    except FileNotFoundError:
         pass
 
     # 장르별 책과 장르별 키워드를 가져오기
