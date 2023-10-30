@@ -10,7 +10,6 @@
             <div class="row mb-3">
                 <h4>${data.subject}</h4>
             </div>
-
             <div class="row mb-3 justify-content-start">
                 <div class="col-2">
                     <span class="desc">글쓴이 : ${data.name}</span>
@@ -27,7 +26,7 @@
             </div>
             <div class="row mb-3">
             	<c:forEach var="image" items="${image}">
-                    <img src="${pageContext.request.contextPath}/resources/boardimages/${image.imageName}" alt="이미지" style="width: 20%; height: auto;">
+                    <img src="/boardimages/${image.imageName}" alt="이미지" style="width: 20%; height: auto;">
                 </c:forEach>
                 <article>
                     <p class="border p-3 mt-3">${data.content}</p>

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class WorldCupController {
 	private final WorldCupService worldCupService;
+	
+	@Value("${resource.images.path}")
+	private String RIP;
 	
 	// 이상형 월드컵 만들기 페이지
 	@GetMapping("/worldCupCreate")
@@ -53,7 +57,7 @@ public class WorldCupController {
 			    int millis = now.get(ChronoField.MILLI_OF_SECOND);
 			    String imageName = files.getOriginalFilename();
 			    worldCupDTO.setOriginImageName(imageName);
-			    String absolutePath = new File("./src/main/webapp/resources").getAbsolutePath() + "\\"; // 파일이 저장될 절대 경로
+			    String absolutePath = RIP; // 파일이 저장될 절대 경로
 			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
 			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
 			    String path = "worldcupimages"; // 저장될 폴더 경로
@@ -115,5 +119,37 @@ public class WorldCupController {
 	@GetMapping("/worldCupResult")
 	public String worldCupResult() {
 		return "/worldcup/worldCupResult";
+	}
+	
+	// 이상형 월드컵 삭제
+	@PostMapping("/worldCupDelete")
+	public ModelAndView worldCupDelete(WorldCupDTO worldCupDTO, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		int idx = worldCupDTO.getIdx();
+		worldCupDTO.setWorldcuptbl_idx(idx);
+		// 게시글 수정 시, 이미지 폴더에 기존 이미지 삭제
+		List<WorldCupDTO> IDTO = worldCupService.worldCupProcImageSelect(worldCupDTO);
+		String aPath = RIP;
+	    String sPath = "worldcupimages";
+	    String rPath = aPath + sPath;
+		for(WorldCupDTO DTO: IDTO) {
+			String filePathStr = rPath + "\\" + DTO.getImageName();
+			File file = new File(filePathStr);
+			file.delete();
+		}
+		
+		boolean isDeleteSuccess = this.worldCupService.worldCupDelete(worldCupDTO);
+		// TODO: 일단 홈으로 이동
+		if(isDeleteSuccess) {
+	    	request.setAttribute("msg", "삭제가 완료되었습니다.");
+	    	request.setAttribute("url", "/");
+			mav.setViewName("/alert");
+		} else {
+	    	request.setAttribute("msg", "올바르지 않은 삭제입니다.");
+	    	request.setAttribute("url", "/");
+	        mav.setViewName("/alert");
+		}
+		return mav;
 	}
 }
