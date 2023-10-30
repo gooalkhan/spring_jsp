@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class BoardController {
 	private final BoardService boardService;
+	
+	@Value("${resource.images.path}")
+	private String RIP;
 	
 	//게시글 목록
 	@GetMapping("/boardList")
@@ -72,7 +76,7 @@ public class BoardController {
 			    int millis = now.get(ChronoField.MILLI_OF_SECOND);
 			    String imageName = files.getOriginalFilename();
 			    boardDTO.setOriginImageName(imageName);
-			    String absolutePath = "C:\\FileIO\\images\\"; // 파일이 저장될 절대 경로
+			    String absolutePath = RIP; // 파일이 저장될 절대 경로
 			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
 			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
 			    String path = "boardimages"; // 저장될 폴더 경로
@@ -165,7 +169,7 @@ public class BoardController {
 			boardDTO.setBoardtbl_idx(idx);
 			// 게시글 수정 시, 이미지 폴더에 기존 이미지 삭제
 			List<BoardDTO> IDTO = boardService.imageSelect(boardDTO);
-			String aPath = "C:\\FileIO\\images\\"; // 파일이 저장될 절대 경로
+			String aPath = RIP; // 파일이 저장될 절대 경로
 		    String sPath = "boardimages";
 		    String rPath = aPath + sPath;
 			for(BoardDTO DTO: IDTO) {
@@ -189,7 +193,7 @@ public class BoardController {
 			    int millis = now.get(ChronoField.MILLI_OF_SECOND);
 			    String imageName = files.getOriginalFilename();
 			    boardDTO.setOriginImageName(imageName);
-			    String absolutePath = "C:\\FileIO\\images\\"; // 파일이 저장될 절대 경로
+			    String absolutePath = RIP; // 파일이 저장될 절대 경로
 			    String newFileName = "image"+ year + month + day + hour + minute + second + millis; // 새로 부여한 이미지명
 			    String fileExtension = '.' + imageName.replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
 			    String path = "boardimages"; // 저장될 폴더 경로
@@ -242,7 +246,7 @@ public class BoardController {
 		boardDTO.setBoardtbl_idx(idx);
 		// 게시글 수정 시, 이미지 폴더에 기존 이미지 삭제
 		List<BoardDTO> IDTO = boardService.imageSelect(boardDTO);
-		String aPath = "C:\\FileIO\\images\\";
+		String aPath = RIP;
 	    String sPath = "boardimages";
 	    String rPath = aPath + sPath;
 		for(BoardDTO DTO: IDTO) {
@@ -254,7 +258,6 @@ public class BoardController {
 		this.boardService.imageDelete(boardDTO);
 		
 		boolean isDeleteSuccess = this.boardService.boardDelete(boardDTO);
-		//TODO: 댓글이 달려있으면 게시물이 지워지지 않으므로 cascasde로 처리하던 해야함
 		if(isDeleteSuccess) {
 	    	request.setAttribute("msg", "삭제가 완료되었습니다.");
 	    	request.setAttribute("url", "/boardList");
