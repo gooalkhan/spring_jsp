@@ -14,7 +14,7 @@
                            style="text-decoration: none; color: #000000; font-weight: bold;">${data.subject}</a>
                         <div class="card-text mt-2 small">${data.content}</div>
                     </div>
-                        <form method="Post" action="/worldCupDelete">
+                        <form method="Post" action="/worldCupDelete" class="text-center">
                     		<input type="hidden" name="idx" value="${data.idx}">
                     		<input type="submit" class="btn btn-danger" value="삭제">
                     	</form>
