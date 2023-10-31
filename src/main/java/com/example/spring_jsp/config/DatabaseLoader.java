@@ -69,6 +69,10 @@ public class DatabaseLoader implements CommandLineRunner {
     private final WorldCupMapper worldCupMapper;
     private final WorldCupImageMapper worldCupImageMapper;
     
+	// application.properties에서 설정한 값을 읽어옴
+	@Value("${resource.images.path}")
+	private String RIP;
+    
     @Override
     public void run(String... args) {
         // 회원 샘플 데이터 추가(일반 회원 홍길동 복사)
@@ -107,6 +111,12 @@ public class DatabaseLoader implements CommandLineRunner {
         pythonMapper.createTable();
         worldCupMapper.createTable();
         worldCupImageMapper.createTable();
+        
+        // 게시판 이미지 폴더 생성
+        createFolder(RIP, "boardimages");
+        
+        // 월드컵 이미지 폴더 생성
+        createFolder(RIP, "worldcupimages");
         
         // 회원 샘플
         memberSampleData(id, name);
@@ -355,5 +365,12 @@ public class DatabaseLoader implements CommandLineRunner {
     		worldCupImageDTO.setWorldcuptbl_idx(3);
     		worldCupImageMapper.save(worldCupImageDTO);
     	}
+    }
+    
+    public void createFolder(String absolutePath, String path) {
+        File file = new File(absolutePath + path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
     }
 }
