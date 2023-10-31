@@ -112,4 +112,9 @@ public class BoardServiceImpl implements BoardService{
 		int affectRowCount = this.boardMapper.imageDelete(boardDTO);
 		return affectRowCount == 1;
 	}
+	
+	@Override
+	public List<BoardDTO> commentNum(){
+		return boardMapper.commentNum();
+	}
 }

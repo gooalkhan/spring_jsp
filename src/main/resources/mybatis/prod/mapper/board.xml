@@ -47,7 +47,7 @@
 		boardtbl
 		(SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_ID)
 		values
-		(#{subject}, #{content}, now(), 0, 0, #{membertbl_id})
+		(#{subject}, #{content}, now(), #{likes}, #{views}, #{membertbl_id})
 	</insert>
 	
 	<!-- 기본 boardtbl update 구문(게시글 수정) -->
@@ -89,6 +89,7 @@
 	    boardtbl
 	    where
 	    subject like CONCAT('%', #{subject}, '%')
+	    order by idx desc;
 	    ]]>
 	</select>
 	
@@ -138,6 +139,7 @@
 	boardtbl
 	join membertbl
 	on boardtbl.membertbl_id = membertbl.id
+	order by idx desc;
 	</select>
 	
 	<!-- 좋아요 버튼 -->
@@ -181,4 +183,13 @@
 		where
 		boardtbl_idx = #{boardtbl_idx}
     </delete>
+    
+    <!-- 게시글 옆에 댓글이 몇개 달렸는지 보이도록 하기 위한 쿼리 -->
+    <select id="commentNum" resultType="com.example.spring_jsp.board.BoardDTO">
+	    SELECT
+		count(*) as count
+		FROM
+		commenttbl
+		GROUP BY boardtbl_IDX;
+    </select>
 </mapper>
