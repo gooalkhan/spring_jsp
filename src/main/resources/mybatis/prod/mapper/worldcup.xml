@@ -122,7 +122,7 @@
 	    from
 	    worldcuptbl
 	    where
-	    SUBJECT like '%'||#{subject}||'%'
+	    subject like CONCAT('%', #{subject}, '%')
 	</select>
 	
 	<!-- 월드컵 제목으로 검색(이미지) -->
@@ -134,7 +134,7 @@
 		join worldcupimagetbl
 		on worldcuptbl.idx = worldcupimagetbl.worldcuptbl_IDX
 		where
-		SUBJECT like '%'||#{subject}||'%'
+		subject like CONCAT('%', #{subject}, '%')
 		GROUP BY worldcuptbl_IDX;
 	</select>
 	
@@ -145,7 +145,7 @@
 	    from
 	    worldcuptbl
 	    where
-	    SUBJECT like '%'||#{subject}||'%'
+	    subject like CONCAT('%', #{subject}, '%')
 	    and
 	    membertbl_id = #{membertbl_id}
 	</select>
@@ -159,7 +159,7 @@
 		join worldcupimagetbl
 		on worldcuptbl.idx = worldcupimagetbl.worldcuptbl_IDX
 		where
-		SUBJECT like '%'||#{subject}||'%'
+		subject like CONCAT('%', #{subject}, '%')
 		and
 		membertbl_id = #{membertbl_id}
 		GROUP BY worldcuptbl_IDX;
