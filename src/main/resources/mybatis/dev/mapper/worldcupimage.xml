@@ -18,4 +18,9 @@
     <update id="dropTable">
         drop table if exists worldcupimagetbl;
     </update>
+    
+    <update id="save">
+        insert into worldcupimagetbl (originImageName, imageName, imagePath, worldcuptbl_idx)
+        values (#{originImageName}, #{imageName}, #{imagePath}, #{worldcuptbl_idx});
+    </update>
 </mapper>

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface WorldCupImageMapper {
     void createTable();
     void dropTable();
+    void save(WorldCupImageDTO worldCupImageDTO);
 }

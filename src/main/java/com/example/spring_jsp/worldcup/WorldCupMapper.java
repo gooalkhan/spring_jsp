@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface WorldCupMapper {
     void createTable();
     void dropTable();
+    void save(WorldCupDTO worldCupDTO);
     int worldCupInsert(WorldCupDTO worldCupDTO);
     int worldCupImageInsert(WorldCupDTO worldCupDTO);
     List<WorldCupDTO> worldCupSelect(WorldCupDTO worldCupDTO);
