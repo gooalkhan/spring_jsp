@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class LikeController {
 	private final LikeService likeService;
 	
+	// 좋아요가 눌렸을 때, 처리
 	@PostMapping("/boardLike")
 	public ModelAndView likeUpdate(LikeDTO likeDTO, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
