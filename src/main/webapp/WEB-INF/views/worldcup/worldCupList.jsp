@@ -13,7 +13,7 @@
                            style="text-decoration: none; color: #000000; font-weight: bold;">${data.subject}</a>
                         <div class="card-text mt-2 small">${data.content}</div>
                     </div>
-                    	<c:if test="${sadmin == 'admin' || sadmin == 'subadmin'}">
+                    	<c:if test="${data.membertbl_id == sid || sadmin == 'admin' || sadmin == 'subadmin'}">
                         <form method="Post" action="/worldCupDelete" class="text-center">
                     		<input type="hidden" name="idx" value="${data.idx}">
                     		<input type="submit" class="btn btn-danger" value="삭제">

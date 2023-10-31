@@ -88,28 +88,63 @@ public class DatabaseLoader implements CommandLineRunner {
         pythonMapper.createTable();
         worldCupMapper.createTable();
         worldCupImageMapper.createTable();
-
-        // 초기 데이터 추가
-        MemberDTO entity = new MemberDTO();
-        entity.setId("hong");
+        
+        // 회원 샘플 데이터 추가(관리자 홍길동)
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId("hong");
         // Hong!1234
-        entity.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
-        entity.setEmail("hong@gmail.com");
-        entity.setName("홍길동");
-        entity.setJoinDate(new Timestamp(System.currentTimeMillis()));
-        memberMapper.save(entity);
+        memberDTO.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
+        memberDTO.setEmail("hong@gmail.com");
+        memberDTO.setName("홍길동");
+        memberDTO.setJoinDate(new Timestamp(System.currentTimeMillis()));
+        memberMapper.save(memberDTO);
+        
+        // 회원 샘플 데이터 추가(일반 회원 홍길동 복사)
+        for(int i = 0; i < 10; i++) {
+            MemberDTO memberDTODupl = new MemberDTO();
+            memberDTODupl.setId("hong" + i);
+            // Hong!1234
+            memberDTODupl.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
+            memberDTODupl.setEmail("hong"+i+"@gmail.com");
+            memberDTODupl.setName("홍길동" + i);
+            memberDTODupl.setJoinDate(new Timestamp(System.currentTimeMillis()));
+            memberMapper.save(memberDTODupl);
+        }
 
+        // 게시글 샘플 데이터 추가(관리자 홍길동)
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setSubject("제목은");
         boardDTO.setContent("내용이다");
         boardDTO.setMembertbl_id("hong");
         boardMapper.boardInsert(boardDTO);
+        
+        // 게시글 샘플 데이터 추가(일반 회원 홍길동 복사)
+        for(int i = 0; i < 10; i++) {
+            BoardDTO boardDTODupl = new BoardDTO();
+            boardDTODupl.setSubject("제목은"+i);
+            boardDTODupl.setContent("내용이다"+i);
+            boardDTODupl.setMembertbl_id("hong"+i);
+            boardMapper.boardInsert(boardDTODupl);
+        }
+        
+        for(int i = 1; i < 10; i++) {
+        	// 댓글 샘플 데이터 추가(관리자 홍길동)
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setContent("댓글이다");
+            commentDTO.setMembertbl_id("hong");
+            commentDTO.setBoardtbl_idx(i);
+            commentMapper.save(commentDTO);
+        	for (int j = 0; j < 9; j++) {
+        		// 댓글 샘플 데이터 추가(일반 회원 홍길동 복사)
+                CommentDTO commentDTODupl = new CommentDTO();
+                commentDTODupl.setContent("댓글이다"+j);
+                commentDTODupl.setMembertbl_id("hong"+j);
+                commentDTODupl.setBoardtbl_idx(i);
+                commentMapper.save(commentDTODupl);
+        	}
+        }
+        
 
-        CommentDTO commentDTO = new CommentDTO();
-        commentDTO.setContent("댓글이다");
-        commentDTO.setMembertbl_id("hong");
-        commentDTO.setBoardtbl_idx(1);
-        commentMapper.save(commentDTO);
 
         initBooktbl();
         initKeywordtbl(); //booktbl 테이블 생성 전 실행해야 함(외래 키)
