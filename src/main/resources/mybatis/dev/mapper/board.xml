@@ -44,7 +44,7 @@
 		boardtbl
 		(SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_ID)
 		values
-		(#{subject}, #{content}, now(), 0, 0, #{membertbl_id})
+		(#{subject}, #{content}, now(), #{likes}, #{views}, #{membertbl_id})
 	</insert>
 	
 	<!-- 기본 boardtbl update 구문(게시글 수정) -->

@@ -271,12 +271,15 @@ public class DatabaseLoader implements CommandLineRunner {
         }
     }
     
+    // 주의 : 샘플 데이터는 likes를 이렇게 막 집어넣어놨지만, boardtbl의 likes컬럼은 원래 liketbl과 맞물리면서 증감해야됨
     public void boardSampleData(String[] id, String[] name) {
     	// 게시글 샘플 데이터 추가(관리자 홍길동)
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setSubject("제목은");
         boardDTO.setContent("내용이다");
         boardDTO.setMembertbl_id("hong");
+        boardDTO.setViews(100);
+        boardDTO.setLikes(10);
         boardMapper.boardInsert(boardDTO);
         
         // 게시글 샘플 데이터 추가(일반 회원 홍길동 복사)
@@ -285,6 +288,8 @@ public class DatabaseLoader implements CommandLineRunner {
             boardDTODupl.setSubject(name[i] + " 이(가) 쓴 글 입니다.");
             boardDTODupl.setContent(name[i] + " 이(가) 쓴 내용 입니다.");
             boardDTODupl.setMembertbl_id(id[i]);
+            boardDTODupl.setViews(i*9);
+            boardDTODupl.setLikes(i);
             boardMapper.boardInsert(boardDTODupl);
         }
     }
