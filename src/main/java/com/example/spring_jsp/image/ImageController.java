@@ -31,7 +31,6 @@ public class ImageController {
 			log.warn("file {} not found!", e.getMessage());
 		}
 
-		// TODO: 이미지 파일 종류에 맞추어 컨텐트 타입 변경
 		return ResponseEntity.ok()
 				.contentType(MediaType.IMAGE_JPEG) // 이미지 파일 타입에 따라 Content-Type을 설정합니다.
 				.body(imageBytes);

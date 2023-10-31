@@ -30,7 +30,6 @@ public class ShopController {
     public String shop(@RequestParam(value = "success", defaultValue = "") String isSuccess, Model model, HttpSession httpSession) {
         String sid = (String)httpSession.getAttribute("sid");
 
-        //TODO:handlerintercepter로 처리
         if (sid != null) {
             List<CampaignDTO> currentCampaigns = campaignService.getCurrentCampaign();
             model.addAttribute("currentCampaigns", currentCampaigns);
