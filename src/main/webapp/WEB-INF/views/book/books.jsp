@@ -23,8 +23,8 @@
         </c:if>
         <div class="row">
             <c:forEach var="book" items="${data}" varStatus="status">
-                <div class="col-sm-6 col-md-3 col-lg-2 mb-4">
-                    <div class="card" style="width: 10rem">
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 mb-4">
+                    <div class="card" style="min-width: 10rem">
                         <a href="?page=${page}&id=${book.bookid}&condition=${param.condition}&searchword=${param.searchword}">
                             <svg class="card-img-top book-pic" width="140" height="200">
                                 <text x="30" y="100">
