@@ -20,7 +20,11 @@
             <c:forEach var="data" items="${data}" varStatus="status">
                 <tr>
                     <td>${data.idx}</td>
-                    <td style="font-size: 10px;"><a href="/boardDetail?idx=${data.idx}" style="font-size: medium; text-decoration: none;">${data.subject}</a>&nbsp;&nbsp;&nbsp;${cnum[status.index].count}</td>
+                    <td style="font-size: 10px;"><a href="/boardDetail?idx=${data.idx}" style="font-size: medium; text-decoration: none;">${data.subject}</a>
+                    <c:if test="${cnum[status.index].count != 0}">
+                    &nbsp;&nbsp;&nbsp;${cnum[status.index].count}
+                    </c:if>
+                    </td>
                     <td>${data.name}</td>
                     <td><fmt:formatDate pattern="yyyy-MM-dd" value="${data.postDate}"/></td>
                     <td>${data.views}</td>

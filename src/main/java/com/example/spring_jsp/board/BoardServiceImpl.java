@@ -64,12 +64,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public List<BoardDTO> boardSearch(String subject) throws Exception{
+	public List<BoardDTO> boardSearch(String subject) throws Exception {
 		return boardMapper.boardSearch(subject);
 	}
 	
 	@Override
-	public List<BoardDTO> commentShow(BoardDTO boardDTO) throws Exception{
+	public List<BoardDTO> commentShow(BoardDTO boardDTO) throws Exception {
 		return boardMapper.commentShow(boardDTO);
 	}
 	
@@ -84,7 +84,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public List<BoardDTO> boardListJoin() throws Exception{
+	public List<BoardDTO> boardListJoin() throws Exception {
 		return boardMapper.boardListJoin();
 	}
 	
@@ -103,7 +103,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public List<BoardDTO> imageSelect(BoardDTO boardDTO){
+	public List<BoardDTO> imageSelect(BoardDTO boardDTO) {
 		return boardMapper.imageSelect(boardDTO);
 	}
 	
@@ -114,7 +114,18 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public List<BoardDTO> commentNum(){
+	public List<BoardDTO> commentNum() {
 		return boardMapper.commentNum();
 	}
+	
+	@Override
+	public List<BoardDTO> boardListJoinPop() {
+		return boardMapper.boardListJoinPop();
+	}
+	
+	@Override
+	public List<BoardDTO> commentNumPop() {
+		return boardMapper.commentNumPop();
+	}
+	
 }

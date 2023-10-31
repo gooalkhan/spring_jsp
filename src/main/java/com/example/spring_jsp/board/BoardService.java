@@ -36,4 +36,8 @@ public interface BoardService {
 
 	List<BoardDTO> commentNum();
 
+	List<BoardDTO> boardListJoinPop();
+
+	List<BoardDTO> commentNumPop();
+
 }
