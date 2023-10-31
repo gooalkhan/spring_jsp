@@ -29,7 +29,9 @@ public class BoardController {
 	public ModelAndView boardList() throws Exception{
 		ModelAndView mav = new ModelAndView();
 		List<BoardDTO> list = boardService.boardListJoin();
+		List<BoardDTO> Clist = boardService.commentNum();
 		mav.addObject("data", list);
+		mav.addObject("cnum", Clist);
 		mav.setViewName("/board/boardList");
 		return mav;
 	}

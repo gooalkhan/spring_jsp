@@ -295,7 +295,7 @@ public class DatabaseLoader implements CommandLineRunner {
     }
     
     public void commentSampleData(String[] id, String[] name) {
-        for(int i = 1; i <= 16; i++) {
+        for(int i = 1; i <= 17; i++) {
         	// 댓글 샘플 데이터 추가(관리자 홍길동)
             CommentDTO commentDTO = new CommentDTO();
             commentDTO.setContent("댓글이다");

@@ -34,4 +34,6 @@ public interface BoardService {
 
 	boolean imageDelete(BoardDTO boardDTO);
 
+	List<BoardDTO> commentNum();
+
 }

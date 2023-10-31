@@ -19,6 +19,7 @@ public class BoardDTO {
     private String name;
     private String id;
     private String admin;
+    private int count;
     
     //imagetbl에 있는 컬럼들의 값을 담기 위한 변수(board와 관련된거라 board에서 처리해주는 게 좋을 거 같아서 board에서 처리)
 	private String originImageName;

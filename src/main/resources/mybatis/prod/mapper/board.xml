@@ -181,4 +181,13 @@
 		where
 		boardtbl_idx = #{boardtbl_idx}
     </delete>
+    
+    <!-- 게시글 옆에 댓글이 몇개 달렸는지 보이도록 하기 위한 쿼리 -->
+    <select id="commentNum" resultType="com.example.spring_jsp.board.BoardDTO">
+	    SELECT
+		count(*) as count
+		FROM
+		commenttbl
+		GROUP BY boardtbl_IDX;
+    </select>
 </mapper>

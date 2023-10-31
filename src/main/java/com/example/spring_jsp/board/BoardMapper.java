@@ -29,4 +29,5 @@ public interface BoardMapper {
 	int imageUpload(BoardDTO boardDTO);
 	List<BoardDTO> imageSelect(BoardDTO boardDTO);
 	int imageDelete(BoardDTO boardDTO);
+	List<BoardDTO> commentNum();
 }
