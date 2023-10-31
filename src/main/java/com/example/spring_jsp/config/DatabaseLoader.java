@@ -72,8 +72,14 @@ public class DatabaseLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // 회원 샘플 데이터 추가(일반 회원 홍길동 복사)
-        String[] id = {"apple", "banana", "grapes", "orange", "strawberry", "watermelon", "cherry", "pineapple", "kiwi", "lemon", "lime", "peach", "mango", "grape", "pear", "blueberry", "raspberry"};
-        String[] name = {"사과", "바나나", "포도", "오렌지", "딸기", "수박", "체리", "파인애플", "키위", "레몬", "라임", "복숭아", "망고", "포도", "배", "블루베리", "라즈베리"};
+        String[] id = {"apple", "banana", "grapes", "orange", "strawberry", "watermelon", "cherry", "pineapple", "kiwi", "lemon", "lime", "peach", "mango", "pear", "blueberry", "raspberry"};
+        String[] name = {"사과", "바나나", "포도", "오렌지", "딸기", "수박", "체리", "파인애플", "키위", "레몬", "라임", "복숭아", "망고", "배", "블루베리", "라즈베리"};
+        
+        // 이미지 이름 구분을 위한 배열
+        String[] color = {"16색깔", "1색깔", "7색깔"};
+        
+        // 이미지 색깔을 오리지널 네임으로 설정하기 위한 배열
+        String[] colorName = {"흰색", "검은색", "회색", "적갈색", "빨간색", "주황색", "노란색", "초록색", "파란색", "남색", "보라색", "연한 회색", "연한 갈색", "분홍색", "진한 노란색" ,"살구색"};
         
         // 초기 테이블 생성
         if (activeProfile.equals("prod")) {
@@ -102,116 +108,20 @@ public class DatabaseLoader implements CommandLineRunner {
         worldCupMapper.createTable();
         worldCupImageMapper.createTable();
         
-        // 회원 샘플 데이터 추가(관리자 홍길동)
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setId("hong");
-        // Hong!1234
-        memberDTO.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
-        memberDTO.setEmail("hong@example.com");
-        memberDTO.setName("홍길동");
-        memberDTO.setJoinDate(new Timestamp(System.currentTimeMillis()));
-        memberDTO.setAdmin("admin");
-        memberMapper.save(memberDTO);
+        // 회원 샘플
+        memberSampleData(id, name);
         
-        // 회원 샘플 데이터 추가(부관리자 테스트)
-        memberDTO.setId("test");
-        // Hong!1234
-        memberDTO.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
-        memberDTO.setEmail("test@example.com");
-        memberDTO.setName("테스트");
-        memberDTO.setJoinDate(new Timestamp(System.currentTimeMillis()));
-        memberDTO.setAdmin("subadmin");
-        memberMapper.save(memberDTO);
+        // 게시판 샘플
+        boardSampleData(id, name);
         
+        // 댓글 샘플
+        commentSampleData(id, name);
         
-        for(int i = 0; i < 17; i++) {
-            MemberDTO memberDTODupl = new MemberDTO();
-            memberDTODupl.setId(id[i]);
-            // Hong!1234
-            memberDTODupl.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
-            memberDTODupl.setEmail(id[i] + "@example.com");
-            memberDTODupl.setName(name[i]);
-            memberDTODupl.setJoinDate(new Timestamp(System.currentTimeMillis()));
-            memberMapper.save(memberDTODupl);
-        }
-
-        // 게시글 샘플 데이터 추가(관리자 홍길동)
-        BoardDTO boardDTO = new BoardDTO();
-        boardDTO.setSubject("제목은");
-        boardDTO.setContent("내용이다");
-        boardDTO.setMembertbl_id("hong");
-        boardMapper.boardInsert(boardDTO);
+        // 월드컵 샘플
+        worldCupSampleData(id);
         
-        // 게시글 샘플 데이터 추가(일반 회원 홍길동 복사)
-        for(int i = 0; i < 17; i++) {
-            BoardDTO boardDTODupl = new BoardDTO();
-            boardDTODupl.setSubject(name[i] + " 이(가) 쓴 글 입니다.");
-            boardDTODupl.setContent(name[i] + " 이(가) 쓴 내용 입니다.");
-            boardDTODupl.setMembertbl_id(id[i]);
-            boardMapper.boardInsert(boardDTODupl);
-        }
-        
-        for(int i = 1; i <= 18; i++) {
-        	// 댓글 샘플 데이터 추가(관리자 홍길동)
-            CommentDTO commentDTO = new CommentDTO();
-            commentDTO.setContent("댓글이다");
-            commentDTO.setMembertbl_id("hong");
-            commentDTO.setBoardtbl_idx(i);
-            commentMapper.save(commentDTO);
-        	for (int j = 0; j < 17; j++) {
-        		// 댓글 샘플 데이터 추가(일반 회원 홍길동 복사)
-                CommentDTO commentDTODupl = new CommentDTO();
-                commentDTODupl.setContent(name[j] + " 가(이) 쓴 댓글입니다.");
-                commentDTODupl.setMembertbl_id(id[j]);
-                commentDTODupl.setBoardtbl_idx(i);
-                commentMapper.save(commentDTODupl);
-        	}
-        }
-        // 월드컵 샘플 데이터 추가
-        for(int i = 0; i < 3; i++) {
-        	WorldCupDTO worldCupDTO = new WorldCupDTO();
-        	worldCupDTO.setSubject("색깔 이상형 월드컵 " + (i+1));
-        	worldCupDTO.setContent("색깔 이상형 월드컵 " + (i+1) + " 입니다. 가장 마음에 드시는 색깔을 고르시면 됩니다.");
-        	// 사과, 바나나, 포도가 만든 걸로 설정
-        	worldCupDTO.setMembertbl_id(id[i]);
-        	worldCupMapper.save(worldCupDTO);
-        }
-        
-        // 이미지 이름 구분을 위한 배열
-        String[] color = {"16색깔", "1색깔", "7색깔"};
-        
-        // 이미지 색깔을 오리지널 네임으로 설정하기 위한 배열
-        String[] colorName = {"흰색", "검은색", "회색", "적갈색", "빨간색", "주황색", "노란색", "초록색", "파란색", "남색", "보라색", "연한 회색", "연한 갈색", "분홍색", "진한 노란색" ,"살구색"};
-        
-        // 이미지 총 16장. 정상적으로 작동한다는 것을 보여줌.
-    	for(int j = 1; j <= 16; j++) {
-    		WorldCupImageDTO worldCupImageDTO = new WorldCupImageDTO();
-    		worldCupImageDTO.setOriginImageName(colorName[j-1] + ".png");
-    		worldCupImageDTO.setImageName(color[0] + j + ".png");
-    		worldCupImageDTO.setImagePath("C:\\FileIO\\images\\worldcupimages");
-    		worldCupImageDTO.setWorldcuptbl_idx(1);
-    		worldCupImageMapper.save(worldCupImageDTO);
-    	}
-    	
-    	// 이미지 총 1장. 1장이라더라도 정상적으로 작동한다는 것을 보여줌.
-    	for(int j = 1; j <= 1; j++) {
-    		WorldCupImageDTO worldCupImageDTO = new WorldCupImageDTO();
-    		worldCupImageDTO.setOriginImageName(colorName[j-1] + ".png");
-    		worldCupImageDTO.setImageName(color[1] + j + ".png");
-    		worldCupImageDTO.setImagePath("C:\\FileIO\\images\\worldcupimages");
-    		worldCupImageDTO.setWorldcuptbl_idx(2);
-    		worldCupImageMapper.save(worldCupImageDTO);
-    	}
-    	
-    	// 이미지 총 7장. 2의 거듭제곱수의 이미지 개수가 아니더라도 정상적으로 작동한다는 것을 보여줌.
-    	for(int j = 1; j <= 7; j++) {
-    		WorldCupImageDTO worldCupImageDTO = new WorldCupImageDTO();
-    		worldCupImageDTO.setOriginImageName(colorName[j-1] + ".png");
-    		worldCupImageDTO.setImageName(color[2] + j + ".png");
-    		worldCupImageDTO.setImagePath("C:\\FileIO\\images\\worldcupimages");
-    		worldCupImageDTO.setWorldcuptbl_idx(3);
-    		worldCupImageMapper.save(worldCupImageDTO);
-    	}
+        // 월드컵 이미지 샘플
+        worldCupImageSampleData(color, colorName);
         
         // 이미지 targetDirectory로 복사
         // 만약, 이미 똑같은 이름의 파일이 있다면 실패함
@@ -323,5 +233,122 @@ public class DatabaseLoader implements CommandLineRunner {
         } catch (IOException e) {
         	logger.error("파일 복사 실패: " + e.getMessage());
         }
+    }
+    
+    public void memberSampleData(String[] id, String[] name) {
+    	
+        // 회원 샘플 데이터 추가(관리자 홍길동)
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId("hong");
+        // Hong!1234
+        memberDTO.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
+        memberDTO.setEmail("hong@example.com");
+        memberDTO.setName("홍길동");
+        memberDTO.setJoinDate(new Timestamp(System.currentTimeMillis()));
+        memberDTO.setAdmin("admin");
+        memberMapper.save(memberDTO);
+        
+        // 회원 샘플 데이터 추가(부관리자 테스트)
+        memberDTO.setId("test");
+        // Hong!1234
+        memberDTO.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
+        memberDTO.setEmail("test@example.com");
+        memberDTO.setName("테스트");
+        memberDTO.setJoinDate(new Timestamp(System.currentTimeMillis()));
+        memberDTO.setAdmin("subadmin");
+        memberMapper.save(memberDTO);
+        
+        
+        for(int i = 0; i < 16; i++) {
+            MemberDTO memberDTODupl = new MemberDTO();
+            memberDTODupl.setId(id[i]);
+            // Hong!1234
+            memberDTODupl.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
+            memberDTODupl.setEmail(id[i] + "@example.com");
+            memberDTODupl.setName(name[i]);
+            memberDTODupl.setJoinDate(new Timestamp(System.currentTimeMillis()));
+            memberMapper.save(memberDTODupl);
+        }
+    }
+    
+    public void boardSampleData(String[] id, String[] name) {
+    	// 게시글 샘플 데이터 추가(관리자 홍길동)
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setSubject("제목은");
+        boardDTO.setContent("내용이다");
+        boardDTO.setMembertbl_id("hong");
+        boardMapper.boardInsert(boardDTO);
+        
+        // 게시글 샘플 데이터 추가(일반 회원 홍길동 복사)
+        for(int i = 0; i < 16; i++) {
+            BoardDTO boardDTODupl = new BoardDTO();
+            boardDTODupl.setSubject(name[i] + " 이(가) 쓴 글 입니다.");
+            boardDTODupl.setContent(name[i] + " 이(가) 쓴 내용 입니다.");
+            boardDTODupl.setMembertbl_id(id[i]);
+            boardMapper.boardInsert(boardDTODupl);
+        }
+    }
+    
+    public void commentSampleData(String[] id, String[] name) {
+        for(int i = 1; i <= 16; i++) {
+        	// 댓글 샘플 데이터 추가(관리자 홍길동)
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setContent("댓글이다");
+            commentDTO.setMembertbl_id("hong");
+            commentDTO.setBoardtbl_idx(i);
+            commentMapper.save(commentDTO);
+        	for (int j = 0; j < 16; j++) {
+        		// 댓글 샘플 데이터 추가(일반 회원 홍길동 복사)
+                CommentDTO commentDTODupl = new CommentDTO();
+                commentDTODupl.setContent(name[j] + " 가(이) 쓴 댓글입니다.");
+                commentDTODupl.setMembertbl_id(id[j]);
+                commentDTODupl.setBoardtbl_idx(i);
+                commentMapper.save(commentDTODupl);
+        	}
+        }
+    }
+    
+    public void worldCupSampleData(String[] id) {
+        // 월드컵 샘플 데이터 추가
+        for(int i = 0; i < 3; i++) {
+        	WorldCupDTO worldCupDTO = new WorldCupDTO();
+        	worldCupDTO.setSubject("색깔 이상형 월드컵 " + (i+1));
+        	worldCupDTO.setContent("색깔 이상형 월드컵 " + (i+1) + " 입니다. 가장 마음에 드시는 색깔을 고르시면 됩니다.");
+        	// 사과, 바나나, 포도가 만든 걸로 설정
+        	worldCupDTO.setMembertbl_id(id[i]);
+        	worldCupMapper.save(worldCupDTO);
+        }
+    }
+    
+    public void worldCupImageSampleData(String[] color, String[] colorName) {
+        // 이미지 총 16장. 정상적으로 작동한다는 것을 보여줌.
+    	for(int j = 1; j <= 16; j++) {
+    		WorldCupImageDTO worldCupImageDTO = new WorldCupImageDTO();
+    		worldCupImageDTO.setOriginImageName(colorName[j-1] + ".png");
+    		worldCupImageDTO.setImageName(color[0] + j + ".png");
+    		worldCupImageDTO.setImagePath("C:\\FileIO\\images\\worldcupimages");
+    		worldCupImageDTO.setWorldcuptbl_idx(1);
+    		worldCupImageMapper.save(worldCupImageDTO);
+    	}
+    	
+    	// 이미지 총 1장. 1장이라더라도 정상적으로 작동한다는 것을 보여줌.
+    	for(int j = 1; j <= 1; j++) {
+    		WorldCupImageDTO worldCupImageDTO = new WorldCupImageDTO();
+    		worldCupImageDTO.setOriginImageName(colorName[j-1] + ".png");
+    		worldCupImageDTO.setImageName(color[1] + j + ".png");
+    		worldCupImageDTO.setImagePath("C:\\FileIO\\images\\worldcupimages");
+    		worldCupImageDTO.setWorldcuptbl_idx(2);
+    		worldCupImageMapper.save(worldCupImageDTO);
+    	}
+    	
+    	// 이미지 총 7장. 2의 거듭제곱수의 이미지 개수가 아니더라도 정상적으로 작동한다는 것을 보여줌.
+    	for(int j = 1; j <= 7; j++) {
+    		WorldCupImageDTO worldCupImageDTO = new WorldCupImageDTO();
+    		worldCupImageDTO.setOriginImageName(colorName[j-1] + ".png");
+    		worldCupImageDTO.setImageName(color[2] + j + ".png");
+    		worldCupImageDTO.setImagePath("C:\\FileIO\\images\\worldcupimages");
+    		worldCupImageDTO.setWorldcuptbl_idx(3);
+    		worldCupImageMapper.save(worldCupImageDTO);
+    	}
     }
 }
