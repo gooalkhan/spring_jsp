@@ -18,7 +18,10 @@
         drop table if exists worldcuptbl;
     </update>
     
-    
+    <update id="save">
+        insert into worldcuptbl (subject, content, membertbl_id)
+        values (#{subject}, #{content}, #{membertbl_id});
+    </update>
     
     
     

@@ -11,6 +11,5 @@ public class WorldCupImageDTO {
 	private String imageName;
 	private String imagePath;
 	private Timestamp imageDate;
-	private String content;
 	private int worldcuptbl_idx;
 }
