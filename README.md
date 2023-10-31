@@ -27,6 +27,7 @@
 * 데이터베이스: H2(개발환경), MySQL(배포환경)
 * 데이터베이스 매핑: Mybatis
 * 파이썬 실행: Apache commons exec
+* 파이썬 분석작업: anaconda, pandas
 * 푸시메시지: websocket
 
 ### Frontend
