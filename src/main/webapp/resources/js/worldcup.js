@@ -136,7 +136,6 @@ function displayNextMatchup() {
         // 현재 라운드의 매치업이 모두 종료된 경우
         if (winImageName.length == 1) {
             // winImageName에 데이터가 1개만 있을 경우에(최종 승자가 결정됬을 경우에) 끝났다는 창 출력
-            // TODO: 여기 월드컵이 끝났습니다. 가 아니라 worldCupResult를 만들어서 결과를 볼 수 있도록 해줘야됨
             alert("월드컵이 끝났습니다.");
            	location.href = "/worldCupResult";
            	// 결과 페이지에서 결과가 보여지도록 처리하기 위한 코드

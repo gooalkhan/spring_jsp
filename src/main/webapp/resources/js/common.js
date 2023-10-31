@@ -38,6 +38,8 @@ function board_form_check() {
 function worldcup_form_check() {
     var subject = document.forms["worldcup_form"]["subject"].value;
     var content = document.forms["worldcup_form"]["content"].value;
+    var uploadfile = document.getElementById('uploadfile');
+    var file = uploadfile.files[0];
 
     if (subject === "") {
         alert("제목을 입력해주세요.");
@@ -45,7 +47,10 @@ function worldcup_form_check() {
     } else if (content === "") {
         alert("내용을 입력해주세요.");
         return false;
-    }
+    } else if (!file){
+		alert("파일을 첨부해주세요.");
+		return false;
+	}
 }
 
 let sock = new SockJS('http://localhost:8080/message');

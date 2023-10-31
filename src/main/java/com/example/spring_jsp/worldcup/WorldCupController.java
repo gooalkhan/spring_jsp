@@ -142,11 +142,11 @@ public class WorldCupController {
 		boolean isDeleteSuccess = this.worldCupService.worldCupDelete(worldCupDTO);
 		if(isDeleteSuccess) {
 	    	request.setAttribute("msg", "삭제가 완료되었습니다.");
-	    	request.setAttribute("url", "/myWorldCupList");
+	    	request.setAttribute("url", "/worldCupList");
 			mav.setViewName("/alert");
 		} else {
 	    	request.setAttribute("msg", "올바르지 않은 삭제입니다.");
-	    	request.setAttribute("url", "/myWorldCupList");
+	    	request.setAttribute("url", "/worldCupList");
 	        mav.setViewName("/alert");
 		}
 		return mav;
