@@ -89,6 +89,7 @@
 	    boardtbl
 	    where
 	    subject like CONCAT('%', #{subject}, '%')
+	    order by idx desc;
 	    ]]>
 	</select>
 	
@@ -138,6 +139,7 @@
 	boardtbl
 	join membertbl
 	on boardtbl.membertbl_id = membertbl.id
+	order by idx desc;
 	</select>
 	
 	<!-- 좋아요 버튼 -->

@@ -86,6 +86,7 @@
 	    boardtbl
 	    where
 	    SUBJECT like '%'||#{subject}||'%'
+	    order by idx desc;
 	    ]]>
 	</select>
 	
@@ -135,6 +136,7 @@
 	boardtbl
 	join membertbl
 	on boardtbl.membertbl_id = membertbl.id
+	order by idx desc;
 	</select>
 	
 	<!-- 좋아요 버튼 -->
