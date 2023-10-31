@@ -104,6 +104,7 @@
 	    on commenttbl.membertbl_id = membertbl.id
 	    where
 	    boardtbl_IDX = #{idx}
+	    order by postdate;
 	    ]]>
 	</select>
 	

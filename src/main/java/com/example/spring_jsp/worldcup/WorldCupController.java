@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class WorldCupController {
 	private final WorldCupService worldCupService;
 	
+	// application.properties에서 설정한 값을 읽어옴
 	@Value("${resource.images.path}")
 	private String RIP;
 	
