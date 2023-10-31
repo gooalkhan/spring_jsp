@@ -318,10 +318,10 @@ public class DatabaseLoader implements CommandLineRunner {
                 // 이미지 복사
                 Files.copy(sourcePath, targetPath);
 
-                System.out.println("파일 복사 성공: " + sourceFile + "를 " + targetFile + "로 복사했습니다.");
+                logger.debug("파일 복사 성공: " + sourceFile + "를 " + targetFile + "로 복사했습니다.");
             }
         } catch (IOException e) {
-            System.err.println("파일 복사 실패: " + e.getMessage());
+        	logger.error("파일 복사 실패: " + e.getMessage());
         }
     }
 }
