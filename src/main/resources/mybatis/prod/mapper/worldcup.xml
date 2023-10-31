@@ -23,7 +23,6 @@
     
     
     
-    
     <!-- 월드컵 인서트 -->
     <insert id="worldCupInsert" useGeneratedKeys="true" keyProperty="idx">
     	insert
@@ -111,7 +110,7 @@
 		join worldcupimagetbl
 		on worldcuptbl.idx = worldcupimagetbl.worldcuptbl_IDX
 		where
-		membertbl_id = 'hong'
+		membertbl_id = #{membertbl_id}
 		GROUP BY worldcuptbl_IDX;
 	</select>
 	

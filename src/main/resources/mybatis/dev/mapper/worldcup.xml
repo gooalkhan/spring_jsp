@@ -110,7 +110,7 @@
 		join worldcupimagetbl
 		on worldcuptbl.idx = worldcupimagetbl.worldcuptbl_IDX
 		where
-		membertbl_id = 'hong'
+		membertbl_id = #{membertbl_id}
 		GROUP BY worldcuptbl_IDX;
 	</select>
 	
