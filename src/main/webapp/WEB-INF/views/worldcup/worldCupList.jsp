@@ -13,6 +13,12 @@
                            style="text-decoration: none; color: #000000; font-weight: bold;">${data.subject}</a>
                         <div class="card-text mt-2 small">${data.content}</div>
                     </div>
+                    	<c:if test="${sadmin == 'admin' || sadmin == 'subadmin'}">
+                        <form method="Post" action="/worldCupDelete" class="text-center">
+                    		<input type="hidden" name="idx" value="${data.idx}">
+                    		<input type="submit" class="btn btn-danger" value="삭제">
+                    	</form>
+                    	</c:if>
                 </div>
             </c:forEach>
         </div>
@@ -27,8 +33,7 @@
             <div class="col-auto">
                 <a href="/" class="btn btn-primary">메인으로</a>
             </div>
-            <!-- 나중에 여기에 제목으로 검색하는 거 구현
-            <form action="">
+            <form action="worldCupSearch">
                 <div class="row">
                     <div class="col-auto">
                         <input type="text" class="form-control" name="subject" placeholder="제목으로 검색">
@@ -38,7 +43,6 @@
                     </div>
                 </div>
             </form>
-            -->
         </div>
     </div>
 </t:layout>

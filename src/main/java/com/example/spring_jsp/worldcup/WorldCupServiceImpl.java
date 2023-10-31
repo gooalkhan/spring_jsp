@@ -64,4 +64,24 @@ public class WorldCupServiceImpl implements WorldCupService {
 	public List<WorldCupDTO> myWorldCupImageSelect(WorldCupDTO worldCupDTO) throws Exception {
 		return worldCupMapper.myWorldCupImageSelect(worldCupDTO);
 	}
+	
+	@Override
+	public List<WorldCupDTO> worldCupSearch(WorldCupDTO worldCupDTO) throws Exception {
+		return worldCupMapper.worldCupSearch(worldCupDTO);
+	}
+	
+	@Override
+	public List<WorldCupDTO> worldCupImageSearch(WorldCupDTO worldCupDTO) throws Exception {
+		return worldCupMapper.worldCupImageSearch(worldCupDTO);
+	}
+	
+	@Override
+	public List<WorldCupDTO> myWorldCupSearch(WorldCupDTO worldCupDTO) throws Exception {
+		return worldCupMapper.myWorldCupSearch(worldCupDTO);
+	}
+	
+	@Override
+	public List<WorldCupDTO> myWorldCupImageSearch(WorldCupDTO worldCupDTO) throws Exception {
+		return worldCupMapper.myWorldCupImageSearch(worldCupDTO);
+	}
 }
