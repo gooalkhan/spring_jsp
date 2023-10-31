@@ -8,6 +8,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * 비동기 처리를 위한 설정
+ * 요청마다 새로운 쓰레드를 생성하는 것이 아니라 쓰레드 풀을 사용하여 쓰레드를 관리한다.
+ */
 @EnableAsync
 @Configuration
 public class AsyncConfig implements AsyncConfigurer {

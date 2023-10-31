@@ -96,7 +96,7 @@
                         <input type="hidden" name="id" value="${data.id}">
                         <a class="btn btn-danger" href="#" onclick="this.parentNode.submit()">회원 탈퇴</a>
                     </form>
-                    <a class="btn btn-Secondary" href="/">메인으로</a>
+                    <a class="btn btn-secondary" href="/">메인으로</a>
                 </div>
             </div>
         </div>

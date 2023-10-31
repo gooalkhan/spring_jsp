@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+/**
+ * 웹 소켓을 통해 메시지를 전송하는 서비스
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service

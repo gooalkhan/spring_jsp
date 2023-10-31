@@ -3,6 +3,9 @@ package com.example.spring_jsp.notification;
 import java.time.LocalDateTime;
 import java.util.Random;
 
+/**
+ * 웹 소켓을 통해 전송되는 메시지
+ */
 public class NotificationDTO {
     private String id;
     private String type;

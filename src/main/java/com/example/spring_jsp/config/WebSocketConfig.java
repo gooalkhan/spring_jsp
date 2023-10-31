@@ -6,6 +6,10 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
+/**
+ * 웹 소켓 설정
+ * 웹 소켓 핸들러를 등록한다.
+ */
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSocket

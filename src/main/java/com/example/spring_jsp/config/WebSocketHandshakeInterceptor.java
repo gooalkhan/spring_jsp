@@ -12,6 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
+/**
+ * 웹 소켓의 handshake를 처리하는 인터셉터
+ * 세션 아이디를 웹소켓 세션에 넣는다.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Component

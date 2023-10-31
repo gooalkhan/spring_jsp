@@ -2,7 +2,10 @@ package com.example.spring_jsp.shop.product;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+/*
+ * 구매한 분석정보 DTO
+ * 빌더 클래스를 이용해 구매한 분석정보마다 다른 가격을 부여할 수 있도록 함
+ */
 public class ProductBuilder {
     private final String uid;
     private final long bookid;

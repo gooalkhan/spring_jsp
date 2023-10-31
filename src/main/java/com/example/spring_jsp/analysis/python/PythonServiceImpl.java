@@ -4,6 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+/**
+ * 파이썬 서비스
+ * 파이썬 실행기와 파이썬 테이블(파이썬 실행결과가 저장되는)을 이용해 파이썬을 실행하고 결과를 저장하는 서비스
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service

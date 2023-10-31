@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 구매처리 서비스
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -30,6 +33,7 @@ public class BookkeepingServiceImpl implements BookkeepingService {
         return point - used;
     }
 
+    //구매한 분석정보 가져오기
     public List<String> getUnlockedUID(String userid) {
         List<String> list =  bookkeepingMapper.getUnlockedUID(userid);
         while (list.remove(null));

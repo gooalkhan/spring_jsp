@@ -8,6 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * 분석 서비스
+ * 콘트롤러에서 받은 분석 내용 요청을 파이썬 서비스에 전달하고 결과를 받아서 뷰에 전달하는 서비스
+ */
+
 @Slf4j
 @Service
 @RequiredArgsConstructor

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+ * 포인트 샵 뷰 컨트롤러
+ */
 @RequestMapping("/shop")
 @RequiredArgsConstructor
 @Controller

@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 구매내역 DTO
+ */
 @Data
 public class BookkeepingDTO {
 
