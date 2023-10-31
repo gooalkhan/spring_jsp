@@ -1,8 +1,35 @@
 # spring_jsp
-개발용 환경설정으로 되어있으므로 active profile을 dev로 설정할것!
-https://gocoder.tistory.com/430
+게시판 및 파이썬을 활용한 실시간 분석 기능을 갖춘 웹 애플리케이션
 
-스프링 부트3 사용으로 자바버전 17로 지정함.
+## 제작 기간
+2023년 10월 4일 ~ 2023년 10월 31일
 
-아나콘다 설치할것
-https://www.anaconda.com/download
+## 기능
+* 게시판(CRUD)
+* 이상형 월드컵 작성 및 삭제
+* 회원 가입, 관리 및 수정
+* 포인트샵을 통한 포인트 구매
+* 실시간 푸시 메시지
+* 웹소설 실시간 분석
+
+## 담당 작업
+* FormDog: 게시판, 회원 가입 및 관리, 이상형 월드컵 백엔드
+* gooalkhan: 푸시메시지, 포인트샵, 파이썬 실시간 분석 백엔드, 전반적인 프론트엔드
+
+## Requirements
+* 스프링 부트 3 이상을 사용하므로 자바 17버전 이상 설치 필요
+* 파이썬 연동위해 아나콘다 설치 필요
+
+## Technical stacks(상세내역은 BOM 참조)
+
+### Backend
+* 웹 어플리케이션 서버: Spring boot
+* 데이터베이스: H2(개발환경), MySQL(배포환경)
+* 데이터베이스 매핑: Mybatis
+* 파이썬 실행: Apache commons exec
+* 푸시메시지: websocket
+
+### Frontend
+* ui: jsp, 부트스트랩 5
+* 푸시메시지: SockJS
+* 그래프: chartjs
