@@ -7,13 +7,18 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 분석작업 중인 분석자료마다 생성되는 토픽을 관리하는 서비스
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class NotificationTopicService {
 
+    //진행중인 토픽들
     private final Map<String, NotificationTopicDTO> topics = new ConcurrentHashMap<>();
 
+    //실패한 토픽들. 분석작업 요청시 실패한 토픽을 찾아보고 실패했으면 이용불가를 표시
     private final Map<String, NotificationTopicDTO> failedTopics = new ConcurrentHashMap<>();
 
     private final BookService bookService;
@@ -52,6 +57,7 @@ public class NotificationTopicService {
         }
     }
 
+    // 토픽의 모든 구독자들에게 메시지 보내기(작업 완료/실패여부)
     public void sendMessageToTopicAllSubscribers(long bookId, String productId, String message) {
         NotificationTopicDTO topic = getTopic(bookId, productId);
 
@@ -72,6 +78,7 @@ public class NotificationTopicService {
         }
     }
 
+    //분석 작업 완료시 완료 메시지 보내고 토픽 삭제
     public void removeTopicWhenComplete(long bookId, String productId) {
         NotificationTopicDTO topic = getTopic(bookId, productId);
 
@@ -84,6 +91,7 @@ public class NotificationTopicService {
         }
     }
 
+    //분석작업 실패시 실패 메시지 보내고 토픽을 실패 토픽으로 이동
     public void removeTopicWhenFailure(long bookId, String productId) {
         NotificationTopicDTO topic = getTopic(bookId, productId);
 

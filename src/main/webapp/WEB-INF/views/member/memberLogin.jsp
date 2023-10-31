@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container d-flex justify-content-center">
+            <div class="container d-flex justify-content-center mb-3">
                 <input type="submit" class="btn btn-primary" value="로그인">
             </div>
         </form>

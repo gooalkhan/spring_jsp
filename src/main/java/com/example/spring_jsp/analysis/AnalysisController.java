@@ -16,7 +16,11 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-
+/**
+ * 분석 컨트롤러
+ * 분석을 구매하고, 구매된 분석결과를 동기, 비동기(ajax) 방식으로 보여준다.
+ * 구매했는지 여부, 세션 체크등을 하고, 분석의 내용은 서비스로 위임한다.
+ */
 @Slf4j
 @RestController
 @RequiredArgsConstructor

@@ -12,11 +12,16 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * 세션 아이디별 웹소켓 세션과 메시지 큐를 관리하는 클래스
+ */
 @Slf4j
 @Component
 public class NotificationQueue implements DisposableBean {
 
+    // {세션아이디: 웹소켓 세션} 맵
     private final Map<String, WebSocketSession> sessionMap = new ConcurrentHashMap<>();
+    // {세션아이디: 메시지 큐} 맵
     private final Map<String, LinkedBlockingQueue<String>> messageQueueMap = new ConcurrentHashMap<>();
 
     public void addQueue(String sid) {

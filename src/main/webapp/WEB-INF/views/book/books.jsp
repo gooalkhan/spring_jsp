@@ -23,17 +23,17 @@
         </c:if>
         <div class="row">
             <c:forEach var="book" items="${data}" varStatus="status">
-                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 mb-4">
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
                     <div class="card" style="min-width: 10rem">
                         <a href="?page=${page}&id=${book.bookid}&condition=${param.condition}&searchword=${param.searchword}">
-                            <svg class="card-img-top book-pic" width="140" height="200">
+                            <svg class="card-img-top book-pic" width="100%" height="200">
                                 <text x="30" y="100">
                                         ${book.bookid}
                                 </text>
                                 <text x="30" y="120">
                                     표지
                                 </text>
-                                <rect x="10" y="10" width="140" height="200" fill="blue"
+                                <rect width="100%" height="100%" fill="blue"
                                       fill-opacity="0.3"/>
                             </svg>
                         </a>

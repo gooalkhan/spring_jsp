@@ -31,7 +31,6 @@ public class BookController {
         int count; // 조건에 맞는 책의 개수 - 페이징 처리를 위해 사용
         if (id != 0) model.addAttribute("id", id);
 
-        //TODO: 데이터 넣는 부분 서비스로 이관
         List<BookDTO> data; // 책 정보
         if (!condition.isEmpty() && !searchword.isEmpty()) {
             data = switch (condition) {

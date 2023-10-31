@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * 포인트 구입 행사 서비스
+ * 언제까지 구입한 고객에게 얼마나 포인트를 적립해줄지 지정 가능
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -36,6 +40,7 @@ public class CampaignServiceImpl implements CampaignService {
         return campaignList;
     }
 
+    //포인트 구입
     public int[] purchasePoint(String sid, String purchaseMethod, CampaignDTO campaignDTO) {
         int result1 = -1;
         int result2 = -1;

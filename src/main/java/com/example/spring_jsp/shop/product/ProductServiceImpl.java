@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/*
+ * 분석정보 구매 서비스
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service

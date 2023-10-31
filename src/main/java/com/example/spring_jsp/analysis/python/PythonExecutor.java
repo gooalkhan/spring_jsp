@@ -16,6 +16,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
+/**
+ * python 실행기
+ * 파이썬을 apache common exec을 이용해 실행하기 위한 클래스
+ */
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -42,6 +47,7 @@ public class PythonExecutor implements InitializingBean {
     private String executablePath;
     private String scriptPath;
 
+    //파이썬 실행시에 필요한 공통인자를 설정한다(파이썬 실행파일 경로, 파이썬 스크립트 경로, 프로파일 경로, 프로파일)
     private CommandLine getDefaultCommandLine(String scriptNameDotPy) {
         CommandLine commandLine = new CommandLine(executablePath);
         commandLine.addArgument("-u");
@@ -51,6 +57,7 @@ public class PythonExecutor implements InitializingBean {
         return commandLine;
     }
 
+    //파이선 기본 실행기를 설정한다. 파이썬 로그 출력시 바로 로그로 출력하도록 설정한다.
     private Executor getDefaultExecutor() {
 
         LogOutputStream outputStream = new LogOutputStream() {
@@ -66,6 +73,7 @@ public class PythonExecutor implements InitializingBean {
         return executor;
     }
 
+    //파이썬이 종료되었을 때 실행할 기본 콜백핸들러를 설정한다.
     private ExecuteResultHandler getDefaultResultHandler() {
         return new ExecuteResultHandler() {
 
@@ -81,6 +89,7 @@ public class PythonExecutor implements InitializingBean {
         };
     }
 
+    //웹소설 분석 요청이 들어왔을 때 실행하는 파이썬 프로세스. 비동기로 작동
     @Async
     public void runAnalysis(long bookid, String productId) {
         try {
@@ -121,6 +130,7 @@ public class PythonExecutor implements InitializingBean {
         }
     }
 
+    //빈 등록 후에 어떤 운영체제인지에 따라 파이썬 실행파일 경로를 설정한다.
     @Override
     public void afterPropertiesSet() throws Exception {
         URL url = this.getClass().getResource("/application.properties");
