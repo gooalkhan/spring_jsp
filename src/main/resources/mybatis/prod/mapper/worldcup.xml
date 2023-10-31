@@ -114,4 +114,54 @@
 		membertbl_id = 'hong'
 		GROUP BY worldcuptbl_IDX;
 	</select>
+	
+	<!-- 월드컵 제목으로 검색 -->
+	<select id="worldCupSearch" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+	    select
+	    *
+	    from
+	    worldcuptbl
+	    where
+	    SUBJECT like '%'||#{subject}||'%'
+	</select>
+	
+	<!-- 월드컵 제목으로 검색(이미지) -->
+	<select id="worldCupImageSearch" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+		select
+		worldcuptbl_IDX, MAX(worldcupimagetbl.idx) AS idx, MAX(IMAGENAME) AS IMAGENAME
+		from
+		worldcuptbl
+		join worldcupimagetbl
+		on worldcuptbl.idx = worldcupimagetbl.worldcuptbl_IDX
+		where
+		SUBJECT like '%'||#{subject}||'%'
+		GROUP BY worldcuptbl_IDX;
+	</select>
+	
+	<!-- 내 월드컵 제목으로 검색 -->
+	<select id="myWorldCupSearch" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+	    select
+	    *
+	    from
+	    worldcuptbl
+	    where
+	    SUBJECT like '%'||#{subject}||'%'
+	    and
+	    membertbl_id = #{membertbl_id}
+	</select>
+	
+	<!-- 내 월드컵 제목으로 검색(이미지) -->
+	<select id="myWorldCupImageSearch" resultType="com.example.spring_jsp.worldcup.WorldCupDTO">
+		select
+		worldcuptbl_IDX, MAX(worldcupimagetbl.idx) AS idx, MAX(IMAGENAME) AS IMAGENAME
+		from
+		worldcuptbl
+		join worldcupimagetbl
+		on worldcuptbl.idx = worldcupimagetbl.worldcuptbl_IDX
+		where
+		SUBJECT like '%'||#{subject}||'%'
+		and
+		membertbl_id = #{membertbl_id}
+		GROUP BY worldcuptbl_IDX;
+	</select>
 </mapper>

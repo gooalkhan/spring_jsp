@@ -158,7 +158,7 @@ public class WorldCupController {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 	    if (session.getAttribute("sid") == null) {
-	    	request.setAttribute("msg", "로그인 시 작성 가능합니다. 로그인 해주세요.");
+	    	request.setAttribute("msg", "로그인 시 접근 가능합니다. 로그인 해주세요.");
 	    	request.setAttribute("url", "/memberLogin");
 	        mav.setViewName("/alert");
 		}else {
@@ -172,4 +172,36 @@ public class WorldCupController {
 		}
 		return mav;
 	}
+	
+	@GetMapping("/worldCupSearch")
+	public ModelAndView worldCupSearch(WorldCupDTO worldCupDTO) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		List<WorldCupDTO> DTO = worldCupService.worldCupSearch(worldCupDTO);
+		List<WorldCupDTO> IDTO = worldCupService.worldCupImageSearch(worldCupDTO);
+		mav.addObject("data", DTO);
+		mav.addObject("image", IDTO);
+		mav.setViewName("/worldcup/worldCupList");
+		return mav;
+	}
+	
+	@GetMapping("/myWorldCupSearch")
+	public ModelAndView myWorldCupSearch(WorldCupDTO worldCupDTO, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+	    if (session.getAttribute("sid") == null) {
+	    	request.setAttribute("msg", "로그인 시 접근 가능합니다. 로그인 해주세요.");
+	    	request.setAttribute("url", "/memberLogin");
+	        mav.setViewName("/alert");
+		} else {
+			String sid = session.getAttribute("sid").toString();
+			worldCupDTO.setMembertbl_id(sid);
+			List<WorldCupDTO> DTO = worldCupService.myWorldCupSearch(worldCupDTO);
+			List<WorldCupDTO> IDTO = worldCupService.myWorldCupImageSearch(worldCupDTO);
+			mav.addObject("data", DTO);
+			mav.addObject("image", IDTO);
+			mav.setViewName("/worldcup/myWorldCupList");
+		}
+		return mav;
+	}
+	
 }

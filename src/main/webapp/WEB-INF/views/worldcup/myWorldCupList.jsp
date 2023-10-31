@@ -31,8 +31,7 @@
             <div class="col-auto">
             <a href="/" class="btn btn-primary">메인으로</a>
             </div>
-            <!-- 나중에 여기에 제목으로 검색하는 거 구현
-            <form action="">
+            <form action="myWorldCupSearch">
                 <div class="row">
                     <div class="col-auto">
                         <input type="text" class="form-control" name="subject" placeholder="제목으로 검색">
@@ -42,7 +41,6 @@
                     </div>
                 </div>
             </form>
-            -->
         </div>
     </c:if>
     <c:if test="${sid == null}">
