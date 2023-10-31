@@ -1,5 +1,27 @@
 package com.example.spring_jsp.config;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import org.h2.tools.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
+
 import com.example.spring_jsp.analysis.python.PythonMapper;
 import com.example.spring_jsp.board.BoardDTO;
 import com.example.spring_jsp.board.BoardMapper;
@@ -9,10 +31,10 @@ import com.example.spring_jsp.book.keyword.KeywordDTO;
 import com.example.spring_jsp.book.keyword.KeywordMapper;
 import com.example.spring_jsp.comment.CommentDTO;
 import com.example.spring_jsp.comment.CommentMapper;
+import com.example.spring_jsp.image.ImageMapper;
+import com.example.spring_jsp.like.LikeMapper;
 import com.example.spring_jsp.member.MemberDTO;
 import com.example.spring_jsp.member.MemberMapper;
-import com.example.spring_jsp.like.LikeMapper;
-import com.example.spring_jsp.image.ImageMapper;
 import com.example.spring_jsp.shop.bookkeeping.BookkeepingMapper;
 import com.example.spring_jsp.worldcup.WorldCupMapper;
 import com.example.spring_jsp.worldcupimage.WorldCupImageMapper;
@@ -21,22 +43,8 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
-import lombok.RequiredArgsConstructor;
-import org.h2.tools.Server;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
@@ -158,6 +166,11 @@ public class DatabaseLoader implements CommandLineRunner {
         	}
         }
         
+        
+        // 이미지 targetDirectory로 복사
+        String targetDirectory = "C:/FileIO/images/worldcupimages";
+        int imgNum = 16;
+        copyImages(targetDirectory, imgNum);
 
 
         initBooktbl();
@@ -231,6 +244,32 @@ public class DatabaseLoader implements CommandLineRunner {
             logger.info("keywordtbl inserted {} rows of sample data", counter);
         } catch (URISyntaxException | IOException | ParseException | CsvValidationException e) {
             throw new RuntimeException(e);
+        }
+    }
+    
+    public void copyImages(String targetDirectory, int imgNum) {
+        // 웹 애플리케이션 내부의 위치한 wcsImg 폴더 안에 있는 이미지들을 처리
+        ClassPathResource sourceResource = new ClassPathResource("wcsImg");
+        
+        try {
+            File sourceDirectory = sourceResource.getFile();
+
+            for (int i = 1; i <= imgNum; i++) {
+                String sourceFileName = i + ".png";
+                String targetFileName = i + ".png";
+                String sourceFile = sourceDirectory + File.separator + sourceFileName;
+                String targetFile = targetDirectory + File.separator + targetFileName;
+
+                Path sourcePath = Paths.get(sourceFile);
+                Path targetPath = Paths.get(targetFile);
+
+                // 이미지 복사
+                Files.copy(sourcePath, targetPath);
+
+                System.out.println("파일 복사 성공: " + sourceFile + "를 " + targetFile + "로 복사했습니다.");
+            }
+        } catch (IOException e) {
+            System.err.println("파일 복사 실패: " + e.getMessage());
         }
     }
 }
