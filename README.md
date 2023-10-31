@@ -19,6 +19,9 @@
 ## Requirements
 * 스프링 부트 3 이상을 사용하므로 자바 17버전 이상 설치 필요
 * 파이썬 연동위해 아나콘다 설치 필요
+* sts4 사용 시, Eclipse Enterprise Java and Web Developer Tools 설치 필요
+* MySQL 설치 필요(배포 환경)
+* 실행시 profile을 dev(개발환경) 또는 prod(배포환경)으로 지정 필요
 
 ## Technical stacks(상세내역은 BOM 참조)
 
