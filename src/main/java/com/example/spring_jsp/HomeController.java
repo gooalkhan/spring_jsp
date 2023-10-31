@@ -17,7 +17,6 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    //TODO: 첫 화면에서 보여줄 게시글, 새로 업데이트된 웹소설 보여주기
     private final BoardService boardService;
     private final BookService bookService;
 

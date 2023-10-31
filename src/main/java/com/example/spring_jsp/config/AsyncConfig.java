@@ -23,7 +23,6 @@ public class AsyncConfig implements AsyncConfigurer {
         executor.setCorePoolSize(10);
         executor.setMaxPoolSize(50);
         executor.setQueueCapacity(100);
-        // 처리되지 못한 요청을 어떻게 처리할지 - abort 무시 TODO: 처리되지 못한 요청을 대기시키기
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         executor.initialize();
 
