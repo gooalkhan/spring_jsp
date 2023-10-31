@@ -61,7 +61,10 @@ public class DatabaseLoader implements CommandLineRunner {
     
     @Override
     public void run(String... args) {
-
+        // 회원 샘플 데이터 추가(일반 회원 홍길동 복사)
+        String[] id = {"apple", "banana", "grapes", "orange", "strawberry", "watermelon", "cherry", "pineapple", "kiwi", "lemon", "lime", "peach", "mango", "grape", "pear", "blueberry", "raspberry"};
+        String[] name = {"사과", "바나나", "포도", "오렌지", "딸기", "수박", "체리", "파인애플", "키위", "레몬", "라임", "복숭아", "망고", "포도", "배", "블루베리", "라즈베리"};
+        
         // 초기 테이블 생성
         if (activeProfile.equals("prod")) {
         	worldCupImageMapper.dropTable();
@@ -94,20 +97,30 @@ public class DatabaseLoader implements CommandLineRunner {
         memberDTO.setId("hong");
         // Hong!1234
         memberDTO.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
-        memberDTO.setEmail("hong@gmail.com");
+        memberDTO.setEmail("hong@example.com");
         memberDTO.setName("홍길동");
         memberDTO.setJoinDate(new Timestamp(System.currentTimeMillis()));
         memberDTO.setAdmin("admin");
         memberMapper.save(memberDTO);
         
-        // 회원 샘플 데이터 추가(일반 회원 홍길동 복사)
-        for(int i = 0; i < 10; i++) {
+        // 회원 샘플 데이터 추가(부관리자 테스트)
+        memberDTO.setId("test");
+        // Hong!1234
+        memberDTO.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
+        memberDTO.setEmail("test@example.com");
+        memberDTO.setName("테스트");
+        memberDTO.setJoinDate(new Timestamp(System.currentTimeMillis()));
+        memberDTO.setAdmin("subadmin");
+        memberMapper.save(memberDTO);
+        
+        
+        for(int i = 0; i < 17; i++) {
             MemberDTO memberDTODupl = new MemberDTO();
-            memberDTODupl.setId("hong" + i);
+            memberDTODupl.setId(id[i]);
             // Hong!1234
             memberDTODupl.setPw("c137843278ae01068a144cfe4ef9e39f49092a1a74fb424d6e82a10d232f6c8a");
-            memberDTODupl.setEmail("hong"+i+"@gmail.com");
-            memberDTODupl.setName("홍길동" + i);
+            memberDTODupl.setEmail(id[i] + "@example.com");
+            memberDTODupl.setName(name[i]);
             memberDTODupl.setJoinDate(new Timestamp(System.currentTimeMillis()));
             memberMapper.save(memberDTODupl);
         }
@@ -120,26 +133,26 @@ public class DatabaseLoader implements CommandLineRunner {
         boardMapper.boardInsert(boardDTO);
         
         // 게시글 샘플 데이터 추가(일반 회원 홍길동 복사)
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 17; i++) {
             BoardDTO boardDTODupl = new BoardDTO();
-            boardDTODupl.setSubject("제목은"+i);
-            boardDTODupl.setContent("내용이다"+i);
-            boardDTODupl.setMembertbl_id("hong"+i);
+            boardDTODupl.setSubject(name[i] + " 이(가) 쓴 글 입니다.");
+            boardDTODupl.setContent(name[i] + " 이(가) 쓴 내용 입니다.");
+            boardDTODupl.setMembertbl_id(id[i]);
             boardMapper.boardInsert(boardDTODupl);
         }
         
-        for(int i = 1; i < 10; i++) {
+        for(int i = 1; i <= 18; i++) {
         	// 댓글 샘플 데이터 추가(관리자 홍길동)
             CommentDTO commentDTO = new CommentDTO();
             commentDTO.setContent("댓글이다");
             commentDTO.setMembertbl_id("hong");
             commentDTO.setBoardtbl_idx(i);
             commentMapper.save(commentDTO);
-        	for (int j = 0; j < 9; j++) {
+        	for (int j = 0; j < 17; j++) {
         		// 댓글 샘플 데이터 추가(일반 회원 홍길동 복사)
                 CommentDTO commentDTODupl = new CommentDTO();
-                commentDTODupl.setContent("댓글이다"+j);
-                commentDTODupl.setMembertbl_id("hong"+j);
+                commentDTODupl.setContent(name[j] + " 가(이) 쓴 댓글입니다.");
+                commentDTODupl.setMembertbl_id(id[j]);
                 commentDTODupl.setBoardtbl_idx(i);
                 commentMapper.save(commentDTODupl);
         	}
