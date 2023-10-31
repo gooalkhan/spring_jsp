@@ -97,6 +97,7 @@ public class DatabaseLoader implements CommandLineRunner {
         memberDTO.setEmail("hong@gmail.com");
         memberDTO.setName("홍길동");
         memberDTO.setJoinDate(new Timestamp(System.currentTimeMillis()));
+        memberDTO.setAdmin("admin");
         memberMapper.save(memberDTO);
         
         // 회원 샘플 데이터 추가(일반 회원 홍길동 복사)

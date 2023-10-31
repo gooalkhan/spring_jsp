@@ -8,7 +8,7 @@
 
     <update id="save">
         insert into membertbl (ID, PW, EMAIL, NAME, JOINDATE, ADMIN)
-        values (#{id}, #{pw}, #{email}, #{name}, #{joinDate}, 'admin');
+        values (#{id}, #{pw}, #{email}, #{name}, #{joinDate}, #{admin});
     </update>
 
     <update id="createTable">
