@@ -65,7 +65,8 @@ def get_genre_data(bookid) -> pandas.DataFrame:
     # 키워드별 선작 리뷰수 평균 데이터프레임에 장르 평균 추가
     new_row = pd.DataFrame({'review_count': [keywordMean.iloc[0]], 'preference_count': [keywordMean.iloc[1]]},
                            index=['장르 평균'])
-    keywordDf = keywordDf.append(new_row)
+    keywordDf = pd.concat([keywordDf, new_row])
+    #keywordDf = keywordDf.append(new_row)
 
     keywordDf['review_count'] = keywordDf['review_count'].astype(int)
     keywordDf['preference_count'] = keywordDf['preference_count'].astype(int)

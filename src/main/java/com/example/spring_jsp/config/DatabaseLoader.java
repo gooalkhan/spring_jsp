@@ -71,10 +71,16 @@ public class DatabaseLoader implements CommandLineRunner {
     
 	// application.properties에서 설정한 값을 읽어옴
 	@Value("${resource.images.path}")
+    private String resourceWindowsPath;
+
+    @Value("${resource.linux.images.path}")
+    private String resourceLinuxPath;
 	private String RIP;
     
     @Override
     public void run(String... args) {
+        RIP = System.getProperty("os.name").toLowerCase().contains("windows") ? resourceWindowsPath : resourceLinuxPath.formatted(System.getProperty("user.name"));
+
         // 회원 샘플 데이터 추가(일반 회원 홍길동 복사)
         String[] id = {"apple", "banana", "grapes", "orange", "strawberry", "watermelon", "cherry", "pineapple", "kiwi", "lemon", "lime", "peach", "mango", "pear", "blueberry", "raspberry"};
         String[] name = {"사과", "바나나", "포도", "오렌지", "딸기", "수박", "체리", "파인애플", "키위", "레몬", "라임", "복숭아", "망고", "배", "블루베리", "라즈베리"};
@@ -135,7 +141,7 @@ public class DatabaseLoader implements CommandLineRunner {
         
         // 이미지 targetDirectory로 복사
         // 만약, 이미 똑같은 이름의 파일이 있다면 실패함
-        String targetDirectory = "C:/FileIO/images/worldcupimages";
+        String targetDirectory = RIP + "worldcupimages";
         int imgNum;
         imgNum = 16;
         copyImages(targetDirectory, imgNum, color[0]);
@@ -372,7 +378,7 @@ public class DatabaseLoader implements CommandLineRunner {
     		WorldCupImageDTO worldCupImageDTO = new WorldCupImageDTO();
     		worldCupImageDTO.setOriginImageName(colorName[j-1] + ".png");
     		worldCupImageDTO.setImageName(color[0] + j + ".png");
-    		worldCupImageDTO.setImagePath("C:\\FileIO\\images\\worldcupimages");
+    		worldCupImageDTO.setImagePath(RIP + "worldcupimages");
     		worldCupImageDTO.setWorldcuptbl_idx(1);
     		worldCupImageMapper.save(worldCupImageDTO);
     	}
@@ -382,7 +388,7 @@ public class DatabaseLoader implements CommandLineRunner {
     		WorldCupImageDTO worldCupImageDTO = new WorldCupImageDTO();
     		worldCupImageDTO.setOriginImageName(colorName[j-1] + ".png");
     		worldCupImageDTO.setImageName(color[1] + j + ".png");
-    		worldCupImageDTO.setImagePath("C:\\FileIO\\images\\worldcupimages");
+    		worldCupImageDTO.setImagePath(RIP + "worldcupimages");
     		worldCupImageDTO.setWorldcuptbl_idx(2);
     		worldCupImageMapper.save(worldCupImageDTO);
     	}
@@ -392,7 +398,7 @@ public class DatabaseLoader implements CommandLineRunner {
     		WorldCupImageDTO worldCupImageDTO = new WorldCupImageDTO();
     		worldCupImageDTO.setOriginImageName(colorName[j-1] + ".png");
     		worldCupImageDTO.setImageName(color[2] + j + ".png");
-    		worldCupImageDTO.setImagePath("C:\\FileIO\\images\\worldcupimages");
+    		worldCupImageDTO.setImagePath(RIP + "worldcupimages");
     		worldCupImageDTO.setWorldcuptbl_idx(3);
     		worldCupImageMapper.save(worldCupImageDTO);
     	}
