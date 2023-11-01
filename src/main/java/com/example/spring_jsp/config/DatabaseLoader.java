@@ -225,36 +225,6 @@ public class DatabaseLoader implements CommandLineRunner {
         }
     }
 
-    /*
-     * jar 파일로 패키징 시, 밑에 코드가 작동을 안함. 따라서 밑에 다시 copyImages 메서드를 만들었음
-     */
-//    public void copyImages(String targetDirectory, int imgNum, String color) {
-//        // 웹 애플리케이션 내부의 위치한 wcsImg 폴더 안에 있는 이미지들을 처리
-//        ClassPathResource sourceResource = new ClassPathResource("wcsImg");
-//        
-//        try {
-//            File sourceDirectory = sourceResource.getFile();
-//
-//            for (int i = 1; i <= imgNum; i++) {
-//                String sourceFileName = i + ".png";
-//                String targetFileName = color + i + ".png";
-//                String sourceFile = sourceDirectory + File.separator + sourceFileName;
-//                String targetFile = targetDirectory + File.separator + targetFileName;
-//
-//                Path sourcePath = Paths.get(sourceFile);
-//                Path targetPath = Paths.get(targetFile);
-//
-//                // 이미지 복사
-//                Files.copy(sourcePath, targetPath);
-//
-//                logger.debug("파일 복사 성공: " + sourceFile + "를 " + targetFile + "로 복사했습니다.");
-//            }
-//        } catch (IOException e) {
-//        	logger.error("파일 복사 실패: " + e.getMessage());
-//        }
-//    }
-    
-
     public void copyImages(String targetDirectory, int imgNum, String color) {
         // 웹 애플리케이션 내부의 위치한 wcsImg 폴더 안에 있는 이미지들을 처리
         ClassLoader classLoader = DatabaseLoader.class.getClassLoader();

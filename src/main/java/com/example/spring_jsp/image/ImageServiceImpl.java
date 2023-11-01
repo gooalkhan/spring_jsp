@@ -18,11 +18,11 @@ import java.nio.file.Paths;
 public class ImageServiceImpl implements ImageService, InitializingBean {
     private final ImageMapper imageMapper;
 
-    @Value("${python.images.path.windows}")
-    private String pythonImagePathWindows;
+    @Value("${resource.images.path}")
+    private String imagePathWindows;
 
-    @Value("${python.images.path.linux}")
-    private String pythonImagePathLinux;
+    @Value("${resource.linux.images.path}")
+    private String imagePathLinux;
 
     private String imagePath;
 
@@ -36,9 +36,9 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
     @Override
     public void afterPropertiesSet() {
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-            imagePath = pythonImagePathWindows;
+            imagePath = imagePathWindows;
         } else {
-            imagePath = pythonImagePathLinux.formatted(System.getProperty("user.name"));
+            imagePath = imagePathLinux.formatted(System.getProperty("user.name"));
         }
 
         try {

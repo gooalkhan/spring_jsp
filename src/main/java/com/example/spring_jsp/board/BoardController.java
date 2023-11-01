@@ -6,6 +6,7 @@ import java.time.temporal.ChronoField;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +20,15 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
-public class BoardController {
+public class BoardController implements InitializingBean {
 	private final BoardService boardService;
 	
 	@Value("${resource.images.path}")
+	private String resourceWindowsPath;
+
+	@Value("${resource.linux.images.path}")
+	private String resourceLinuxPath;
+
 	private String RIP;
 	
 	//게시글 목록
@@ -95,7 +101,10 @@ public class BoardController {
 			                // mkdir() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가
 			                // mkdirs() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
 			            }
-			            file = new File(absolutePath + path + "\\" + newFileName + fileExtension);
+
+						String partition = System.getProperty("os.name").toLowerCase().contains("windows") ? "\\" : "/";
+
+			            file = new File(absolutePath + path + partition + newFileName + fileExtension);
 			            files.transferTo(file);
 
 
@@ -283,5 +292,10 @@ public class BoardController {
 		mav.addObject("data", DTO);
 		mav.setViewName("/board/boardList");
 		return mav;
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		RIP = System.getProperty("os.name").toLowerCase().contains("windows") ? resourceWindowsPath : resourceLinuxPath.formatted(System.getProperty("user.name"));
 	}
 }
