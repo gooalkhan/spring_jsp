@@ -58,10 +58,47 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="article" items="${boardList}">
+                        <c:forEach var="article" items="${boardList}" varStatus="status">
                             <tr>
                                 <td>${article.idx}</td>
-                                <td><a href="/boardDetail?idx=${article.idx}">${article.subject}</a></td>
+                                <td style="font-size: 10px;"><a href="/boardDetail?idx=${article.idx}" style="font-size: medium; text-decoration: none;">${article.subject}</a>
+                                <c:if test="${cnum[status.index].count != 0}">
+                    			&nbsp;&nbsp;&nbsp;${cnum[status.index].count}
+                    			</c:if>
+                                </td>
+                                <td>${article.name}</td>
+                                <td><fmt:formatDate pattern="yyyy-MM-dd" value="${article.postDate}"/></td>
+                                <td>${article.views}</td>
+                                <td>${article.likes}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card col-12 mb-3" id="newboard">
+                <div class="card-body">
+                    <h5><b>인기 게시글</b></h5>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>글 번호</th>
+                            <th>제목</th>
+                            <th>글쓴이</th>
+                            <th>게시일</th>
+                            <th>조회수</th>
+                            <th>좋아요</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="article" items="${boardListPop}" varStatus="status">
+                            <tr>
+                                <td>${article.idx}</td>
+                                <td style="font-size: 10px;"><a href="/boardDetail?idx=${article.idx}" style="font-size: medium; text-decoration: none;">${article.subject}</a>
+                                <c:if test="${cnumPop[status.index].count != 0}">
+                    			&nbsp;&nbsp;&nbsp;${cnumPop[status.index].count}
+                    			</c:if>
+                                </td>
                                 <td>${article.name}</td>
                                 <td><fmt:formatDate pattern="yyyy-MM-dd" value="${article.postDate}"/></td>
                                 <td>${article.views}</td>

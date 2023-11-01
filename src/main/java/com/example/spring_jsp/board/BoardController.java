@@ -3,6 +3,7 @@ package com.example.spring_jsp.board;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,8 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		List<BoardDTO> list = boardService.boardListJoin();
 		List<BoardDTO> Clist = boardService.commentNum();
+		//리스트를 역순으로
+		Collections.reverse(Clist);
 		mav.addObject("data", list);
 		mav.addObject("cnum", Clist);
 		mav.setViewName("/board/boardList");
