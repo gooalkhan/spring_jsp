@@ -30,4 +30,6 @@ public interface BoardMapper {
 	List<BoardDTO> imageSelect(BoardDTO boardDTO);
 	int imageDelete(BoardDTO boardDTO);
 	List<BoardDTO> commentNum();
+	List<BoardDTO> boardListJoinPop();
+	List<BoardDTO> commentNumPop();
 }

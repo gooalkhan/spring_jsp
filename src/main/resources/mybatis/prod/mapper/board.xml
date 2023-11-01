@@ -186,11 +186,39 @@
     </delete>
     
     <!-- 게시글 옆에 댓글이 몇개 달렸는지 보이도록 하기 위한 쿼리 -->
-    <select id="commentNum" resultType="com.example.spring_jsp.board.BoardDTO">
-	    SELECT
-		count(*) as count
+    <select id="commentNum">
+		SELECT
+	    IFNULL(COUNT(commenttbl.boardtbl_idx), 0) AS count
 		FROM
-		commenttbl
-		GROUP BY boardtbl_IDX;
+	    boardtbl
+		LEFT JOIN
+	    commenttbl
+	    ON boardtbl.idx = commenttbl.boardtbl_idx
+		GROUP BY boardtbl.idx;
+    </select>
+    
+    <!-- 인기 게시글이 나오기 위한 쿼리 -->
+    <select id="boardListJoinPop">
+		select
+		IDX, SUBJECT, CONTENT, POSTDATE, LIKES, VIEWS, membertbl_ID, NAME, ADMIN
+		from
+		boardtbl
+		join membertbl
+		on boardtbl.membertbl_id = membertbl.id
+	    where LIKES >= 10
+		order by idx desc;
+	</select>
+	
+	<!-- 인기 게시글의 댓글이 나오기 위한 쿼리 -->
+    <select id="commentNumPop">
+		SELECT
+	    IFNULL(COUNT(commenttbl.boardtbl_idx), 0) AS count
+		FROM
+	    boardtbl
+		LEFT JOIN
+	    commenttbl
+	    ON boardtbl.idx = commenttbl.boardtbl_idx
+	    where LIKES >= 10
+		GROUP BY boardtbl.idx;
     </select>
 </mapper>
