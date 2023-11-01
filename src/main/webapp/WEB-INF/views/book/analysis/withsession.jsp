@@ -1,8 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="card mb-3 p-3" id='${productDTO.productid}'>
-    <p class="card-text"> <h5><b>${analysis} 분석</b></h5> </p>
+    <p class="card-text"> <h5><b>
+    <c:choose>
+        <c:when test="${analysis == '선호작품'}">
+            선호작품 분석은 구매 가능하나 현재 준비 중으로 추후 업데이트 됩니다.
+        </c:when>
+        <c:otherwise>
+            ${analysis} 분석
+        </c:otherwise>
+    </c:choose></b></h5> </p>
     <div class="container d-flex justify-content-center">
-        <form id="form-${productDTO.uid}" name="form-${productDTO.uid}" onsubmit="return purchaseAnalysis('form-${productDTO.uid}')" action="/analysis"
+        <form id="form-${productDTO.uid}" name="form-${productDTO.uid}"
+              onsubmit="return purchaseAnalysis('form-${productDTO.uid}')" action="/analysis"
               method="post">
             <input hidden value="${productDTO.bookid}" name="bookid">
             <input hidden value="${productDTO.uid}" name="uid">
