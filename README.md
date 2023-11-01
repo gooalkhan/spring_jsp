@@ -21,12 +21,16 @@
 * 파이썬 연동위해 아나콘다 설치 필요
 * sts4 사용 시, Eclipse Enterprise Java and Web Developer Tools 설치 필요
 * MySQL 설치 필요(배포 환경)
-* 실행시 profile을 dev(개발환경) 또는 prod(배포환경)으로 지정 필요
+* 톰캣 10버전
+* 실행시 VM arguments에 -Dspring.profiles.active=dev 또는 -Dspring.profiles.active=prod 추가 필요(개발, 배포환경)
+* 실행시 VM arguments에 -Dfile.encoding=UTF-8 추가 필요(톰캣 한글깨짐 방지)
+* 배포방식: war-exploded
 
 ## Technical stacks(상세내역은 BOM 참조)
 
 ### Backend
-* 웹 어플리케이션 서버: Spring boot
+* 웹 서버: Tomcat 10
+* 웹 어플리케이션 서버: Spring boot 3
 * 데이터베이스: H2(개발환경), MySQL(배포환경)
 * 데이터베이스 매핑: Mybatis
 * 파이썬 실행: Apache commons exec
