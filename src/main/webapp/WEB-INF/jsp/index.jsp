@@ -15,16 +15,18 @@
                                 <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
                                     <div class="card" style="min-width: 140px;">
                                         <a href="books?page=${page}&id=${book.bookid}&condition=${param.condition}&searchword=${param.searchword}">
-                                            <svg class="card-img-top book-pic" width="100%" height="200">
-                                                <text x="30" y="100">
-                                                        ${book.bookid}
-                                                </text>
-                                                <text x="30" y="120">
-                                                    표지
-                                                </text>
-                                                <rect width="100%" height="100%" fill="purple"
-                                                      fill-opacity="0.3"/>
-                                            </svg>
+                                            <img src="https://img.ridicdn.net/cover/${book.bookid}/xlarge" class="img-fluid rounded-start"
+                                                 alt="${book.bookid}">
+<%--                                            <svg class="card-img-top book-pic" width="100%" height="200">--%>
+<%--                                                <text x="30" y="100">--%>
+<%--                                                        ${book.bookid}--%>
+<%--                                                </text>--%>
+<%--                                                <text x="30" y="120">--%>
+<%--                                                    표지--%>
+<%--                                                </text>--%>
+<%--                                                <rect width="100%" height="100%" fill="purple"--%>
+<%--                                                      fill-opacity="0.3"/>--%>
+<%--                                            </svg>--%>
                                         </a>
                                         <div class="card-body book-card">
                                             <div class="row">
@@ -61,7 +63,7 @@
                         <c:forEach var="article" items="${boardList}" varStatus="status">
                             <tr>
                                 <td>${article.idx}</td>
-                                <td style="font-size: 10px;"><a href="/boardDetail?idx=${article.idx}" style="font-size: medium; text-decoration: none;">${article.subject}</a>
+                                <td style="font-size: 10px;"><a href="${pageContext.request.contextPath}/boardDetail?idx=${article.idx}" style="font-size: medium; text-decoration: none;">${article.subject}</a>
                                 <c:if test="${cnum[status.index].count != 0}">
                     			&nbsp;&nbsp;&nbsp;${cnum[status.index].count}
                     			</c:if>
@@ -76,7 +78,7 @@
                     </table>
                 </div>
             </div>
-            <div class="card col-12 mb-3" id="newboard">
+            <div class="card col-12 mb-3" id="hotboard">
                 <div class="card-body">
                     <h5><b>인기 게시글</b></h5>
                     <table class="table table-striped">
@@ -94,7 +96,7 @@
                         <c:forEach var="article" items="${boardListPop}" varStatus="status">
                             <tr>
                                 <td>${article.idx}</td>
-                                <td style="font-size: 10px;"><a href="/boardDetail?idx=${article.idx}" style="font-size: medium; text-decoration: none;">${article.subject}</a>
+                                <td style="font-size: 10px;"><a href="${pageContext.request.contextPath}/boardDetail?idx=${article.idx}" style="font-size: medium; text-decoration: none;">${article.subject}</a>
                                 <c:if test="${cnumPop[status.index].count != 0}">
                     			&nbsp;&nbsp;&nbsp;${cnumPop[status.index].count}
                     			</c:if>

@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0.35-debian
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: proddb
+    ports:
+      - "3306"
+    restart: always
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./build/libs:/usr/local/tomcat/webapps
+    links:
+      - db
+    depends_on:
+      db:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    restart: always

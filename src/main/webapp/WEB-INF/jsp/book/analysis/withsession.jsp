@@ -12,7 +12,7 @@
     </c:choose></b></h5> </p>
     <div class="container d-flex justify-content-center">
         <form id="form-${productDTO.uid}" name="form-${productDTO.uid}"
-              onsubmit="return purchaseAnalysis('form-${productDTO.uid}')" action="/analysis"
+              onsubmit="return purchaseAnalysis('form-${productDTO.uid}')" action="${pageContext.request.contextPath}/analysis"
               method="post">
             <input hidden value="${productDTO.bookid}" name="bookid">
             <input hidden value="${productDTO.uid}" name="uid">

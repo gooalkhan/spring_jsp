@@ -12,6 +12,10 @@ java {
 	sourceCompatibility = '17'
 }
 
+war {
+	archiveFileName = 'ROOT.war'
+}
+
 configurations {
 	compile.exclude module: "commons-logging"
 	compileOnly {

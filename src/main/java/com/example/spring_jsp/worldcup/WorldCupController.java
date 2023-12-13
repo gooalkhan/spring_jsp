@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,14 +18,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
-public class WorldCupController {
+public class WorldCupController implements InitializingBean {
 	private final WorldCupService worldCupService;
+
+	@Value("${resource.images.path}")
+	private String resourceWindowsPath;
+
+	@Value("${resource.linux.images.path}")
+	private String resourceLinuxPath;
 	
 	// application.properties에서 설정한 값을 읽어옴
-	@Value("${resource.images.path}")
 	private String RIP;
+	private String SEPARATOR;
 	
 	// 이상형 월드컵 만들기 페이지
 	@GetMapping("/worldCupCreate")
@@ -66,13 +75,14 @@ public class WorldCupController {
 			    String realName = newFileName + fileExtension;
 			    try {
 			    	if(!files.isEmpty()) {
+						log.debug("writing worldcup file - {}", realName);
 			    		File file = new File(absolutePath + path);
 			            if(!file.exists()){
 			                file.mkdirs();
 			                // mkdir() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가
 			                // mkdirs() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
 			            }
-			            file = new File(absolutePath + path + "\\" + newFileName + fileExtension);
+			            file = new File(absolutePath + path + SEPARATOR + newFileName + fileExtension);
 			            files.transferTo(file);
 
 
@@ -84,7 +94,7 @@ public class WorldCupController {
 			    	}
 			    	
 			    } catch (Exception e) {
-			    	e.printStackTrace();
+			    	log.error(e.getMessage());
 			    }
 			}
 			mav.setViewName("redirect:/worldCupList");
@@ -135,7 +145,7 @@ public class WorldCupController {
 	    String sPath = "worldcupimages";
 	    String rPath = aPath + sPath;
 		for(WorldCupDTO DTO: IDTO) {
-			String filePathStr = rPath + "\\" + DTO.getImageName();
+			String filePathStr = rPath + SEPARATOR + DTO.getImageName();
 			File file = new File(filePathStr);
 			file.delete();
 		}
@@ -204,5 +214,10 @@ public class WorldCupController {
 		}
 		return mav;
 	}
-	
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		RIP = System.getProperty("os.name").toLowerCase().contains("windows") ? resourceWindowsPath : resourceLinuxPath.formatted(System.getProperty("user.name"));
+		SEPARATOR = System.getProperty("os.name").toLowerCase().contains("windows") ? "\\" : "/";
+	}
 }

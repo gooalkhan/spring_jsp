@@ -53,7 +53,7 @@ function worldcup_form_check() {
 	}
 }
 
-let sock = new SockJS('http://localhost:8080/message');
+let sock = new SockJS(location.origin + '/message');
 
 sock.onopen = function () {
     console.log('open');
@@ -94,7 +94,7 @@ sock.onclose = function () {
 
 function getAnalysis(bookid, productid) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:8080/analysis?bookid=" + bookid + "&productid=" + productid, true);
+    xhr.open("GET", location.origin + "/analysis?bookid=" + bookid + "&productid=" + productid, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var parser = new DOMParser();
@@ -114,7 +114,7 @@ function purchaseAnalysis(formuid) {
     var formData = document.forms[formuid];
     var body = new FormData(formData);
 
-    xhr.open("POST", "http://localhost:8080/analysis", true);
+    xhr.open("POST", location.origin + "/analysis", true);
     xhr.withCredentials = true;
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {

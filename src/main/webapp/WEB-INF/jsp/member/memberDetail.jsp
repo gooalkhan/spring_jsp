@@ -90,9 +90,9 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3 text-center">
-                    <a class="btn btn-primary" href="/memberUpdate?id=${data.id}">정보 수정</a>
+                    <a class="btn btn-primary" href="${pageContext.request.contextPath}/memberUpdate?id=${data.id}">정보 수정</a>
 
-                    <form method="Post" action="/memberDelete" style="display: inline">
+                    <form method="Post" action="${pageContext.request.contextPath}/memberDelete" style="display: inline">
                         <input type="hidden" name="id" value="${data.id}">
                         <a class="btn btn-danger" href="#" onclick="this.parentNode.submit()">회원 탈퇴</a>
                     </form>

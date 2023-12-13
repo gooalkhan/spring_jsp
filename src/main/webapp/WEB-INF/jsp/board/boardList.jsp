@@ -20,7 +20,7 @@
             <c:forEach var="data" items="${data}" varStatus="status">
                 <tr>
                     <td>${data.idx}</td>
-                    <td style="font-size: 10px;"><a href="/boardDetail?idx=${data.idx}" style="font-size: medium; text-decoration: none;">${data.subject}</a>
+                    <td style="font-size: 10px;"><a href="${pageContext.request.contextPath}/boardDetail?idx=${data.idx}" style="font-size: medium; text-decoration: none;">${data.subject}</a>
                     <c:if test="${cnum[status.index].count != 0}">
                     &nbsp;&nbsp;&nbsp;${cnum[status.index].count}
                     </c:if>
@@ -35,12 +35,12 @@
         </table>
         <div class="container d-flex justify-content-around">
         	<div class="col-auto">
-            	<a href="/boardInsert" class="btn btn-primary">글쓰기</a>
+            	<a href="${pageContext.request.contextPath}/boardInsert" class="btn btn-primary">글쓰기</a>
             </div>
             <div class="col-auto">
             <a href="/" class="btn btn-primary">메인으로</a>
             </div>
-            <form action="/boardSearch">
+            <form action="${pageContext.request.contextPath}/boardSearch">
                 <div class="row">
                     <div class="col-auto">
                         <input type="text" class="form-control" name="subject" placeholder="제목으로 검색">

@@ -27,7 +27,7 @@
                 <tbody>
                 <c:forEach var="data" items="${data}">
                     <tr>
-                        <td><a href="/memberDetail?id=${data.id}">${data.id}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/memberDetail?id=${data.id}">${data.id}</a></td>
                         <td>${fn:substring(data.pw,0,5)}...</td>
                         <td>${data.email}</td>
                         <td>${data.hasEmailAuthed}</td>
@@ -41,7 +41,7 @@
             </table>
             <hr>
             <div class="container d-flex justify-content-center">
-                <form method="get" action="/memberDetail">
+                <form method="get" action="${pageContext.request.contextPath}/memberDetail">
                     <div class="row">
                         <div class="col-auto"><input class="form-control" type="text" name="id" id="id" placeholder="아이디로 검색"></div>
                         <div class="col-auto"><input class="btn btn-primary" type="submit" value="찾기"></div>

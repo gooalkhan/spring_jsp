@@ -14,7 +14,7 @@
 <body>
 
 <div class="container bg-white pe-3">
-    <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+    <jsp:include page="/WEB-INF/jsp/common/header.jsp"/>
 
     <%-- 여기부터 내용시작 --%>
     <jsp:doBody/>
@@ -39,7 +39,7 @@
 
 </div>
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<jsp:include page="/WEB-INF/jsp/common/footer.jsp"/>
 </body>
 <script src="${pageContext.request.contextPath}/resources/js/sockjs.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>

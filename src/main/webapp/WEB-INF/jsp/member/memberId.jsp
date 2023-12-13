@@ -17,17 +17,17 @@
         <c:if test="${data.id != null}">
 	        <div class="d-grid gap-3">
 		        <div class="container d-flex justify-content-center" style="width: 200px;">
-		        	<a class="btn btn-outline-primary" href="/memberLogin">로그인하러 가기</a>
+		        	<a class="btn btn-outline-primary" href="${pageContext.request.contextPath}/memberLogin">로그인하러 가기</a>
 		       	</div>
 				<div class="container d-flex justify-content-center" style="width: 200px;">
-		        	<a class="btn btn-outline-success" href="/whereIsMyPw">비밀번호 찾기</a>
+		        	<a class="btn btn-outline-success" href="${pageContext.request.contextPath}/whereIsMyPw">비밀번호 찾기</a>
 		       	</div>
 	       	</div>
        	</c:if>
        	<c:if test="${data.id == null}">
 	       	<div class="d-grid gap-3">
 				<div class="container d-flex justify-content-center" style="width: 200px;">
-		        	<a class="btn btn-outline-success" href="/whereIsMyId">아이디 찾기 재시도</a>
+		        	<a class="btn btn-outline-success" href="${pageContext.request.contextPath}/whereIsMyId">아이디 찾기 재시도</a>
 		       	</div>
 	       	</div>
        	</c:if>

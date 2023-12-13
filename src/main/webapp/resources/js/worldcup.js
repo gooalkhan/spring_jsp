@@ -121,13 +121,14 @@ function startGame() {
 
 // 게임 진행 함수
 function displayNextMatchup() {
+	let root_path = location.origin;
 	// 부전승 처리
 	if (imageName.length == 1){
 		alert("자료가 하나 남았습니다. 하나남은 자료는 부전승으로 올라갑니다.")
 		randNum();
-		document.getElementById("leftImage").src = "/worldcupimages/" + tempiNL;
+		document.getElementById("leftImage").src = root_path + "/worldcupimages/" + tempiNL;
 		document.getElementById("leftImageName").innerText = tempoINL;
-		document.getElementById("rightImage").src = "/worldcupimages/" + tempiNL;
+		document.getElementById("rightImage").src = root_path + "/worldcupimages/" + tempiNL;
 		document.getElementById("rightImageName").innerText = tempoINL;
 		winImageL();
 		count--;
@@ -137,7 +138,7 @@ function displayNextMatchup() {
         if (winImageName.length == 1) {
             // winImageName에 데이터가 1개만 있을 경우에(최종 승자가 결정됬을 경우에) 끝났다는 창 출력
             alert("월드컵이 끝났습니다.");
-           	location.href = "/worldCupResult";
+           	location.href = root_path + "/worldCupResult";
            	// 결과 페이지에서 결과가 보여지도록 처리하기 위한 코드
             winImg = winImageName[0];
             winImgName = winOriginImageName[0];
@@ -188,11 +189,11 @@ function displayNextMatchup() {
         randNum();
         
 //      alert(tempiNL);
-		document.getElementById("leftImage").src = "/worldcupimages/" + tempiNL;
+		document.getElementById("leftImage").src = root_path + "/worldcupimages/" + tempiNL;
 		document.getElementById("leftImageName").innerText = tempoINL;
 		
 //		alert(tempiNR);
-		document.getElementById("rightImage").src = "/worldcupimages/" + tempiNR;
+		document.getElementById("rightImage").src = root_path + "/worldcupimages/" + tempiNR;
 		document.getElementById("rightImageName").innerText = tempoINR;
 		
 		//매치업 수를 증가
@@ -261,9 +262,11 @@ function randNum() {
 
 // 마지막에 결과값을 보기 위한 함수
 function endGame() {
+	let root_path = location.origin;
+
 	var endImg = sessionStorage.getItem('sWCimg');
     var endImgName = sessionStorage.getItem('sWCimgName');
-	document.getElementById("winnerImg").src = "/worldcupimages/" + endImg;
+	document.getElementById("winnerImg").src = root_path + "/worldcupimages/" + endImg;
 	document.getElementById("winnerImgName").innerText = endImgName;
 }
 

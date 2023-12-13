@@ -3,7 +3,7 @@
     <%@include file="member_menu.jsp" %>
 </div>
 <div class="container d-flex justify-content-center">
-    <a href="/">
+    <a href="${pageContext.request.contextPath}/">
         <svg width="1000">
             <text x="20%" y="65%" font-family="Futura" font-weight="bold" font-size="5em">BookTOGETHER</text>
         </svg>

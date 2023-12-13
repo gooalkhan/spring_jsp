@@ -27,7 +27,7 @@
             </div>
         </form>
         <div class="container d-flex justify-content-center">
-        	<a class="btn btn-warning" href="/whereIsMyAccount">아이디/비밀번호를 까먹으셨나요?</a>
+        	<a class="btn btn-warning" href="${pageContext.request.contextPath}/whereIsMyAccount">아이디/비밀번호를 까먹으셨나요?</a>
         </div>
     </div>
 </t:layout>

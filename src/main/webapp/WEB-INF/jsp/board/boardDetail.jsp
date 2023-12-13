@@ -38,11 +38,11 @@
                     
                         <div class="col">
                             <button type="button" class="btn btn-primary"
-                                    onclick="location.href='/boardUpdate?idx=${data.idx}'">수정
+                                    onclick="location.href='${pageContext.request.contextPath}/boardUpdate?idx=${data.idx}'">수정
                             </button>
                         </div>
                         <div class="col">
-                            <form method="Post" action="/boardDelete">
+                            <form method="Post" action="${pageContext.request.contextPath}/boardDelete">
                                 <input type="hidden" name="idx" value="${data.idx}">
                                 <input type="submit" class="btn btn-danger" value="삭제">
                             </form>
@@ -50,7 +50,7 @@
                 </c:if>
                 <c:if test="${sid != null}">
                         <div class="col">
-                            <form method="Post" action="/boardLike">
+                            <form method="Post" action="${pageContext.request.contextPath}/boardLike">
                             	<input type="hidden" name="boardtbl_idx" value="${data.idx}">
                 				<input type="hidden" name="membertbl_id" value="${sid}">
                 				<c:if test="${like.id != sid}">
@@ -84,7 +84,7 @@
                         <td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd" value="${show.postDate}"/></td>
                         <td class="text-end">
                             <c:if test="${show.name == sname || sadmin == 'admin' || sadmin == 'subadmin'}">
-                                <form method="Post" action="commentDelete">
+                                <form method="Post" action="${pageContext.request.contextPath}/commentDelete">
                                     <input type="hidden" name="idx" value="${show.idx}">
                                     <input type="hidden" name="bidx" value="${data.idx}">
                                     <a href="#" onclick="this.parentNode.submit()">삭제</a>
@@ -99,7 +99,7 @@
         <hr>
         <div class="container">
 
-            <form method="Post" name="comment_form" onsubmit="return comment_form_check()" action="/commentInsert">
+            <form method="Post" name="comment_form" onsubmit="return comment_form_check()" action="${pageContext.request.contextPath}/commentInsert">
                 <input type="hidden" name="membertbl_id" value="${sid}">
                 <input type="hidden" name="boardtbl_idx" value="${data.idx}">
                 <div class="mb-3">
@@ -112,8 +112,8 @@
             </form>
         </div>
         <div class="container d-flex justify-content-evenly">
-            <span><a href="/boardList">게시글 목록으로</a></span>
-            <span><a href="/">메인으로</a></span>
+            <span><a href="${pageContext.request.contextPath}/boardList">게시글 목록으로</a></span>
+            <span><a href="${pageContext.request.contextPath}/">메인으로</a></span>
         </div>
     </div>
 </t:layout>

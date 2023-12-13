@@ -1,6 +1,8 @@
-import sys
+import sysconfig
 
-import pandas
+print(sysconfig.get_path("platlib"))
+
+import sys
 import uuid
 import time
 import pandas as pd
@@ -15,7 +17,7 @@ db = MyDB.get_instance()
 bookid = sys.argv[3]
 
 
-def get_genre_data(bookid) -> pandas.DataFrame:
+def get_genre_data(bookid) -> pd.DataFrame:
     # 해당하는 책의 장르를 가져오기
     category = ""
     is_adult_only = ""
@@ -79,7 +81,7 @@ def get_genre_data(bookid) -> pandas.DataFrame:
     return keywordDf
 
 
-def get_keyword_analysis(bookid: str) -> pandas.DataFrame:
+def get_keyword_analysis(bookid: str) -> pd.DataFrame:
     # 장르데이터 가져오기
     keywordDf = get_genre_data(bookid)
 

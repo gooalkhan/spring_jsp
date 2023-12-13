@@ -19,7 +19,7 @@
             constraint bookkeepingtbl_pk
                 primary key (uuid),
             constraint bookkeepingtbl_membertbl_ID_fk
-                foreign key (userid) references MEMBERTBL (ID),
+                foreign key (userid) references membertbl (ID),
             constraint bookkeepingtbl_bookkeepingtbl_uuid_fk
                 foreign key (referenceuuid) references bookkeepingtbl (uuid)
         ) ENGINE = InnoDB

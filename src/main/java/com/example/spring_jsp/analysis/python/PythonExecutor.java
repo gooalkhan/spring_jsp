@@ -29,7 +29,7 @@ public class PythonExecutor implements InitializingBean {
     private final NotificationTopicService notificationTopicService;
 
     private final Map<String, String> requestMap = Map.ofEntries(
-            Map.entry("키워드", "keyword.py"),
+            Map.entry("키워드", "mykeyword.py"),
             Map.entry("선호작품", "favorite.py")
     );
     private final String username = System.getProperty("user.name");
@@ -63,7 +63,7 @@ public class PythonExecutor implements InitializingBean {
         LogOutputStream outputStream = new LogOutputStream() {
             @Override
             protected void processLine(String line, int level) {
-                log.debug("python: " + line);
+                log.info("python: " + line);
             }
         };
 
@@ -95,6 +95,7 @@ public class PythonExecutor implements InitializingBean {
         try {
             CommandLine cmdLine = getDefaultCommandLine(requestMap.get(productId));
             cmdLine.addArgument(String.valueOf(bookid));
+            log.debug(cmdLine.toString());
 
             Executor executor = getDefaultExecutor();
             executor.execute(cmdLine,new ExecuteResultHandler() {

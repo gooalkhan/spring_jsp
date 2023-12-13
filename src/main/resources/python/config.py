@@ -1,6 +1,6 @@
-import os
 import platform
 import sys
+import getpass
 from jinja2 import Environment, FileSystemLoader
 '''
     This file is used to read the spring application config file and return a dictionary
@@ -37,7 +37,7 @@ PROD_CONFIG = get_config(LIB_PATH + PROD_FILENAME)
 COMMON_CONFIG = get_config(LIB_PATH + COMMON_FILENAME)
 SPRING_CONFIG = {"dev": DEV_CONFIG, "prod": PROD_CONFIG}
 
-IMG_PATH = COMMON_CONFIG["resource.images.path"] if platform.system().lower() == 'windows' else COMMON_CONFIG["resource.linux.images.path"] % os.environ.get("USERNAME")
+IMG_PATH = COMMON_CONFIG["resource.images.path"] if platform.system().lower() == 'windows' else COMMON_CONFIG["resource.linux.images.path"] % getpass.getuser()
 
 TEMPLATE_DIR = LIB_PATH + '\\python\\templates' if platform.system().lower() == 'windows' else LIB_PATH + '/python/templates'
 

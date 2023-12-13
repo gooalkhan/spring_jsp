@@ -51,7 +51,7 @@ finally:
         def insert(self, jobuid, bookid, productid, template):
             with self.get_connection() as conn:
                 with conn.cursor() as curs:
-                    curs.execute("insert into python (JOBUID, BOOKID, PRODUCTID, STRINGTEMPLATE) values (%s, %s, %s, %s)",
+                    curs.execute("insert into PYTHON (JOBUID, BOOKID, PRODUCTID, STRINGTEMPLATE) values (%s, %s, %s, %s)",
                                  (jobuid, bookid, productid, template))
                 conn.commit()
 

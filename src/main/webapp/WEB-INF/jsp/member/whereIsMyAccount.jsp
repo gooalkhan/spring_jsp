@@ -11,10 +11,10 @@
         </div>
         <div class="d-grid gap-3">
             <div class="container d-flex justify-content-center" style="width: 200px;">
-        		<a class="btn btn-outline-primary" href="/whereIsMyId">아이디</a>
+        		<a class="btn btn-outline-primary" href="${pageContext.request.contextPath}/whereIsMyId">아이디</a>
         	</div>
         	<div class="container d-flex justify-content-center" style="width: 200px;">
-        		<a class="btn btn-outline-success" href="/whereIsMyPw">비밀번호</a>
+        		<a class="btn btn-outline-success" href="${pageContext.request.contextPath}/whereIsMyPw">비밀번호</a>
         	</div>
         </div>
 	</div>	

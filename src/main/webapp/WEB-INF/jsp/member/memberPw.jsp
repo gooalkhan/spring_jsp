@@ -8,7 +8,7 @@
             <div class="m-3 text-center">
             	<c:if test="${data.pw != null}">
                 <h3>회원님의 비밀번호를 재설정 하겠습니다.</h3>
-                <form name="memberUpdateForm" method="Post" action="/resetPw" onsubmit="return validateMemberForm('update')">
+                <form name="memberUpdateForm" method="Post" action="${pageContext.request.contextPath}/resetPw" onsubmit="return validateMemberForm('update')">
                 	<input type="hidden" name="id" value="${data.id}">
                 	<div class="d-grid gap-3">
                         <div class="mb-3">
@@ -33,14 +33,14 @@
         <c:if test="${data.pw != null}">
 	        <div class="d-grid gap-3">
 		        <div class="container d-flex justify-content-center" style="width: 200px;">
-		        	<a class="btn btn-outline-primary" href="/memberLogin">로그인하러 가기</a>
+		        	<a class="btn btn-outline-primary" href="${pageContext.request.contextPath}/memberLogin">로그인하러 가기</a>
 		       	</div>
 	       	</div>
        	</c:if>
        	<c:if test="${data.pw == null}">
 	       	<div class="d-grid gap-3">
 				<div class="container d-flex justify-content-center" style="width: 200px;">
-		        	<a class="btn btn-outline-success btn-lg" href="/whereIsMyPw">비밀번호 찾기 재시도</a>
+		        	<a class="btn btn-outline-success btn-lg" href="${pageContext.request.contextPath}/whereIsMyPw">비밀번호 찾기 재시도</a>
 		       	</div>
 	       	</div>
        	</c:if>
