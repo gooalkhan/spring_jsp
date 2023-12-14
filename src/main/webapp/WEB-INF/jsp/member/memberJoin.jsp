@@ -5,8 +5,11 @@
 <t:layout>
     <div class="container py-3">
         <div class="row justify-content-center">
-            <div class="col-4 m-3 text-center">
+            <div class="col-12 m-3 text-center">
                 <h3>회원 가입</h3>
+                <h5>시범으로 운영하는 서비스입니다.<br>
+                    실제 사용중인 아이디 및 비밀번호를 입력하지 말아주세요
+                </h5>
             </div>
         </div>
         <div class="container">

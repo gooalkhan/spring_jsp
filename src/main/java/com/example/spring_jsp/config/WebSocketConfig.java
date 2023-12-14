@@ -19,6 +19,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
     private final WebSocketHandshakeInterceptor webSocketHandshakeInterceptor;
 
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(textSocketHandler, "/message").withSockJS().setInterceptors(webSocketHandshakeInterceptor);
+        registry.addHandler(textSocketHandler, "/message").setAllowedOriginPatterns("*").withSockJS().setInterceptors(webSocketHandshakeInterceptor);
     }
 }

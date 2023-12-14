@@ -135,7 +135,7 @@ public class MemberController {
 		memberDTO.setPw(sha256.getSHA256(pw));
 		MemberDTO DTO = memberService.memberLogin(memberDTO);
 		if(DTO == null) {
-			request.setAttribute("msg", "아이디와 비밀번호가 틀렸습니다. 다시 입력해주세요.");
+			request.setAttribute("msg", "아이디와 비밀번호가 틀렸거나 가입되지 않은 회원입니다");
 			request.setAttribute("url", "/memberLogin");
 			mav.setViewName("/alert");
 		}

@@ -6,6 +6,7 @@ import java.time.temporal.ChronoField;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class BoardController implements InitializingBean {
@@ -30,6 +32,7 @@ public class BoardController implements InitializingBean {
 	private String resourceLinuxPath;
 
 	private String RIP;
+	private String SEPARATOR;
 	
 	//게시글 목록
 	@GetMapping("/boardList")
@@ -102,9 +105,10 @@ public class BoardController implements InitializingBean {
 			                // mkdirs() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
 			            }
 
-						String partition = System.getProperty("os.name").toLowerCase().contains("windows") ? "\\" : "/";
+						String pathToSave = absolutePath + path + SEPARATOR + newFileName + fileExtension;
+						log.debug("writing - {}", pathToSave);
 
-			            file = new File(absolutePath + path + partition + newFileName + fileExtension);
+			            file = new File(pathToSave);
 			            files.transferTo(file);
 
 
@@ -116,7 +120,7 @@ public class BoardController implements InitializingBean {
 			    	}
 			    	
 			    } catch (Exception e) {
-			    	e.printStackTrace();
+			    	log.error(e.getMessage());
 			    }
 			}
 		    
@@ -187,7 +191,7 @@ public class BoardController implements InitializingBean {
 		    String sPath = "boardimages";
 		    String rPath = aPath + sPath;
 			for(BoardDTO DTO: IDTO) {
-				String filePathStr = rPath + "\\" + DTO.getImageName();
+				String filePathStr = rPath + SEPARATOR + DTO.getImageName();
 				File file = new File(filePathStr);
 				file.delete();
 			}
@@ -224,7 +228,7 @@ public class BoardController implements InitializingBean {
 			                // mkdir() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 생성 불가
 			                // mkdirs() 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
 			            }
-			            file = new File(absolutePath + path + "\\" + newFileName + fileExtension);
+			            file = new File(absolutePath + path + SEPARATOR + newFileName + fileExtension);
 			            files.transferTo(file);
 
 
@@ -297,5 +301,6 @@ public class BoardController implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		RIP = System.getProperty("os.name").toLowerCase().contains("windows") ? resourceWindowsPath : resourceLinuxPath.formatted(System.getProperty("user.name"));
+		SEPARATOR = System.getProperty("os.name").toLowerCase().contains("windows") ? "\\" : "/";
 	}
 }
